@@ -8,18 +8,19 @@ import banksys.account.exception.InsufficientFundsException;
 import banksys.account.exception.NegativeAmountException;
 
 
-public class OrdinaryAccountTest{
-
+public class OrdinaryAccountTest {
 
 	@Test
 	public void testCredit() {
 		OrdinaryAccount account = new OrdinaryAccount("123A");
+		
 		try {
 			account.credit(100);
 		} catch (NegativeAmountException e) {
 			fail(e.getMessage());
 		}
-		assertEquals("Ordinary account test fail", 100, account.getBalance(), 0);
+
+		assertTrue("Ordinary account testCredit fail", account.getBalance() == 100);
 	}
 
 	@Test (expected = NegativeAmountException.class)
