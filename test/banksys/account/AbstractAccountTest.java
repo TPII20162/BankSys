@@ -43,11 +43,9 @@ public class AbstractAccountTest {
 	public void testCreditNegativeAmount() {
 		try {
 			account.credit(-30);
-		} catch (NegativeAmountException e) {
-			return;
-		}
+			fail("Should throw an exception");
+		} catch (NegativeAmountException e) {}
 		
-		fail("Should throw an exception");
 	}
 
 }
