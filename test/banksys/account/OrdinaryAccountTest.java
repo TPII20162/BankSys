@@ -11,25 +11,6 @@ import banksys.account.exception.NegativeAmountException;
 public class OrdinaryAccountTest {
 
 	@Test
-	public void testCredit() {
-		OrdinaryAccount account = new OrdinaryAccount("123A");
-		
-		try {
-			account.credit(100);
-		} catch (NegativeAmountException e) {
-			fail(e.getMessage());
-		}
-
-		assertTrue("Ordinary account testCredit fail", account.getBalance() == 100);
-	}
-
-	@Test (expected = NegativeAmountException.class)
-	public void testCreditNegative()  throws NegativeAmountException { 
-		OrdinaryAccount account = new OrdinaryAccount("123A");
-		account.credit(-100);
-	}
-	
-	@Test
 	public void testDebit() {
 		OrdinaryAccount account = new OrdinaryAccount("123A");
 			try {
@@ -46,6 +27,7 @@ public class OrdinaryAccountTest {
 			}
 			assertEquals("Ordinary account test fail", 50, account.getBalance(), 0);
 	}
+	
 	@Test (expected = NegativeAmountException.class)
 	public void testDebitWithNegativeAmount() throws NegativeAmountException {
 		OrdinaryAccount account = new OrdinaryAccount("123A");
