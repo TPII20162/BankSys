@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import banksys.account.OrdinaryAccount;
 import banksys.persistence.exception.AccountCreationException;
+import banksys.persistence.exception.AccountDeletionException;
 
 public class AccountVectorTest {
 	
@@ -32,4 +33,22 @@ public class AccountVectorTest {
 		
 	}
 	
+	@Test
+	public void testDelete() throws AccountCreationException,
+			AccountDeletionException {
+		
+		OrdinaryAccount oAccount = new OrdinaryAccount("123A");
+		
+		accountVector.create(oAccount);
+		
+		assertEquals("Deveria existir uma conta", 1,
+				accountVector.numberOfAccounts());
+		
+		accountVector.delete("123A");
+		
+		assertEquals("A conta deveria ter sido removida", 0,
+				accountVector.numberOfAccounts());
+		
+	}
+
 }
