@@ -73,7 +73,7 @@ public class AccountXStream implements IAccountRepository {
 		return list;
 	}
 
-	public int mumberOfAccounts() {
+	public int numberOfAccounts() {
 		return this.accounts.size();
 	}
 
