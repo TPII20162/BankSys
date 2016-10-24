@@ -50,5 +50,16 @@ public class AccountVectorTest {
 				accountVector.numberOfAccounts());
 		
 	}
+	
+	@Test(expected = AccountCreationException.class)
+	public void testCreateDuplicatedAccounts() throws AccountCreationException {
+		
+		OrdinaryAccount oAccount = new OrdinaryAccount("123A");
+		
+		accountVector.create(oAccount);
+		
+		accountVector.create(oAccount);
+		
+	}
 
 }
