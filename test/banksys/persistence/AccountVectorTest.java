@@ -77,8 +77,9 @@ public class AccountVectorTest {
 
 	@Test
 	public void testRetrieve() {
-		AbstractAccount a1 = new OrdinaryAccount("123A");
-		AbstractAccount a2 = new OrdinaryAccount("123B");
+		
+		AbstractAccount a1 = new OrdinaryAccount(ACCOUNT_NUMBER_A);
+		AbstractAccount a2 = new OrdinaryAccount(ACCOUNT_NUMBER_B);
 		
 		try {
 			accountVector.create(a1);
@@ -88,12 +89,16 @@ public class AccountVectorTest {
 		}
 		
 		try {
-			accountVector.retrieve(a1.getNumber());
-			accountVector.retrieve(a2.getNumber());
+			
+			assertEquals("Os números das contas deveriam ser iguais", a1.getNumber(),
+					accountVector.retrieve(ACCOUNT_NUMBER_A).getNumber());
+			
+			assertEquals("Os números das contas deveriam ser iguais", a2.getNumber(),
+					accountVector.retrieve(ACCOUNT_NUMBER_B).getNumber());
+			
 		} catch (AccountNotFoundException e) {
 			fail("Failed to retrieve account");
 		}
 	}
-
 
 }
