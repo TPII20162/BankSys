@@ -61,5 +61,12 @@ public class AccountVectorTest {
 		accountVector.create(oAccount);
 		
 	}
+	
+	@Test(expected = AccountDeletionException.class)
+	public void testDeleteWithNonexistentAccount() throws AccountDeletionException {
+		
+		accountVector.delete("123A");
+		
+	}
 
 }
