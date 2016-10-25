@@ -21,32 +21,31 @@ public class BankControllerTest {
 	public void setUp() {
 		ac = new AccountVector();
 		bc = new BankController(ac);
+		oc = new OrdinaryAccount("123A");
+		oc2 = new OrdinaryAccount("123B");
 	}
 	
 	@Test
 	public void testAddAccount() {
-		oc = new OrdinaryAccount("123");
 		try {
 			bc.addAccount(oc);
-		} catch (BankTransactionException e) {
-			e.printStackTrace();
-		}
+		} catch (BankTransactionException e) {}
+		assertEquals("Era para ter adicionado 1 conta ",1,ac.numberOfAccounts());
+		try {
+			bc.addAccount(oc2);
+		} catch (BankTransactionException e) {}
+		assertEquals("Era para ter adicionado 2 contas ",2,ac.numberOfAccounts());
 		
-		assertEquals("Era para ter adicionado ",ac.numberOfAccounts(),1,0.001);
 	}
 
 	@Test
 	public void testRemoveAccount() {
-		oc = new OrdinaryAccount("123");
 		try {
 			bc.addAccount(oc);
 			bc.removeAccount(oc.getNumber());
-		} catch (BankTransactionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (BankTransactionException e) {}
 		try{
-			assertNull("Era para ser nulo",ac.retrieve(oc.getNumber()));
+			assertNull("Era para ser nulo", ac.retrieve(oc.getNumber()));
 		}catch(Exception e){
 			
 		}
@@ -54,34 +53,30 @@ public class BankControllerTest {
 
 	@Test
 	public void testDoCredit() {
-		oc = new OrdinaryAccount("123");
 		try {
 			bc.addAccount(oc);
-			bc.doCredit("123", 50);
-		} catch (BankTransactionException e) {
-			e.printStackTrace();
-		}
+			bc.doCredit("123A", 50);
+		} catch (BankTransactionException e) {}
 		try {
-			assertEquals("Era para ser igual",ac.retrieve("123").getBalance(),50,0.001);
-		} catch (AccountNotFoundException e) {
-			e.printStackTrace();
-		}
+			assertEquals("Era para ser igual",50, ac.retrieve("123A").getBalance(), 0.01);
+		} catch (AccountNotFoundException e) {}
 	}
 
 	@Test
 	public void testDoDebit() {
-		oc = new OrdinaryAccount("123");
 		try {
 			bc.addAccount(oc);
-			bc.doCredit("123", 50);
-		} catch (BankTransactionException e) {
-			e.printStackTrace();
-		}
+			bc.doCredit("123A", 50);
+		} catch (BankTransactionException e) {}
 		try {
-			assertEquals("Era para ser igual",ac.retrieve("123").getBalance(),50,0.001);
-		} catch (AccountNotFoundException e) {
-			e.printStackTrace();
-		}
+			assertEquals("Era para ser igual",50, ac.retrieve("123A").getBalance(),0.001);
+		} catch (AccountNotFoundException e) {}
+		try {
+			bc.doDebit("123A", 30);
+		} catch (BankTransactionException e) {}
+		try {
+			assertEquals("Era para ser igual", 20, ac.retrieve("123A").getBalance(),0.001);
+		} catch (AccountNotFoundException e) {}
 	}
 
 	@Test
