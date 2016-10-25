@@ -2,6 +2,7 @@ package banksys.control;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import banksys.account.OrdinaryAccount;
@@ -15,11 +16,16 @@ public class BankControllerTest {
 	private AccountVector ac;
 	private OrdinaryAccount oc,oc2;
 	private BankController bc;
+	
+	@Before
+	public void setUp() {
+		ac = new AccountVector();
+		bc = new BankController(ac);
+	}
+	
 	@Test
 	public void testAddAccount() {
-		ac = new AccountVector();
 		oc = new OrdinaryAccount("123");
-		bc = new BankController(ac);
 		try {
 			bc.addAccount(oc);
 		} catch (BankTransactionException e) {
@@ -31,9 +37,7 @@ public class BankControllerTest {
 
 	@Test
 	public void testRemoveAccount() {
-		ac = new AccountVector();
 		oc = new OrdinaryAccount("123");
-		bc = new BankController(ac);
 		try {
 			bc.addAccount(oc);
 			bc.removeAccount(oc.getNumber());
@@ -50,9 +54,7 @@ public class BankControllerTest {
 
 	@Test
 	public void testDoCredit() {
-		ac = new AccountVector();
 		oc = new OrdinaryAccount("123");
-		bc = new BankController(ac);
 		try {
 			bc.addAccount(oc);
 			bc.doCredit("123", 50);
@@ -68,9 +70,7 @@ public class BankControllerTest {
 
 	@Test
 	public void testDoDebit() {
-		ac = new AccountVector();
 		oc = new OrdinaryAccount("123");
-		bc = new BankController(ac);
 		try {
 			bc.addAccount(oc);
 			bc.doCredit("123", 50);
@@ -86,9 +86,7 @@ public class BankControllerTest {
 
 	@Test
 	public void testGetBalance() {
-		ac = new AccountVector();
 		oc = new OrdinaryAccount("123");
-		bc = new BankController(ac);
 		try {
 			bc.addAccount(oc);
 			bc.doCredit("123", 50);
@@ -104,10 +102,8 @@ public class BankControllerTest {
 
 	@Test
 	public void testDoTransfer() {
-		ac = new AccountVector();
 		oc = new OrdinaryAccount("123");
 		oc2 = new OrdinaryAccount("456");
-		bc = new BankController(ac);
 		try {
 			bc.addAccount(oc);
 			bc.doCredit("123", 50);
@@ -127,8 +123,6 @@ public class BankControllerTest {
 	@Test
 	public void testDoEarnInterest() {
 		SavingsAccount sc = new SavingsAccount("1234");
-		ac = new AccountVector();
-		bc = new BankController(ac);
 		try {
 			bc.addAccount(sc);
 			bc.doCredit("1234", 10);
@@ -143,8 +137,6 @@ public class BankControllerTest {
 
 	@Test
 	public void testDoEarnBonus() {
-		ac = new AccountVector();
-		bc = new BankController(ac);
 		SpecialAccount sc = new SpecialAccount("1223");
 		try{
 			bc.addAccount(sc);
