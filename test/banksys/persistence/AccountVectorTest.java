@@ -1,13 +1,16 @@
 package banksys.persistence;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import banksys.account.AbstractAccount;
 import banksys.account.OrdinaryAccount;
 import banksys.persistence.exception.AccountCreationException;
 import banksys.persistence.exception.AccountDeletionException;
+import banksys.persistence.exception.AccountNotFoundException;
 
 public class AccountVectorTest {
 	
@@ -71,5 +74,26 @@ public class AccountVectorTest {
 		accountVector.delete("ACCOUNT_NUMBER_A");
 		
 	}	
+
+	@Test
+	public void testRetrieve() {
+		AbstractAccount a1 = new OrdinaryAccount("123A");
+		AbstractAccount a2 = new OrdinaryAccount("123B");
+		
+		try {
+			accountVector.create(a1);
+			accountVector.create(a2);
+		} catch (AccountCreationException e) {
+			fail("Failed to create accounts");
+		}
+		
+		try {
+			accountVector.retrieve(a1.getNumber());
+			accountVector.retrieve(a2.getNumber());
+		} catch (AccountNotFoundException e) {
+			fail("Failed to retrieve account");
+		}
+	}
+
 
 }
