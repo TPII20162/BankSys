@@ -43,11 +43,7 @@ public class AbstractAccountTest {
 	
 	@Test (expected = NegativeAmountException.class)
 	public void testCreditNegativeAmount() throws NegativeAmountException {
-		try {
-			account.credit(-100);
-		} catch (NegativeAmountException e) {
-			fail(e.getMessage());	
-		}
+		account.credit(-100);
 	}
 
 }
