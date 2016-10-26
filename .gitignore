@@ -37,3 +37,6 @@ local.properties
 
 # Code Recommenders
 .recommenders/
+
+#GNU/Linux Backup Files
+*~
