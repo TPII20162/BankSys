@@ -39,13 +39,15 @@ public class AbstractAccountTest {
 		assertTrue("Balance should be 80", account.getBalance() == 80);
 	}
 	
-	@Test
-	public void testCreditNegativeAmount() {
+	
+	
+	@Test (expected = NegativeAmountException.class)
+	public void testCreditNegativeAmount() throws NegativeAmountException {
 		try {
 			account.credit(-30);
-			fail("Should throw an exception");
-		} catch (NegativeAmountException e) {}
-		
+		} catch (NegativeAmountException e) {
+			fail(e.getMessage());	
+		}
 	}
 
 }
