@@ -40,82 +40,33 @@ public class BankController {
 	}
 
 	public void doCredit(String number, double amount) throws BankTransactionException {
-		AbstractAccount account;
-		try {
-			account = this.repository.retrieve(number);
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
-		try {
-			account.credit(amount);
-		} catch (NegativeAmountException nae) {
-			throw new BankTransactionException(nae);
-		}
+		credit(number, amount);
 		this.commit();
 
 	}
 
 	public void doDebit(String number, double amount) throws BankTransactionException {
-		AbstractAccount account;
-		try {
-			account = this.repository.retrieve(number);
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
-		try {
-			account.debit(amount);
-		} catch (InsufficientFundsException ife) {
-			throw new BankTransactionException(ife);
-		} catch (NegativeAmountException nae) {
-			throw new BankTransactionException(nae);
-		}
+		debit(number, amount);
 		this.commit();
 	}
 
 	public double getBalance(String number) throws BankTransactionException {
-		AbstractAccount conta;
-		try {
-			conta = this.repository.retrieve(number);
-			return conta.getBalance();
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
+		AbstractAccount conta = retrieve(number);
+		return conta.getBalance();
+
 	}
 
-	public void doTransfer(String fromNumber, String toNumber, double amount) throws BankTransactionException {
-		AbstractAccount fromAccount;
-		try {
-			fromAccount = this.repository.retrieve(fromNumber);
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
+	public void doTransfer(String fromNumber, String toNumber, double amount) throws BankTransactionException{
 
-		AbstractAccount toAccount;
-		try {
-			toAccount = this.repository.retrieve(toNumber);
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
+		debit(fromNumber, amount);
 
-		try {
-			fromAccount.debit(amount);
-			toAccount.credit(amount);
-		} catch (InsufficientFundsException sie) {
-			throw new BankTransactionException(sie);
-		} catch (NegativeAmountException nae) {
-			throw new BankTransactionException(nae);
-		}
+		credit(toNumber, amount);
 
 		this.commit();
 	}
 
 	public void doEarnInterest(String number) throws BankTransactionException, IncompatibleAccountException {
-		AbstractAccount auxAccount;
-		try {
-			auxAccount = this.repository.retrieve(number);
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
+		AbstractAccount auxAccount = retrieve(number);
 
 		if (auxAccount instanceof SavingsAccount) {
 			((SavingsAccount) auxAccount).earnInterest();
@@ -127,12 +78,7 @@ public class BankController {
 	}
 
 	public void doEarnBonus(String number) throws BankTransactionException, IncompatibleAccountException {
-		AbstractAccount auxAccount;
-		try {
-			auxAccount = this.repository.retrieve(number);
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
+		AbstractAccount auxAccount = retrieve(number);
 
 		if (auxAccount instanceof SpecialAccount) {
 			((SpecialAccount) auxAccount).earnBonus();
@@ -147,6 +93,37 @@ public class BankController {
 			this.repository.flush();
 		} catch (FlushException fe) {
 			throw new BankTransactionException(fe);
+		}
+	}
+
+
+	public AbstractAccount retrieve(String number) throws BankTransactionException{
+		AbstractAccount auxAccount;
+		try {
+			auxAccount = this.repository.retrieve(number);
+		} catch (AccountNotFoundException anfe) {
+			throw new BankTransactionException(anfe);
+		}
+		return auxAccount;
+	
+	}
+
+	public void credit(String Number, double amount) throws BankTransactionException {
+		AbstractAccount aux = retrieve(Number);
+		try {
+			aux.credit(amount);
+		} catch (NegativeAmountException e) {
+			throw new BankTransactionException(e);
+		}
+
+	}
+
+	public void debit(String Number, double amount) throws  BankTransactionException{
+		AbstractAccount aux = retrieve(Number);
+		try {
+			aux.debit(amount);
+		} catch (NegativeAmountException | InsufficientFundsException e) {
+			throw new BankTransactionException(e);
 		}
 	}
 }
