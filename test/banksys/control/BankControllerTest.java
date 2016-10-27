@@ -89,7 +89,7 @@ public class BankControllerTest {
 			e.printStackTrace();
 		}
 		try {
-			assertEquals("Era para ser igual",bc.getBalance("123"),50,0.001);
+			assertEquals("Era para ser igual",50, bc.getBalance("123"), 0.001);
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
 		}
@@ -108,8 +108,8 @@ public class BankControllerTest {
 			e.printStackTrace();
 		}
 		try {
-			assertEquals("Era para ser igual",bc.getBalance("123"),30,0.001);
-			assertEquals("Era para ser igual",bc.getBalance("456"),20,0.001);
+			assertEquals("Era para ser igual",30, bc.getBalance("123"), 0.001);
+			assertEquals("Era para ser igual",30, bc.getBalance("456"),0.001);
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
 		}
@@ -126,7 +126,7 @@ public class BankControllerTest {
 			e.printStackTrace();
 		}
 		try{
-		assertEquals("Era para ser Igual",ac.retrieve("1234").getBalance(),10.01,0.001);
+		assertEquals("Era para ser Igual",10.01, ac.retrieve("1234").getBalance(), 0.001);
 		}catch(AccountNotFoundException e){}
 	}
 
@@ -139,7 +139,7 @@ public class BankControllerTest {
 			bc.doEarnBonus("1223");
 		}catch(Exception e){}
 		try {
-			assertEquals("Era para ser igual",ac.retrieve("1223").getBalance(),50.5,0.001);
+			assertEquals("Era para ser igual",50.5, ac.retrieve("1223").getBalance(), 0.001);
 		} catch (AccountNotFoundException e) {
 			e.printStackTrace();
 		}
