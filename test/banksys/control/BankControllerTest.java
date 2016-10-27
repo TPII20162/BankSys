@@ -30,11 +30,11 @@ public class BankControllerTest {
 		try {
 			bc.addAccount(oc);
 		} catch (BankTransactionException e) {}
-		assertEquals("Era para ter adicionado 1 conta ",1,ac.numberOfAccounts());
+		assertEquals("Era para ter adicionado 1 conta ",1, ac.numberOfAccounts());
 		try {
 			bc.addAccount(oc2);
 		} catch (BankTransactionException e) {}
-		assertEquals("Era para ter adicionado 2 contas ",2,ac.numberOfAccounts());
+		assertEquals("Era para ter adicionado 2 contas ",2, ac.numberOfAccounts());
 		
 	}
 
@@ -81,35 +81,31 @@ public class BankControllerTest {
 
 	@Test
 	public void testGetBalance() {
-		oc = new OrdinaryAccount("123");
+		//oc = new OrdinaryAccount("123");
 		try {
 			bc.addAccount(oc);
-			bc.doCredit("123", 50);
+			bc.doCredit("123A", 50);
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
 		}
 		try {
-			assertEquals("Era para ser igual",50, bc.getBalance("123"), 0.001);
-		} catch (BankTransactionException e) {
-			e.printStackTrace();
-		}
+			assertEquals("Era para ser igual",50, bc.getBalance("123A"), 0.001);
+		} catch (BankTransactionException e) {}
 	}
 
 	@Test
 	public void testDoTransfer() {
-		oc = new OrdinaryAccount("123");
-		oc2 = new OrdinaryAccount("456");
 		try {
 			bc.addAccount(oc);
-			bc.doCredit("123", 50);
+			bc.doCredit("123A", 50);
 			bc.addAccount(oc2);
-			bc.doTransfer("123", "456", 20);
+			bc.doTransfer("123A", "123B", 20);
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
 		}
 		try {
-			assertEquals("Era para ser igual",30, bc.getBalance("123"), 0.001);
-			assertEquals("Era para ser igual",30, bc.getBalance("456"),0.001);
+			assertEquals("Era para ser igual",30, bc.getBalance("123A"), 0.001);
+			assertEquals("Era para ser igual",20, bc.getBalance("123B"),0.001);
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
 		}
