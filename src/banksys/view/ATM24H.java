@@ -7,7 +7,7 @@ import banksys.account.OrdinaryAccount;
 import banksys.account.SavingsAccount;
 import banksys.account.SpecialAccount;
 import banksys.account.TaxAccount;
-import banksys.control.BankController;
+import banksys.control.FinancialController;
 import banksys.control.exception.BankTransactionException;
 import banksys.persistence.AccountVector;
 
@@ -16,7 +16,7 @@ public class ATM24H {
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		BankController bank = new BankController(new AccountVector());
+		FinancialController bank = new FinancialController(new AccountVector());
 		boolean loop = true;
 		while (loop) {
 			switch (mainMenu()) {

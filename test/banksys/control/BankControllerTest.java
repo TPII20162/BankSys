@@ -15,12 +15,12 @@ import banksys.persistence.exception.AccountNotFoundException;
 public class BankControllerTest {
 	private AccountVector ac;
 	private OrdinaryAccount oc,oc2;
-	private BankController bc;
+	private FinancialController bc;
 	
 	@Before
 	public void setUp() {
 		ac = new AccountVector();
-		bc = new BankController(ac);
+		bc = new FinancialController(ac);
 		oc = new OrdinaryAccount("123A");
 		oc2 = new OrdinaryAccount("123B");
 	}
