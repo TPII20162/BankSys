@@ -140,6 +140,21 @@ public class ATM24H {
 				break;
 
 			case 9:
+				//TODO Implement structure to withdraw
+				
+				System.out.println("Enter the account number: ");
+				number = scanner.next();
+				System.out.println("Enter the amount to be debited: ");
+				amount = scanner.nextDouble();
+				try {
+					bank.doDebit(number, amount);
+					System.out.println("Operation was successful!");
+				} catch (BankTransactionException bte) {
+					System.out.println("Error: " + bte.getMessage());
+				}
+
+				break;
+			case 0:
 				System.out.print("Goodbye and have a nice day!!!");
 				loop = false;
 				break;
@@ -163,7 +178,8 @@ public class ATM24H {
 		System.out.println(" [6] Remove Account");
 		System.out.println(" [7] Earn Iterest");
 		System.out.println(" [8] Earn Bonus");
-		System.out.println(" [9] Exit");
+		System.out.println(" [9] WithDraw");
+		System.out.println(" [0] Exit");
 		System.out.println("================================");
 		System.out.println("Enter the desired option: ");
 		return scanner.nextInt();
