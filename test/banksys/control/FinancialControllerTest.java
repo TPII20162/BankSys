@@ -22,6 +22,26 @@ public class FinancialControllerTest {
 	}
 	
 
-	
+	@Test
+	public void testAddAccount(){
+		FinancialController financialController = new FinancialController(accountVector);
+		
+		try {
+			financialController.addAccount(ordinaryAccount1);
+			assertEquals("Era para ter adicionado 1 conta ",1,accountVector.numberOfAccounts());
+		} catch (BankTransactionException e) {
+			e.printStackTrace();
+		}
+			
+		try {
+			financialController.addAccount(ordinaryAccount2);
+			assertEquals("Era para ter adicionado 2 contas ",2,accountVector.numberOfAccounts());
+		} catch (BankTransactionException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
 
 }
