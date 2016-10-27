@@ -79,4 +79,14 @@ public class BankController {
 		}
 		this.commit();
 	}
+	
+	public boolean validateWithdraw(double amount){
+		
+		if(amount > 10){
+			if(amount % 2 == 0){
+				return true;
+			}
+		}
+		return false;
+	}
 }
