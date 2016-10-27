@@ -12,6 +12,7 @@ import banksys.persistence.AccountVector;
 public class FinancialControllerTest {
 	private AccountVector accountVector;
 	private OrdinaryAccount ordinaryAccount1, ordinaryAccount2;
+
 	
 	
 	@Before
@@ -19,11 +20,13 @@ public class FinancialControllerTest {
 		accountVector = new AccountVector();
 		ordinaryAccount1 = new OrdinaryAccount("123A");
 		ordinaryAccount2 = new OrdinaryAccount("123B");
+		
 	}
 	
 
 	@Test
 	public void testAddAccount(){
+		
 		FinancialController financialController = new FinancialController(accountVector);
 		
 		try {
@@ -40,8 +43,28 @@ public class FinancialControllerTest {
 			e.printStackTrace();
 		}
 		
-		
-		
 	}
 
+	
+	@Test
+	public void testRemoveAccount(){
+		FinancialController financialController = new FinancialController(accountVector);
+		try {
+			financialController.addAccount(ordinaryAccount1);
+			financialController.addAccount(ordinaryAccount2);
+		} catch (BankTransactionException e1) {
+		
+			e1.printStackTrace();
+		}
+		
+		try {
+			financialController.removeAccount("123A");
+			assertEquals("Era para ter removido uma conta restando 1",1, accountVector.numberOfAccounts());
+			
+			financialController.removeAccount("123B");
+			assertEquals("Era para ter removido uma conta restando 0", 0, accountVector.numberOfAccounts());
+		} catch (BankTransactionException e) {
+			e.printStackTrace();
+		}
+	}
 }
