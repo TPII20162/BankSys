@@ -12,7 +12,7 @@ import banksys.control.exception.BankTransactionException;
 import banksys.persistence.AccountVector;
 import banksys.persistence.exception.AccountNotFoundException;
 
-public class FinancialControllerTest {
+public class FacadeTest {
 	private AccountVector accountVector;
 	private OrdinaryAccount ordinaryAccount1, ordinaryAccount2;
 
@@ -30,7 +30,7 @@ public class FinancialControllerTest {
 	@Test
 	public void testAddAccount(){
 		
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		try {
 			financialController.addAccount(ordinaryAccount1);
@@ -51,7 +51,7 @@ public class FinancialControllerTest {
 	
 	@Test
 	public void testRemoveAccount(){
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		try {
 			financialController.addAccount(ordinaryAccount1);
 			financialController.addAccount(ordinaryAccount2);
@@ -73,7 +73,7 @@ public class FinancialControllerTest {
 	
 	@Test
 	public void testDoCredit(){
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		try {
 			financialController.addAccount(ordinaryAccount1);
@@ -92,7 +92,7 @@ public class FinancialControllerTest {
 	
 	@Test
 	public void testDoDebit(){
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		try {
 			financialController.addAccount(ordinaryAccount1);
@@ -113,7 +113,7 @@ public class FinancialControllerTest {
 	@Test
 	public void testGetBalance(){
 		
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		try {
 			financialController.addAccount(ordinaryAccount1);
@@ -133,7 +133,7 @@ public class FinancialControllerTest {
 	
 	@Test 
 	public void testDoTransfer(){
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		try {
 			financialController.addAccount(ordinaryAccount1);
@@ -157,14 +157,14 @@ public class FinancialControllerTest {
 	
 	@Test
 	public void testDoEarnBonus(){
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		SpecialAccount specialAccount = new SpecialAccount("123C");
 		
 		try {
 			financialController.addAccount(specialAccount);
 		
-			financialController.credit("123C", 50);
+			financialController.doCredit("123C", 50);
 			financialController.doEarnBonus("123C");
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
@@ -181,14 +181,14 @@ public class FinancialControllerTest {
 	@Test
 	public void testDoEarnInterest(){
 		
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		SavingsAccount savingsAccount = new SavingsAccount("123C");
 		
 		try {
 			financialController.addAccount(savingsAccount);
 		
-			financialController.credit("123C", 50);
+			financialController.doCredit("123C", 50);
 			financialController.doEarnInterest("123C");
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
@@ -204,11 +204,11 @@ public class FinancialControllerTest {
 	
 	@Test
 	public void testCredit(){
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		try {
 			financialController.addAccount(ordinaryAccount1);
-			financialController.credit("123A", 50);
+			financialController.doCredit("123A", 50);
 		} catch (BankTransactionException e) {
 			e.printStackTrace();
 		}
@@ -224,12 +224,12 @@ public class FinancialControllerTest {
 	
 	@Test
 	public void testDebit(){
-		FinancialController financialController = new FinancialController(accountVector);
+		Facade financialController = new Facade(accountVector);
 		
 		try {
 			financialController.addAccount(ordinaryAccount1);
-			financialController.credit("123A", 50);
-			financialController.debit("123A", 30);
+			financialController.doCredit("123A", 50);
+			financialController.doDebit("123A", 30);
 		} catch (BankTransactionException e) {
 	
 			e.printStackTrace();

@@ -14,12 +14,15 @@ import banksys.persistence.exception.FlushException;
 
 public class AccountService {
 	public enum AccountType {
-		ORDINARY,SAVINGS,SPECIAL,TAX
+		ORDINARY, SAVINGS, SPECIAL, TAX
 	}
+
 	private IAccountRepository repository;
-	public AccountService(IAccountRepository repository){
+
+	public AccountService(IAccountRepository repository) {
 		this.repository = repository;
 	}
+
 	public void addAccount(AbstractAccount account)
 			throws BankTransactionException {
 		try {
@@ -29,30 +32,36 @@ public class AccountService {
 		}
 		this.commit();
 	}
-	public void addAccount(String numero,AccountType tipo){
-		switch(tipo){
-		case ORDINARY: 
+
+	public void addAccount(String numero, AccountType tipo) {
+		switch (tipo) {
+		case ORDINARY:
 			try {
 				this.repository.create(new OrdinaryAccount(numero));
-			} catch (AccountCreationException e) {}
+			} catch (AccountCreationException e) {
+			}
 			break;
-		case SAVINGS :	
+		case SAVINGS:
 			try {
 				this.repository.create(new SavingsAccount(numero));
-			} catch (AccountCreationException e) {}
+			} catch (AccountCreationException e) {
+			}
 			break;
-		case SPECIAL :	
+		case SPECIAL:
 			try {
 				this.repository.create(new SpecialAccount(numero));
-			} catch (AccountCreationException e) {}
+			} catch (AccountCreationException e) {
+			}
 			break;
-		case TAX :	
+		case TAX:
 			try {
 				this.repository.create(new TaxAccount(numero));
-			} catch (AccountCreationException e) {}
-			break;	
+			} catch (AccountCreationException e) {
+			}
+			break;
 		}
 	}
+
 	public void removeAccount(String number) throws BankTransactionException {
 		try {
 			this.repository.delete(number);
@@ -61,6 +70,7 @@ public class AccountService {
 		}
 		this.commit();
 	}
+
 	public AbstractAccount retrieve(String number)
 			throws BankTransactionException {
 		AbstractAccount auxAccount;
@@ -71,11 +81,22 @@ public class AccountService {
 		}
 		return auxAccount;
 	}
+
 	public void commit() throws BankTransactionException {
 		try {
 			this.repository.flush();
 		} catch (FlushException fe) {
 			throw new BankTransactionException(fe);
 		}
+	}
+
+	public boolean validateWithdraw(double amount) {
+
+		if ((amount > 10) && (amount % 2 == 0)) {
+			return true;
+		}
+
+		return false;
+
 	}
 }

@@ -17,7 +17,7 @@ public class TransactionService {
 	public void setRepository(IAccountRepository repository) {
 		this.repository = repository;
 	}
-	
+
 	public void commit() throws BankTransactionException {
 		try {
 			this.repository.flush();
@@ -25,7 +25,7 @@ public class TransactionService {
 			throw new BankTransactionException(fe);
 		}
 	}
-	
+
 	public AbstractAccount retrieve(String number)
 			throws BankTransactionException {
 		AbstractAccount auxAccount;
@@ -36,8 +36,9 @@ public class TransactionService {
 		}
 		return auxAccount;
 	}
+
 	public void doEarnInterest(String number) throws BankTransactionException,
-	IncompatibleAccountException {
+			IncompatibleAccountException {
 		AbstractAccount auxAccount = retrieve(number);
 		if (auxAccount instanceof SavingsAccount) {
 			((SavingsAccount) auxAccount).earnInterest();
@@ -57,8 +58,9 @@ public class TransactionService {
 		}
 		this.commit();
 	}
-	
-	public void credit(String Number, double amount) throws BankTransactionException {
+
+	public void credit(String Number, double amount)
+			throws BankTransactionException {
 		AbstractAccount aux = this.retrieve(Number);
 		try {
 			aux.credit(amount);
@@ -68,7 +70,8 @@ public class TransactionService {
 
 	}
 
-	public void debit(String Number, double amount) throws  BankTransactionException{
+	public void debit(String Number, double amount)
+			throws BankTransactionException {
 		AbstractAccount aux = this.retrieve(Number);
 		try {
 			aux.debit(amount);
@@ -76,5 +79,5 @@ public class TransactionService {
 			throw new BankTransactionException(e);
 		}
 	}
-	
+
 }
