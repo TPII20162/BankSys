@@ -111,5 +111,12 @@ public class AccountVectorTest {
 			fail("Failed to retrieve account");
 		}
 	}
+	
+	@Test
+	public void testFailing() {
+	
+	    assertTrue(false);
+	
+	}
 
 }
