@@ -13,12 +13,12 @@ public class BankTransactionException extends Exception {
 	}
 
 	public BankTransactionException(Exception cause) {
-		super("Transaction not perfermed!");
+		super("Transaction not performed!");
 		this.cause = cause;
 	}
 
 	public String getMessage() {
-		String text = "Transaction not perfermed!\nCause: ";
+		String text = "Transaction not performed! \nCause: ";
 		if (cause != null) {
 			text += cause.getMessage();
 		} else {
