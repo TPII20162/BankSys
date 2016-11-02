@@ -12,7 +12,7 @@ import banksys.control.exception.BankTransactionException;
 import banksys.persistence.AccountVector;
 import banksys.persistence.exception.AccountNotFoundException;
 
-public class BankControllerTest {
+public class BankControllerFacadeTest {
 	private AccountVector ac;
 	private OrdinaryAccount oc,oc2;
 	private BankControllerFacade bc;
