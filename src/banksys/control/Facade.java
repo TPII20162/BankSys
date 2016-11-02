@@ -1,8 +1,6 @@
 package banksys.control;
 
 import banksys.account.AbstractAccount;
-import banksys.account.exception.InsufficientFundsException;
-import banksys.account.exception.NegativeAmountException;
 import banksys.control.exception.BankTransactionException;
 import banksys.control.exception.IncompatibleAccountException;
 import banksys.persistence.IAccountRepository;
