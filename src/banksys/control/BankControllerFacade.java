@@ -33,6 +33,10 @@ public class BankControllerFacade {
 		bankControllerTransaction.debit(number, amount);
 		bankControllerTransaction.commit();
 	}
+	
+	public boolean validateWithdraw(double amount) {
+		return bankControllerTransaction.validateWithdraw(amount);
+	}
 
 	public double getBalance(String number) throws BankTransactionException {
 		AbstractAccount conta = bankControllerTransaction.retrieve(number);
