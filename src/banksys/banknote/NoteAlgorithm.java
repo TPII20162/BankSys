@@ -1,5 +1,6 @@
 package banksys.banknote;
 
 public interface NoteAlgorithm {
-	public String GetNotes();
+	public String GetNotes(double value);
+	public String nameOfAlgoritm();
 }

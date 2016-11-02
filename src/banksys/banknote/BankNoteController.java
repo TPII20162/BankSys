@@ -3,16 +3,23 @@ package banksys.banknote;
 public class BankNoteController {
 
 	NoteAlgorithm noteAlgorithm;
+	String notesString = null;
 	
-	public String BankNoteController(){
-		noteAlgorithm = new HighNotesAlgorithm();
-		String notesString = noteAlgorithm.GetNotes();
-		
+	BankNoteController(NoteAlgorithm newAlgorithm, double value){
+		setAlgorithm(newAlgorithm);
+		notesString = noteAlgorithm.GetNotes(value);
+	}
+	
+	public String getNotesString(){
 		return notesString;
 	}
 	
-	public void SetAlgorithm(NoteAlgorithm newAlgorithm){
+	public void setAlgorithm(NoteAlgorithm newAlgorithm){
 		noteAlgorithm = newAlgorithm;
+	}
+	
+	public String getAlgorithmName(){
+		return noteAlgorithm.nameOfAlgoritm();
 	}
 		
 	
