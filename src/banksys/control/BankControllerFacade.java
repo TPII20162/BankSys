@@ -5,12 +5,12 @@ import banksys.control.exception.BankTransactionException;
 import banksys.control.exception.IncompatibleAccountException;
 import banksys.persistence.IAccountRepository;
 
-public class Facade {
+public class BankControllerFacade {
 
 	private AccountService bankControllerAccount;
 	private TransactionService bankControllerTransaction = new TransactionService();
 	
-	public Facade(IAccountRepository repository) {
+	public BankControllerFacade(IAccountRepository repository) {
 		bankControllerAccount = new AccountService(repository);
 		bankControllerTransaction.setRepository(repository);
 	}
