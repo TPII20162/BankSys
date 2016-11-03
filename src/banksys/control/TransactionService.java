@@ -82,7 +82,7 @@ public class TransactionService {
 	
 	public boolean validateWithdraw(double amount) {
 		
-		if ((amount > 10) && (amount % 2 == 0)) {
+		if ((amount >= 10) && (amount % 2 == 0)) {
 			return true;
 		}
 		
