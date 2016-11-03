@@ -78,6 +78,23 @@ public class BankControllerFacadeTest {
 			assertEquals("Era para ser igual", 20, ac.retrieve("123A").getBalance(),0.001);
 		} catch (AccountNotFoundException e) {}
 	}
+	
+	@Test
+	public void testValidateWithdraw() {
+		
+		assertTrue("O valor 20.0 deveria ser válido",
+				bc.validateWithdraw(20.0));
+		
+		assertTrue("O valor 10.0 deveria ser válido",
+				bc.validateWithdraw(10.0));
+		
+		assertFalse("O valor 5.0 deveria ser inválido",
+				bc.validateWithdraw(5.0));
+		
+		assertFalse("O valor 15.0 deveria ser inválido",
+				bc.validateWithdraw(15.0));
+		
+	}
 
 	@Test
 	public void testGetBalance() {
