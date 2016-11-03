@@ -16,9 +16,12 @@ public class Transaction {
 	/** Number of account that suffer this transaction*/
 	private String numberAccount;
 	
+	/** If the type of the transaction is a transfer than the field numberDestinationAccount must be filled*/
+	private String numberDestinationAccount;
+	
 	/** Type of transaction (debit, credit, transfer, bonus, interest).
 	 * 
-	 * 	Question: Devemos usar os nomes referentes a cada transação, ou melhor um valor inteiro para identificar cada uma?(Ganha em peformance)
+	 * 	Question: Devemos usar os nomes referentes a cada transaï¿½ï¿½o, ou melhor um valor inteiro para identificar cada uma?(Ganha em peformance)
 	 */
 	private String type;
 	
@@ -32,6 +35,16 @@ public class Transaction {
 		super();
 		this.id = id;
 		this.numberAccount = numberAccount;
+		this.type = type;
+		this.value = value;
+		this.date = date;
+	}
+	
+	public Transaction(String id, String numberAccount, String numberDestinationAccount, String type, double value, Date date) {
+		super();
+		this.id = id;
+		this.numberAccount = numberAccount;
+		this.numberDestinationAccount = numberDestinationAccount;
 		this.type = type;
 		this.value = value;
 		this.date = date;
@@ -75,6 +88,14 @@ public class Transaction {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getNumberDestinationAccount() {
+		return numberDestinationAccount;
+	}
+
+	public void setNumberDestinationAccount(String numberDestinationAccount) {
+		this.numberDestinationAccount = numberDestinationAccount;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package banksys.control;
 
+import java.util.Date;
+
 import banksys.account.AbstractAccount;
 import banksys.control.exception.BankTransactionException;
 import banksys.control.exception.IncompatibleAccountException;
@@ -51,6 +53,10 @@ public class BankControllerFacade {
 		bankControllerTransaction.credit(toNumber, amount);
 
 		bankControllerTransaction.commit();
+		
+		AbstractAccount auxFrom = this.retrieve(fromNumber);
+		auxFrom.newTransaction(toNumber, "transfer", amount, new Date(System.currentTimeMillis()));
+		
 	}
 
 	public void doEarnInterest(String number) throws BankTransactionException, IncompatibleAccountException {

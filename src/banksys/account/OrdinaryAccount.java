@@ -1,5 +1,7 @@
 package banksys.account;
 
+import java.util.Date;
+
 import banksys.account.exception.InsufficientFundsException;
 import banksys.account.exception.NegativeAmountException;
 
@@ -19,5 +21,7 @@ public class OrdinaryAccount extends AbstractAccount {
 		} else {
 			throw new NegativeAmountException(amount);
 		}
+		
+		newTransaction(null, "debit", amount, new Date(System.currentTimeMillis()));
 	}
 }
