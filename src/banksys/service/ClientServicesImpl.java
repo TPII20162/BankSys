@@ -44,7 +44,15 @@ public class ClientServicesImpl implements ClientServices {
 
 	@Override
 	public Double doRetrieveBalance(Client client, String accountNumber) throws ClientServiceException {
-		return null;
+		Double balance = null;
+		Account account;
+		try {
+			account = accountDAO.retrieve(accountNumber);
+			balance = account.getBalance();
+			return balance;
+		} catch (AccountNotFoundException e) {
+			throw new ClientServiceException(e);
+		}
 	}
 
 	@Override
