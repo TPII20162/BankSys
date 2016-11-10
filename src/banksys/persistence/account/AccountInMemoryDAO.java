@@ -1,17 +1,17 @@
 package banksys.persistence.account;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import banksys.model.Account;
-import banksys.model.Client;
 import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
 import banksys.persistence.account.exception.AccountNotFoundException;
 import banksys.persistence.exception.PersistenceException;
 
 public class AccountInMemoryDAO implements AccountDAO {
-
+	
 	private static List<Account> accounts = new ArrayList<Account>();
 
 	@Override
@@ -28,8 +28,15 @@ public class AccountInMemoryDAO implements AccountDAO {
 
 	@Override
 	public Account retrieve(String number) throws AccountNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		for(Iterator<Account> iterator = accounts.iterator(); iterator.hasNext(); ) {
+			Account account = iterator.next();
+			
+			if (account.getNumber().equals(number)) {
+				return account;
+			}
+		}
+		
+		throw new AccountNotFoundException("Account " + number + " not found.");
 	}
 	
 	@Override
