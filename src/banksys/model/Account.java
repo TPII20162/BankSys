@@ -1,62 +1,68 @@
-package banksys.account;
+package banksys.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+public class Account {
 
-import banksys.account.exception.InsufficientFundsException;
-import banksys.account.exception.NegativeAmountException;
-import banksys.util.Transaction;
+	private String number;
 
-public abstract class AbstractAccount {
+	private Double balance;
 
-	protected String number;
-	protected double balance;
-	protected List<Transaction> transactions;
+	private AccountType type;
 
-	public AbstractAccount(String number) {
+	private Double clientId;
+
+	public Account(String number, AccountType type) {
+		this(number, 0.0, type);
+	}
+
+	public Account(AccountType type) {
+		this("", 0.0, type, 0.0);
+	}
+
+	public Account(AccountType type, Double clientId) {
+		this("", 0.0, type, clientId);
+	}
+
+	public Account(String number, Double balance, AccountType type) {
+		this(number, balance, type, 0.0);
+	}
+
+	public Account(String number, Double balance, AccountType type, Double clientId) {
 		this.number = number;
-		this.balance = 0;
-		this.transactions = new ArrayList<Transaction>();
+		this.balance = balance;
+		this.type = type;
+		this.clientId = clientId;
 	}
-
-	public void credit(double amount) throws NegativeAmountException {
-		if (amount >= 0) {
-			this.balance += amount;
-			
-			newTransaction(null, "credit", amount, new Date(System.currentTimeMillis()));
-		} else {
-			throw new NegativeAmountException(amount);
-		}
-		
-		
-		
-	}
-	
-	public void newTransaction(String numDestinationAccount, String type, double value, Date date){
-		int num = transactions.size();
-		String id = String.valueOf(num+1);
-		
-		Transaction transaction;
-		
-		if(type.equals("transfer")){
-			 transaction = new Transaction(id,number, numDestinationAccount, type, value, date);
-			
-		}else{
-			 transaction = new Transaction(id, number, type, value, date);
-		}
-		
-		transactions.add(transaction);
-		
-	}
-
-	public abstract void debit(double amount) throws NegativeAmountException, InsufficientFundsException;
 
 	public String getNumber() {
 		return number;
 	}
 
-	public double getBalance() {
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public Double getBalance() {
 		return balance;
 	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
+	public AccountType getType() {
+		return type;
+	}
+
+	public void setType(AccountType type) {
+		this.type = type;
+	}
+
+	public Double getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Double clientId) {
+		this.clientId = clientId;
+	}
+
 }

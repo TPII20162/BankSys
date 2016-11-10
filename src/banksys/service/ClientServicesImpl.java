@@ -1,95 +1,55 @@
-package banksys.control;
+package banksys.service;
 
-import java.util.Date;
+import java.util.List;
 
-import banksys.account.AbstractAccount;
-import banksys.account.SavingsAccount;
-import banksys.account.SpecialAccount;
-import banksys.account.exception.InsufficientFundsException;
-import banksys.account.exception.NegativeAmountException;
-import banksys.control.exception.BankTransactionException;
-import banksys.control.exception.IncompatibleAccountException;
-import banksys.persistence.IAccountRepository;
-import banksys.persistence.exception.AccountNotFoundException;
-import banksys.persistence.exception.FlushException;
+import banksys.model.Account;
+import banksys.model.Client;
+import banksys.persistence.account.AccountDAO;
+import banksys.service.exception.ClientServiceException;
 
-public class TransactionService {
-	private IAccountRepository repository;
+public class ClientServicesImpl implements ClientServices {
 
-	public void setRepository(IAccountRepository repository) {
-		this.repository = repository;
+	private AccountDAO accountDAO;
+
+	public ClientServicesImpl(AccountDAO accountDAO) {
+		this.accountDAO = accountDAO;
 	}
 
-	public void commit() throws BankTransactionException {
-		try {
-			this.repository.flush();
-		} catch (FlushException fe) {
-			throw new BankTransactionException(fe);
-		}
-	}
-
-	public AbstractAccount retrieve(String number)
-			throws BankTransactionException {
-		AbstractAccount auxAccount;
-		try {
-			auxAccount = this.repository.retrieve(number);
-		} catch (AccountNotFoundException anfe) {
-			throw new BankTransactionException(anfe);
-		}
-		return auxAccount;
-	}
-
-	public void doEarnInterest(String number) throws BankTransactionException,
-			IncompatibleAccountException {
-		AbstractAccount auxAccount = retrieve(number);
-		if (auxAccount instanceof SavingsAccount) {
-			((SavingsAccount) auxAccount).earnInterest();
-		} else {
-			throw new IncompatibleAccountException(number);
-		}
-		this.commit();
-	}
-
-	public void doEarnBonus(String number) throws BankTransactionException,
-			IncompatibleAccountException {
-		AbstractAccount auxAccount = retrieve(number);
-		if (auxAccount instanceof SpecialAccount) {
-			((SpecialAccount) auxAccount).earnBonus();
-		} else {
-			throw new IncompatibleAccountException(number);
-		}
-		this.commit();
-	}
-
-	public void credit(String Number, double amount)
-			throws BankTransactionException {
-		AbstractAccount aux = this.retrieve(Number);
-		try {
-			aux.credit(amount);
-		} catch (NegativeAmountException e) {
-			throw new BankTransactionException(e);
-		}
+	@Override
+	public void doCredit(Client client, String accountNumber, Double amount) throws ClientServiceException {
+		// TODO Auto-generated method stub
 
 	}
 
-	public void debit(String Number, double amount)
-			throws BankTransactionException {
-		AbstractAccount aux = this.retrieve(Number);
-		try {
-			aux.debit(amount);
-		} catch (NegativeAmountException | InsufficientFundsException e) {
-			throw new BankTransactionException(e);
-		}
+	@Override
+	public void doDebit(Client client, String accountNumber, Double amount) throws ClientServiceException {
+		// TODO Auto-generated method stub
+
 	}
-	
-	public boolean validateWithdraw(double amount) {
-		
-		if ((amount >= 10) && (amount % 2 == 0)) {
-			return true;
-		}
-		
-		return false;
-		
+
+	@Override
+	public void doTransfer(Client client, String sourceAccountNumber, String targetAccountNumber, Double amount)
+			throws ClientServiceException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Client doLogin(String username, String password) throws ClientServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double doRetrieveBalance(Client client, String accountNumber) throws ClientServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> doRetrieveAllClientAccounts(Client client) throws ClientServiceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

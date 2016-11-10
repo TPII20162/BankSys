@@ -1,34 +1,28 @@
-package banksys.control.exception;
+package banksys.service.exception;
 
-public class BankTransactionException extends Exception {
+public class ClientServiceException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
-	private Exception cause;
-
-	private String message;
-
-	public BankTransactionException(String message) {
-		this.message = message;
+	public ClientServiceException() {
+		super();
 	}
 
-	public BankTransactionException(Exception cause) {
-		super("Transaction not performed!");
-		this.cause = cause;
+	public ClientServiceException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
-	public String getMessage() {
-		String text = "Transaction not performed! \nCause: ";
-		if (cause != null) {
-			text += cause.getMessage();
-		} else {
-			text += message;
-		}
-		return text;
+	public ClientServiceException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
-	public Exception getCause() {
-		return cause;
+	public ClientServiceException(String message) {
+		super(message);
+	}
+
+	public ClientServiceException(Throwable cause) {
+		super(cause);
 	}
 
 }
