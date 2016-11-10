@@ -6,6 +6,8 @@ import banksys.model.Account;
 import banksys.model.Client;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.exception.AccountNotFoundException;
+import banksys.persistence.client.ClientInMemoryDAO;
+import banksys.persistence.client.exception.ClientNotFoundException;
 import banksys.persistence.exception.PersistenceException;
 import banksys.service.exception.ClientServiceException;
 
@@ -38,8 +40,23 @@ public class ClientServicesImpl implements ClientServices {
 
 	@Override
 	public Client doLogin(String username, String password) throws ClientServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		
+
+		ClientInMemoryDAO clientInMemoryDAO = new ClientInMemoryDAO();
+		Client client = null;
+		
+		try {
+			client = clientInMemoryDAO.retrieveByUsernameAndPassword(username, password);
+		} catch (ClientNotFoundException e) {
+			System.out.println("Erro: "+e.getMessage());
+		}
+		
+		if(client != null){
+			return client;
+		}else{
+			return null;
+		}
+
 	}
 
 	@Override
