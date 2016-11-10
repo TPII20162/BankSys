@@ -5,7 +5,11 @@ import java.util.List;
 import banksys.model.Account;
 import banksys.model.Client;
 import banksys.persistence.account.AccountDAO;
+<<<<<<< HEAD
 import banksys.persistence.account.exception.AccountNotFoundException;
+=======
+import banksys.persistence.exception.PersistenceException;
+>>>>>>> 2397a1b91de0049355f25aa8944f11a059f2a3d2
 import banksys.service.exception.ClientServiceException;
 
 public class ClientServicesImpl implements ClientServices {
@@ -48,8 +52,11 @@ public class ClientServicesImpl implements ClientServices {
 
 	@Override
 	public List<Account> doRetrieveAllClientAccounts(Client client) throws ClientServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return accountDAO.findByClientId(client.getId());
+		} catch (PersistenceException e) {
+			throw new ClientServiceException(e);
+		}		
 	}
 
 }
