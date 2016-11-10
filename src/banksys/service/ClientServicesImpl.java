@@ -3,6 +3,7 @@ package banksys.service;
 import java.util.List;
 
 import banksys.model.Account;
+import banksys.model.AccountType;
 import banksys.model.Client;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.exception.AccountNotFoundException;
@@ -27,7 +28,39 @@ public class ClientServicesImpl implements ClientServices {
 
 	@Override
 	public void doDebit(Client client, String accountNumber, Double amount) throws ClientServiceException {
-		// TODO Auto-generated method stub
+		if(amount<=0){
+			throw new ClientServiceException("Error: The amount must be 0 or higher.");
+		}
+		
+		try {
+			
+			Account account = this.accountDAO.retrieve(accountNumber);
+			
+			//No caso do credito, qualquer cliente pode creditar em qualquer conta.
+			//Mas no debito apenas o dono da conta pode debitar
+			if(client.getId()==account.getClientId()){
+				
+				double currentBalance = account.getBalance();
+				
+				if(account.getType()==AccountType.TAX){
+					amount = amount + (amount * 0.001);
+				}
+				
+				if(currentBalance - amount >= 0 ){					
+					account.setBalance(currentBalance - amount);
+					
+					this.accountDAO.update(account);					
+				}else{
+					throw new ClientServiceException("Error: The balance after the Debit Operation must be 0 or higher.");
+				}
+				
+			}else{
+				throw new ClientServiceException("Error: Only the owner of the account can do Debits.");
+			}
+			
+		} catch (AccountNotFoundException e) {
+			throw new ClientServiceException("Error: Account of number "+accountNumber+ " not found.");
+		}
 
 	}
 
