@@ -5,9 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import banksys.model.Account;
+import banksys.model.Client;
 import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
 import banksys.persistence.account.exception.AccountNotFoundException;
+import banksys.persistence.client.ClientInMemoryDAO;
+import banksys.persistence.client.exception.ClientDeletionException;
 import banksys.persistence.exception.PersistenceException;
 
 public class AccountInMemoryDAO implements AccountDAO {
@@ -23,7 +26,21 @@ public class AccountInMemoryDAO implements AccountDAO {
 
 	@Override
 	public void delete(String number) throws AccountDeletionException {
-		// TODO Auto-generated method stub
+		Account acc = findByNumber(number);
+		if (acc != null) {
+			AccountInMemoryDAO.accounts.remove(acc);
+		} else {
+			throw new AccountDeletionException("Account number " + number + " not found!");
+		}
+	}
+
+	private Account findByNumber(String number) {
+		for (Account acc : AccountInMemoryDAO.accounts) {
+			if (acc.getNumber() == number) {
+				return acc;
+			}
+		}
+		return null;
 	}
 
 	@Override
