@@ -2,6 +2,8 @@ package banksys.persistence.account;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,18 +11,21 @@ import org.junit.Test;
 import banksys.model.Account;
 import banksys.model.AccountType;
 import banksys.persistence.account.exception.AccountCreationException;
+import banksys.persistence.account.exception.AccountDeletionException;
+import banksys.persistence.account.exception.AccountNotFoundException;
 import banksys.persistence.exception.PersistenceException;
 
 public class AccountInMemoryDAOTest {
 
 	private AccountInMemoryDAO aim;
 	private Account ac, ac2, ac3;
+	private ArrayList<Account> client1;
 	@Before
 	public void setUp() throws Exception {
 		aim = new AccountInMemoryDAO();
-		ac = new Account(AccountType.ORDINARY, 1.0);
-		ac2 = new Account(AccountType.SAVINGS, 1.0);
-		ac3 = new Account(AccountType.ORDINARY, 2.0);
+		ac = new Account("1", 0.0, AccountType.ORDINARY, 1.0);
+		ac2 = new Account("2", 0.0, AccountType.SAVINGS, 1.0);
+		ac3 = new Account("3", 0.0, AccountType.ORDINARY, 2.0);
 	}
 
 	@After
@@ -29,12 +34,42 @@ public class AccountInMemoryDAOTest {
 
 	@Test
 	public void testCreate() {
-		fail("Not yet implemented");
+		try {
+			aim.create(ac);
+			aim.create(ac2);
+			aim.create(ac3);
+		} catch (AccountCreationException e) {}
+		try {
+			assertEquals(ac, aim.retrieve("1"));
+			assertEquals(ac2, aim.retrieve("2"));
+			assertEquals(ac3, aim.retrieve("3"));
+		} catch (AccountNotFoundException e) {}
+	}
+	
+	@Test(expected = AccountCreationException.class)
+	public void testCreateAlreadyExists() throws AccountCreationException{
+		aim.create(ac);
+		aim.create(ac);
 	}
 
 	@Test
-	public void testDelete() {
-		fail("Not yet implemented");
+	public void testDelete() {		
+		try {
+			aim.create(ac);
+			aim.create(ac2);
+			aim.create(ac3);
+		} catch (AccountCreationException e) {}
+		try {
+			aim.delete("2");
+		} catch (AccountDeletionException e) {}
+		try {
+			assertEquals(2, aim.numberOfAccounts());
+		} catch (PersistenceException e) {}
+	}
+	
+	@Test(expected = AccountDeletionException.class)
+	public void testDeleteIsNull() throws AccountDeletionException{
+		aim.delete("2");
 	}
 
 	@Test
@@ -67,13 +102,27 @@ public class AccountInMemoryDAOTest {
 	}
 	
 	@Test
-	public void testNumberOfAccounts() {
+	public void testNumberOfAccounts()  {
 		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testFindByClientId() {
-		fail("Not yet implemented");
+		client1 = new ArrayList<Account>();
+		try {
+			aim.create(ac);
+			aim.create(ac2);
+			aim.create(ac3);
+		} catch (AccountCreationException e) {}
+		client1.add(ac);
+		client1.add(ac2);		
+		try {
+			assertEquals(client1, aim.findByClientId(1.0));
+		} catch (PersistenceException e) {}
 	}
 
+	@Test(expected = PersistenceException.class)
+	public void testFindByClientIdIsNull() throws PersistenceException{
+		aim.findByClientId(1.0);
+	}
 }
