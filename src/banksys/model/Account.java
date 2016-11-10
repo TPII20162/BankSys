@@ -12,6 +12,7 @@ public class Account {
 	
 	private Double bonus;
 
+
 	public Account(String number, AccountType type) {
 		this(number, 0.0, type);
 	}

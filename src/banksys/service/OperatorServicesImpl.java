@@ -80,7 +80,11 @@ public class OperatorServicesImpl implements OperatorServices {
 	
 	@Override
 	public void doEarnInterest(Operator operator, String accountNumber) throws OperationServiceException {
-		// TODO Auto-generated method stub
+		 try {
+			this.accountDAO.retrieve(accountNumber).setBalance(this.accountDAO.retrieve(accountNumber).getBalance()*0.001);
+		} catch (AccountNotFoundException e) {
+			throw new OperationServiceException("Error: Do Interest",e);
+		}
 		
 	}
 
@@ -94,6 +98,7 @@ public class OperatorServicesImpl implements OperatorServices {
 		} catch (AccountNotFoundException anfe) {
 			throw new OperationServiceException("Error: Invalid Account Number!", anfe);
 		}
+
 	}
 
 	@Override
