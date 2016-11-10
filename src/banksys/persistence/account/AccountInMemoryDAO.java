@@ -36,7 +36,7 @@ public class AccountInMemoryDAO implements AccountDAO {
 			}
 		}
 		
-		throw new AccountNotFoundException("Account not found.");
+		throw new AccountNotFoundException("Account " + number + " not found.");
 	}
 	
 	@Override
