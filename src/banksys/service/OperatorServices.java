@@ -18,7 +18,7 @@ public interface OperatorServices {
 	
 	public Operator doLogin(String username, String password) throws OperationServiceException;
 
-	public void doEarnInterest(Operator operator, String accountNumber) throws OperationServiceException;
+	public void doEarnInterest(Operator operator, String accountNumber,double amount) throws OperationServiceException;
 
 	public void doEarnBonus(Operator operator, String accountNumber) throws OperationServiceException;
 	

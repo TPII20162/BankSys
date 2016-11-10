@@ -5,6 +5,7 @@ import java.util.List;
 import banksys.model.Account;
 import banksys.model.Client;
 import banksys.persistence.account.AccountDAO;
+import banksys.persistence.account.exception.AccountNotFoundException;
 import banksys.service.exception.ClientServiceException;
 
 public class ClientServicesImpl implements ClientServices {
@@ -17,7 +18,7 @@ public class ClientServicesImpl implements ClientServices {
 
 	@Override
 	public void doCredit(Client client, String accountNumber, Double amount) throws ClientServiceException {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -42,7 +43,6 @@ public class ClientServicesImpl implements ClientServices {
 
 	@Override
 	public Double doRetrieveBalance(Client client, String accountNumber) throws ClientServiceException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

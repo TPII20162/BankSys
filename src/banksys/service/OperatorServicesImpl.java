@@ -80,13 +80,16 @@ public class OperatorServicesImpl implements OperatorServices {
 	
 	@Override
 	public void doEarnInterest(Operator operator, String accountNumber) throws OperationServiceException {
-		// TODO Auto-generated method stub
+		 try {
+			this.accountDAO.retrieve(accountNumber).setBalance(this.accountDAO.retrieve(accountNumber).getBalance()*0.001);
+		} catch (AccountNotFoundException e) {
+		}
 		
 	}
 
 	@Override
 	public void doEarnBonus(Operator operator, String accountNumber) throws OperationServiceException {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

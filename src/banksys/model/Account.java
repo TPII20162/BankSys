@@ -9,6 +9,7 @@ public class Account {
 	private AccountType type;
 
 	private Double clientId;
+	
 
 	public Account(String number, AccountType type) {
 		this(number, 0.0, type);
