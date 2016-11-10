@@ -10,12 +10,12 @@ import banksys.persistence.client.exception.ClientNotFoundException;
 import banksys.persistence.exception.PersistenceException;
 
 public class ClientInMemoryDAO implements ClientDAO {
-	private static double ACCOUNT_IDS = 1;
+	private static double CLIENT_IDS = 1;
 
-	private static List<Client> clients = new ArrayList<Client>();;
+	private static List<Client> clients = new ArrayList<Client>();
 
 	private static double nextId() {
-		return ACCOUNT_IDS++;
+		return CLIENT_IDS++;
 	}
 
 	public ClientInMemoryDAO() {

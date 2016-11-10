@@ -52,14 +52,17 @@ public class AccountInMemoryDAO implements AccountDAO {
 
 	@Override
 	public int numberOfAccounts() throws PersistenceException {
-		// TODO Auto-generated method stub
-		return 0;
+		return accounts.size();
 	}
 
 	@Override
 	public List<Account> findByClientId(Double clientId) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Account> accountsById = new ArrayList<Account>();
+		for(Account aux : accounts){
+			if(aux.getClientId() == clientId)
+				accountsById.add(aux);
+		}
+		return accountsById;
 	}
 
 }
