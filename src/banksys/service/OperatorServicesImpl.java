@@ -86,8 +86,14 @@ public class OperatorServicesImpl implements OperatorServices {
 
 	@Override
 	public void doEarnBonus(Operator operator, String accountNumber) throws OperationServiceException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Account ac = this.accountDAO.retrieve(accountNumber);
+			ac.setBalance(ac.getBalance() + ac.getBonus());
+			ac.setBonus(0.0);
+			this.accountDAO.update(ac);			
+		} catch (AccountNotFoundException anfe) {
+			throw new OperationServiceException("Error: Invalid Account Number!", anfe);
+		}
 	}
 
 	@Override

@@ -9,6 +9,8 @@ public class Account {
 	private AccountType type;
 
 	private Double clientId;
+	
+	private Double bonus;
 
 	public Account(String number, AccountType type) {
 		this(number, 0.0, type);
@@ -63,6 +65,14 @@ public class Account {
 
 	public void setClientId(Double clientId) {
 		this.clientId = clientId;
+	}
+
+	public Double getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(Double bonus) {
+		this.bonus = bonus;
 	}
 
 }
