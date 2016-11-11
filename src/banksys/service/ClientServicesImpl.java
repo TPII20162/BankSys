@@ -31,7 +31,8 @@ public class ClientServicesImpl implements ClientServices {
 			Account account = this.accountDAO.retrieve(accountNumber);
 			
 			if(account.getType()==AccountType.SPECIAL){
-				//atualizar bonus: bonus += (amount * 0.01);
+				double currentBonus = account.getBonus();
+				account.setBonus(currentBonus + (amount * 0.01));
 			}
 			
 			double currentBalance = account.getBalance();
