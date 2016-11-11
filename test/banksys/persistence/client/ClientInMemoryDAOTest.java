@@ -45,4 +45,11 @@ public class ClientInMemoryDAOTest {
 		
 		assertNotNull(clientDAO.retrieveByUsernameAndPassword("fulano1", "ful1ano"));
 	}
+	@Test
+	public void testnumberOfClients() throws PersistenceException{
+		Client client  = new Client((double)1,"Fulano de Tal", "fulano1", "ful1ano");
+		ClientInMemoryDAO clientDAO = new ClientInMemoryDAO();
+		clientDAO.create(client);
+		assertEquals(1,clientDAO.numberOfClients());
+	}
 }
