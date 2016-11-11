@@ -18,10 +18,10 @@ public class AccountInMemoryDAO implements AccountDAO {
 	private static List<Account> accounts = new ArrayList<Account>();
 
 	@Override
-	public Account create(Account account) throws AccountCreationException {
-		// TODO Auto-generated method stub
-		return null;
-
+	public Account create(Account account) throws AccountCreationException{
+		account.setNumber(Double.toString(nextId()));
+		AccountInMemoryDAO.accounts.add(account);
+		return account;
 	}
 
 	@Override
