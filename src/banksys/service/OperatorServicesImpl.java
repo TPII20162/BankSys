@@ -80,8 +80,10 @@ public class OperatorServicesImpl implements OperatorServices {
 	
 	@Override
 	public void doEarnInterest(Operator operator, String accountNumber) throws OperationServiceException {
-		 try {
-			this.accountDAO.retrieve(accountNumber).setBalance(this.accountDAO.retrieve(accountNumber).getBalance()*0.001);
+		Account ac; 
+		try {
+			ac = this.accountDAO.retrieve(accountNumber);
+			ac.setBalance(ac.getBalance()*0.001);
 		} catch (AccountNotFoundException e) {
 			throw new OperationServiceException("Error: Do Interest",e);
 		}
