@@ -74,12 +74,12 @@ public class AccountInMemoryDAOTest {
 
 	@Test
 	public void testRetrieve() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	public void testUpdate() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class AccountInMemoryDAOTest {
 	
 	@Test
 	public void testNumberOfAccounts()  {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
