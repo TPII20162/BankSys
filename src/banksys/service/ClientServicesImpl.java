@@ -89,8 +89,16 @@ public class ClientServicesImpl implements ClientServices {
 	@Override
 	public void doTransfer(Client client, String sourceAccountNumber, String targetAccountNumber, Double amount)
 			throws ClientServiceException {
-		// TODO Auto-generated method stub
-
+		
+		try {
+			this.accountDAO.retrieve(targetAccountNumber);
+			this.doDebit(client, sourceAccountNumber, amount);	
+			this.doCredit(client, targetAccountNumber, amount);		
+		}catch (AccountNotFoundException e) {
+			throw new ClientServiceException("Error: Account of number "+targetAccountNumber+ " not found.");
+		}catch (ClientServiceException e){
+			throw e;			
+		}
 	}
 
 	@Override
