@@ -22,6 +22,27 @@ public class ClientServicesImpl implements ClientServices {
 
 	@Override
 	public void doCredit(Client client, String accountNumber, Double amount) throws ClientServiceException {
+
+		if(amount<=0){
+			throw new ClientServiceException("Error: The amount must be 0 or higher.");
+		}
+			
+		try {
+			Account account = this.accountDAO.retrieve(accountNumber);
+			
+			if(account.getType()==AccountType.SPECIAL){
+				//atualizar bonus: bonus += (amount * 0.01);
+			}
+			
+			double currentBalance = account.getBalance();
+			
+			account.setBalance(currentBalance + amount);
+			
+			this.accountDAO.update(account);
+			
+		} catch (AccountNotFoundException e) {
+			throw new ClientServiceException("Error: Account of number "+accountNumber+ " not found.");
+		}
 		
 
 	}
