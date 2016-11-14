@@ -35,7 +35,20 @@ public class Account {
 		this.type = type;
 		this.clientId = clientId;
 	}
-
+	
+	@Override
+	public boolean equals(Object o) {
+		
+		if (!(o instanceof Account)) {
+			return false;
+		}
+		
+		Account account = (Account) o;
+		
+		return account.getNumber().equals(this.getNumber());
+		
+	}
+	
 	public String getNumber() {
 		return number;
 	}
