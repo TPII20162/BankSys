@@ -21,9 +21,19 @@ public class AccountInMemoryDAO implements AccountDAO {
 	
 	@Override
 	public Account create(Account account) throws AccountCreationException{
+		
+		if (accounts.contains(account)) {
+			
+			throw new AccountCreationException("Account already exists: " +
+					account.getNumber());
+			
+		}
+		
 		account.setNumber(nextId());
 		AccountInMemoryDAO.accounts.add(account);
+		
 		return account;
+		
 	}
 
 	@Override

@@ -105,7 +105,7 @@ public class AccountInMemoryDAOTest {
 	public void testNumberOfAccounts()  {
 		
 	}
-
+	
 	@Test
 	public void testFindByClientId() {
 		client1 = new ArrayList<Account>();
@@ -120,7 +120,7 @@ public class AccountInMemoryDAOTest {
 			assertEquals(client1, aim.findByClientId(1.0));
 		} catch (PersistenceException e) {}
 	}
-
+	
 	@Test(expected = PersistenceException.class)
 	public void testFindByClientIdIsNull() throws PersistenceException{
 		aim.findByClientId(1.0);
