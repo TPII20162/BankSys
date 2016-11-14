@@ -5,12 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import banksys.model.Account;
-import banksys.model.Client;
 import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
 import banksys.persistence.account.exception.AccountNotFoundException;
-import banksys.persistence.client.ClientInMemoryDAO;
-import banksys.persistence.client.exception.ClientDeletionException;
 import banksys.persistence.exception.PersistenceException;
 
 public class AccountInMemoryDAO implements AccountDAO {
