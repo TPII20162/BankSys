@@ -15,11 +15,16 @@ import banksys.persistence.exception.PersistenceException;
 
 public class AccountInMemoryDAO implements AccountDAO {
 	
+	private static String ACCOUNT_IDS = "1";
 	private static List<Account> accounts = new ArrayList<Account>();
 
+	private static String nextId() {
+		return String.valueOf(Integer.parseInt(ACCOUNT_IDS) + 1);
+	}
+	
 	@Override
 	public Account create(Account account) throws AccountCreationException{
-		account.setNumber(Double.toString(nextId()));
+		account.setNumber(nextId());
 		AccountInMemoryDAO.accounts.add(account);
 		return account;
 	}
