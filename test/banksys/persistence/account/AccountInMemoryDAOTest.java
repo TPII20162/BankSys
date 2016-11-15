@@ -3,6 +3,7 @@ package banksys.persistence.account;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,16 +21,39 @@ public class AccountInMemoryDAOTest {
 	private AccountInMemoryDAO aim;
 	private Account ac, ac2, ac3;
 	private ArrayList<Account> client1;
+	
 	@Before
 	public void setUp() throws Exception {
+		
 		aim = new AccountInMemoryDAO();
+		
 		ac = new Account(AccountType.ORDINARY, 1.0);
 		ac2 = new Account(AccountType.SAVINGS, 1.0);
 		ac3 = new Account(AccountType.ORDINARY, 2.0);
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		
+		int numberOfAccounts = aim.numberOfAccounts();
+		
+		if (numberOfAccounts > 0) {
+		
+			String[] accountNumbers = new String[numberOfAccounts];
+			
+			List<Account> createdAccounts = aim.list();
+			
+			for (int i = 0; i < numberOfAccounts; i++) {
+				accountNumbers[i] = createdAccounts.get(i).getNumber();
+			}
+			
+			for (String accountNumber : accountNumbers) {
+				aim.delete(accountNumber);
+			}
+		
+		}
+		
 	}
 
 	@Test
@@ -101,7 +125,7 @@ public class AccountInMemoryDAOTest {
 	}
 	
 	@Test
-	public void testNumberOfAccounts()  {
+	public void testNumberOfAccounts() {
 		
 	}
 	
