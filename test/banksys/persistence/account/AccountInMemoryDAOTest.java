@@ -2,7 +2,6 @@ package banksys.persistence.account;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -11,16 +10,17 @@ import org.junit.Test;
 
 import banksys.model.Account;
 import banksys.model.AccountType;
+import banksys.model.Client;
 import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
 import banksys.persistence.account.exception.AccountNotFoundException;
+import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.exception.PersistenceException;
 
 public class AccountInMemoryDAOTest {
 
 	private AccountInMemoryDAO aim;
 	private Account ac, ac2, ac3;
-	private ArrayList<Account> client1;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -130,18 +130,25 @@ public class AccountInMemoryDAOTest {
 	}
 	
 	@Test
-	public void testFindByClientId() {
-		client1 = new ArrayList<Account>();
-		try {
-			aim.create(ac);
-			aim.create(ac2);
-			aim.create(ac3);
-		} catch (AccountCreationException e) {}
-		client1.add(ac);
-		client1.add(ac2);		
-		try {
-			assertEquals(client1, aim.findByClientId(1.0));
-		} catch (PersistenceException e) {}
+	public void testFindByClientId() throws PersistenceException {
+		
+		Client client = new Client("José da Silva", "jsilva", "12345");
+		
+		ClientInMemoryDAO cim = new ClientInMemoryDAO();
+		cim.create(client);
+		
+		aim.create(ac);
+		aim.create(ac2);
+		aim.create(ac3);
+		
+		ac.setClientId(client.getId());
+		ac2.setClientId(client.getId());
+		
+		List<Account> clientAccounts = aim.findByClientId(client.getId());
+		
+		assertEquals(ac, clientAccounts.get(0));
+		assertEquals(ac2, clientAccounts.get(0));
+		
 	}
 	
 	@Test(expected = PersistenceException.class)
