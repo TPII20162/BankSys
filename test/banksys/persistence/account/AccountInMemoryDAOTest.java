@@ -77,18 +77,18 @@ public class AccountInMemoryDAOTest {
 	}
 
 	@Test
-	public void testDelete() {		
-		try {
-			aim.create(ac);
-			aim.create(ac2);
-			aim.create(ac3);
-		} catch (AccountCreationException e) {}
-		try {
-			aim.delete("2");
-		} catch (AccountDeletionException e) {}
-		try {
-			assertEquals(2, aim.numberOfAccounts());
-		} catch (PersistenceException e) {}
+	public void testDelete() throws PersistenceException {
+		
+		aim.create(ac);
+		aim.create(ac2);
+		aim.create(ac3);
+		
+		assertEquals("Deveriam existir três contas", 3, aim.numberOfAccounts());
+		
+		aim.delete(ac.getNumber());
+		
+		assertEquals("Deveriam existir duas contas", 2, aim.numberOfAccounts());
+		
 	}
 	
 	@Test(expected = AccountDeletionException.class)
