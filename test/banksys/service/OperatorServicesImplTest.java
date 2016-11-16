@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import banksys.model.Account;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.AccountInMemoryDAO;
 import banksys.persistence.client.ClientDAO;
