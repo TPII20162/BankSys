@@ -37,6 +37,7 @@ public class OperatorServicesImplTest {
 
 	@Test
 	public void testDoNewClientAndDoRetrieveClient() {
+		
 		Operator op = new Operator("Operator","operator","operator");
 
 		try {
