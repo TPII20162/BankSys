@@ -76,7 +76,7 @@ public class OperatorServicesImplTest {
 	}
 
 	@Test
-	public void testDoNewAccount() {
+	public void testDoNewAccountAndDoRetrieveAccount() {
 		AccountType act = AccountType.SPECIAL;
 		Operator op = new Operator("Operator","operator","operator");
 
@@ -93,11 +93,6 @@ public class OperatorServicesImplTest {
 
 	@Test
 	public void testDoCloseAccount() {
-		
-	}
-
-	@Test
-	public void testDoRetrieveAccount() {
 		
 	}
 
