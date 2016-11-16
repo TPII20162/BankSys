@@ -5,51 +5,97 @@ import banksys.persistence.client.exception.ClientCreationException;
 import banksys.persistence.exception.PersistenceException;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ClientInMemoryDAOTest {
-
-	@Test
-	public void createTest() throws ClientCreationException{
+	
+	private ClientInMemoryDAO cim;
+	
+	@Before
+	public void setUp() {
+		cim = new ClientInMemoryDAO();
+	}
+	
+	@After
+	public void tearDown() throws PersistenceException {
 		
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1", "ful1ano");
+		int numberOfClients = cim.numberOfClients();
 		
-		ClientInMemoryDAO clientDAO = new ClientInMemoryDAO();
+		if (numberOfClients > 0) {
 		
-		Client clientReceive = clientDAO.create(client);
+			Double[] clientIds = new Double[numberOfClients];
+			
+			List<Client> createdClients = cim.list();
+			
+			for (int i = 0; i < numberOfClients; i++) {
+				clientIds[i] = createdClients.get(i).getId();
+			}
+			
+			for (Double clientId : clientIds) {
+				cim.delete(clientId);
+			}
 		
-		assertEquals(client, clientReceive);
+		}
+		
 	}
 	
 	@Test
-	public void deleteTest() throws PersistenceException{
+	public void testCreate() throws ClientCreationException {
 		
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1", "ful1ano");
+		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+				"ful1ano");
+		
+		Client clientReceive = cim.create(client);
+		
+		assertEquals(client, clientReceive);
+		
+	}
+	
+	@Test
+	public void testDelete() throws PersistenceException {
+		
+		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+				"ful1ano");
+		
 		int sizeBefore;
 		
-		ClientInMemoryDAO clientDAO = new ClientInMemoryDAO();
+		cim.create(client);
 		
-		clientDAO.create(client);
+		sizeBefore = cim.numberOfClients();
 		
-		sizeBefore = clientDAO.numberOfClients();
+		cim.delete(client.getId());
 		
-		clientDAO.delete(client.getId());
+		assertEquals(sizeBefore-1, cim.numberOfClients());
 		
-		assertEquals(sizeBefore-1, clientDAO.numberOfClients());
 	}
+	
 	@Test
-	public void testRetriveByUsernameAndPassword() throws PersistenceException{
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1", "ful1ano");
-		ClientInMemoryDAO clientDAO = new ClientInMemoryDAO();
-		clientDAO.create(client);
+	public void testRetriveByUsernameAndPassword() throws PersistenceException {
 		
-		assertNotNull(clientDAO.retrieveByUsernameAndPassword("fulano1", "ful1ano"));
+		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+				"ful1ano");
+		
+		cim.create(client);
+		
+		assertNotNull(cim.retrieveByUsernameAndPassword("fulano1", "ful1ano"));
+		
 	}
+	
 	@Test
-	public void testnumberOfClients() throws PersistenceException{
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1", "ful1ano");
-		ClientInMemoryDAO clientDAO = new ClientInMemoryDAO();
-		clientDAO.create(client);
-		assertEquals(1,clientDAO.numberOfClients());
+	public void testNumberOfClients() throws PersistenceException {
+		
+		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+				"ful1ano");
+		
+		cim.create(client);
+		
+		assertEquals(1,cim.numberOfClients());
+		
 	}
+	
 }
