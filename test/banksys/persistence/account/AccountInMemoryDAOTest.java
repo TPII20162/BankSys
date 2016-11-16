@@ -151,8 +151,13 @@ public class AccountInMemoryDAOTest {
 		
 	}
 	
-	@Test(expected = PersistenceException.class)
-	public void testFindByClientIdIsNull() throws PersistenceException{
-		aim.findByClientId(1.0);
+	public void testFindByClientIdWhenClientDontExists()
+			throws PersistenceException{
+		
+		List<Account> clientAccounts = aim.findByClientId(1.0);
+		
+		assertTrue("Não deveria existir nenhuma conta para um cliente" +
+				" inexistente", clientAccounts.isEmpty());
+		
 	}
 }
