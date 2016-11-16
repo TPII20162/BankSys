@@ -13,6 +13,7 @@ import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.operator.OperatorDAO;
 import banksys.persistence.operator.OperatorInMemoryDAO;
 import banksys.service.exception.OperationServiceException;
+import banksys.model.Account;
 import banksys.model.AccountType;
 import banksys.model.Operator;
 
@@ -76,7 +77,18 @@ public class OperatorServicesImplTest {
 
 	@Test
 	public void testDoNewAccount() {
-		
+		AccountType act = AccountType.SPECIAL;
+		Operator op = new Operator("Operator","operator","operator");
+
+		try {
+			operatorServices.doNewClient(op, "Client", "Client", "client");
+			Account accExpected = operatorServices.doNewAccount(op,2.0,act);
+			Account accActual = operatorServices.doRetrieveAccount(op, accExpected.getNumber());
+			assertEquals("Error: Account Not Find", accExpected.getNumber(), accActual.getNumber());
+
+		} catch (OperationServiceException e) {
+			fail("Error: Account Not Find");
+		}
 	}
 
 	@Test
