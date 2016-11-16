@@ -15,6 +15,7 @@ import banksys.persistence.operator.OperatorInMemoryDAO;
 import banksys.service.exception.OperationServiceException;
 import banksys.model.Account;
 import banksys.model.AccountType;
+import banksys.model.Client;
 import banksys.model.Operator;
 
 public class OperatorServicesImplTest {
@@ -35,17 +36,21 @@ public class OperatorServicesImplTest {
 	}
 
 	@Test
-	public void testDoNewClient() {
-		
+	public void testDoNewClientAndDoRetrieveClient() {
+		Operator op = new Operator("Operator","operator","operator");
+
+		try {
+			Client cliExpected = operatorServices.doNewClient(op, "FullName", "username", "password");
+			Client cliRetrieve = operatorServices.doRetrieveClient(op, cliExpected.getId());
+			assertEquals("Error: Client Not Find", cliExpected.getId(), cliRetrieve.getId());
+
+		} catch (OperationServiceException e) {
+			fail("Error: Client Not Find");
+		}
 	}
 
 	@Test
 	public void testDoDeleteClient() {
-		
-	}
-
-	@Test
-	public void testDoRetrieveClient() {
 		
 	}
 
