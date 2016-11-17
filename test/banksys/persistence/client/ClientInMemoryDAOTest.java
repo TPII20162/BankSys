@@ -89,7 +89,7 @@ public class ClientInMemoryDAOTest {
 	@Test
 	public void testNumberOfClients() throws PersistenceException {
 		
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+		Client client  = new Client("Fulano de Tal", "fulano1",
 				"ful1ano");
 		
 		cim.create(client);
