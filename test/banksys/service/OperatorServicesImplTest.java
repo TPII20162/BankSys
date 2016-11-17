@@ -92,7 +92,7 @@ public class OperatorServicesImplTest {
 		Operator op = new Operator("Operator","operator","operator");
 
 		try {
-			Client cli = operatorServices.doNewClient(op, "fullName", "username", "password");
+			Client cli = operatorServices.doNewClient(op, "fullName", "username", "password","password");
 			Account accExpected = operatorServices.doNewAccount(op, cli.getId(), act);
 			Account accActual = operatorServices.doRetrieveAccount(op, accExpected.getNumber());
 			assertEquals("Error: Account Not Find", accExpected.getNumber(), accActual.getNumber());
@@ -108,7 +108,7 @@ public class OperatorServicesImplTest {
 		AccountType act = AccountType.ORDINARY;
 		Operator op = new Operator("Operator","operator","operator");
 		
-		Client cli = operatorServices.doNewClient(op, "fullName", "username", "password");
+		Client cli = operatorServices.doNewClient(op, "fullName", "username", "password","password");
 		Account acc = operatorServices.doNewAccount(op, cli.getId(), act);
 		operatorServices.doCloseAccount(op, acc.getNumber());
 		operatorServices.doRetrieveAccount(op, acc.getNumber());
