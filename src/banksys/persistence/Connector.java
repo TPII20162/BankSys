@@ -2,15 +2,31 @@ package banksys.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Connector { 
     
 	private static Connection connection = null;
 	private final static String DATABASE_URL = "jdbc:sqlite:banksys.db";
-        
+ 
+	/*
+	 * Since we only need one connection to the database
+	 * we will check if one connection is already open before connecting
+	 */
 	public static Connection connect()
+	{
+		if(connection == null)
+		{
+			connection = connectToSQLite();
+		}
+		
+		return connection;
+	}
+	
+	/*
+	 * Private method so only this class has direct access to open the database connection
+	 */
+	private static Connection connectToSQLite()
 	{
 		try{
 			connection = DriverManager.getConnection(DATABASE_URL);
