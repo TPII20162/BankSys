@@ -35,14 +35,22 @@ public class OperatorServicesImpl implements OperatorServices {
 	}
 
 	@Override
-	public Client doNewClient(Operator operator, String fullName, String username, String password)
+	public Client doNewClient(Operator operator, String fullName,
+			String username, String password, String password2)
 			throws OperationServiceException {
-		Client client = new Client(fullName, username, password);
-		try {
-			return this.clientDAO.create(client);
-		} catch (ClientCreationException cce) {
-			throw new OperationServiceException(cce);
+
+		if (password.equals(password2)) {
+			Client client = new Client(fullName, username, password);
+			try {
+				return this.clientDAO.create(client);
+			} catch (ClientCreationException cce) {
+				throw new OperationServiceException(cce);
+			}
+
+		} else {
+			throw new OperationServiceException("Password and confirmation don't match.");
 		}
+
 	}
 
 	@Override

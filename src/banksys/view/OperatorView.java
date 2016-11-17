@@ -41,9 +41,11 @@ public class OperatorView {
 				String username = scanner.next();
 				System.out.print("Enter the client password: ");
 				String password = scanner.next();
-
+				System.out.print("Enter the password confirmation: ");
+				String password2 = scanner.next();
+				
 				try {
-					Client client = operatorServices.doNewClient(operator, fullName, username, password);
+					Client client = operatorServices.doNewClient(operator, fullName, username, password, password2);
 					System.out.println("Client creation successfully! Client ID number: " + client.getId());
 				} catch (OperationServiceException ose) {
 					System.out.println(ose.getMessage());

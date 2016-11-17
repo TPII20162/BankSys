@@ -10,7 +10,7 @@ import banksys.service.exception.OperationServiceException;
 
 public interface OperatorServices {
 
-	public Client doNewClient(Operator operator, String fullName, String username, String password) throws OperationServiceException;
+	public Client doNewClient(Operator operator, String fullName, String username, String password, String password2) throws OperationServiceException;
 
 	public void doDeleteClient(Operator operator, Double clientId) throws OperationServiceException;
 
