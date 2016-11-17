@@ -76,12 +76,14 @@ public class AccountInMemoryDAO implements AccountDAO {
 
 	@Override
 	public List<Account> list() throws PersistenceException {
-		if(AccountInMemoryDAO.accounts.size()==0){
+		
+		if (AccountInMemoryDAO.accounts.size() == 0) {
 			throw new PersistenceException("Not existing account list!");
 		}
 		
 		List<Account> listAccounts = new ArrayList<Account>();
-		Collections.copy(listAccounts, AccountInMemoryDAO.accounts);
+		
+		listAccounts.addAll(accounts);
 		
 		return listAccounts;
 	}
