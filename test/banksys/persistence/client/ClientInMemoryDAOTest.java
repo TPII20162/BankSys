@@ -98,4 +98,15 @@ public class ClientInMemoryDAOTest {
 		
 	}
 	
+	@Test(expected = ClientCreationException.class)
+	public void testCreateDuplicatedClients() throws ClientCreationException {
+		
+		Client client1 = new Client(1.0, "full name", "user name", "password");
+		Client client2 = new Client(1.0, "full name", "user name", "password");
+		
+		cim.create(client1);
+		cim.create(client2);
+		
+	}
+	
 }
