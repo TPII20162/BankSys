@@ -78,7 +78,8 @@ public class AccountInMemoryDAO implements AccountDAO {
 		if(AccountInMemoryDAO.accounts.size()==0){
 			throw new PersistenceException("Not existing account list!");
 		}
-		return AccountInMemoryDAO.accounts;
+		List<Account> listAccounts = AccountInMemoryDAO.accounts;
+		return listAccounts;
 	}
 
 	@Override
