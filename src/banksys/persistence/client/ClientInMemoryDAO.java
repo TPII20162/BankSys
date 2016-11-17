@@ -23,6 +23,12 @@ public class ClientInMemoryDAO implements ClientDAO {
 
 	@Override
 	public Client create(Client client) throws ClientCreationException {
+		
+		for (Client someClient : clients){
+			if (someClient.getId() == client.getId()){
+				throw new ClientCreationException("Error: Duplicate client of ID" + client.getId() + "!");
+			}
+		}
 		client.setId(nextId());
 		ClientInMemoryDAO.clients.add(client);
 		return client;
