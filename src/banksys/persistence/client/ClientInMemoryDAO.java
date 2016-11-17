@@ -1,6 +1,8 @@
 package banksys.persistence.client;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import banksys.model.Client;
@@ -69,7 +71,10 @@ public class ClientInMemoryDAO implements ClientDAO {
 		if (ClientInMemoryDAO.clients.size() == 0) {
 			throw new PersistenceException("No existing client list!");
 		}
-		return ClientInMemoryDAO.clients;
+		List<Client> list = new ArrayList<>();
+		list.addAll(ClientInMemoryDAO.clients);
+
+		return list;
 	}
 
 	@Override
