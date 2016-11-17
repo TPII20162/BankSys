@@ -35,8 +35,7 @@ public class OperatorServicesImpl implements OperatorServices {
 	}
 
 	@Override
-	public Client doNewClient(Operator operator, String fullName,
-			String username, String password, String password2)
+	public Client doNewClient(Operator operator, String fullName, String username, String password, String password2)
 			throws OperationServiceException {
 
 		if (password.equals(password2)) {

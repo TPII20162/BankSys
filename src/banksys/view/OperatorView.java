@@ -35,8 +35,9 @@ public class OperatorView {
 		while (loop) {
 			switch (mainMenu()) {
 			case 1:
+				scanner.nextLine();
 				System.out.print("Enter the client full name: ");
-				String fullName = scanner.next();
+				String fullName = scanner.nextLine();
 				System.out.print("Enter the client username: ");
 				String username = scanner.next();
 				System.out.print("Enter the client password: ");
@@ -46,9 +47,9 @@ public class OperatorView {
 				
 				try {
 					Client client = operatorServices.doNewClient(operator, fullName, username, password, password2);
-					System.out.println("Client creation successfully! Client ID number: " + client.getId());
+					System.out.printf("\nClient creation successfully! Client ID number: %.0f\n\n", client.getId());
 				} catch (OperationServiceException ose) {
-					System.out.println(ose.getMessage());
+					System.out.println("\n" + ose.getMessage() +"\n");
 				}
 				break;
 
