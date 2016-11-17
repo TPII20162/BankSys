@@ -75,6 +75,19 @@ public class ClientInMemoryDAOTest {
 	}
 	
 	@Test
+	public void testRetrieve() throws PersistenceException {
+		
+		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+				"ful1ano");
+		
+		cim.create(client);
+		
+		Client clientReceived = cim.retrieve(client.getId());
+		assertEquals(client.getId(), clientReceived.getId());
+		
+	}
+	
+	@Test
 	public void testRetriveByUsernameAndPassword() throws PersistenceException {
 		
 		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
