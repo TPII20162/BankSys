@@ -1,6 +1,7 @@
 package banksys.persistence.account;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -78,7 +79,10 @@ public class AccountInMemoryDAO implements AccountDAO {
 		if(AccountInMemoryDAO.accounts.size()==0){
 			throw new PersistenceException("Not existing account list!");
 		}
-		List<Account> listAccounts = AccountInMemoryDAO.accounts;
+		
+		List<Account> listAccounts = new ArrayList<Account>();
+		Collections.copy(listAccounts, AccountInMemoryDAO.accounts);
+		
 		return listAccounts;
 	}
 
