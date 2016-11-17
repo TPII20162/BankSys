@@ -27,17 +27,11 @@ public class ClientInMemoryDAOTest {
 		int numberOfClients = cim.numberOfClients();
 		
 		if (numberOfClients > 0) {
-		
-			Double[] clientIds = new Double[numberOfClients];
 			
 			List<Client> createdClients = cim.list();
 			
-			for (int i = 0; i < numberOfClients; i++) {
-				clientIds[i] = createdClients.get(i).getId();
-			}
-			
-			for (Double clientId : clientIds) {
-				cim.delete(clientId);
+			for (Client client : createdClients) {
+				cim.delete(client.getId());
 			}
 		
 		}
