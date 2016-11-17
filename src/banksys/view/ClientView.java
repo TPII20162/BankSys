@@ -25,9 +25,11 @@ public class ClientView {
 				client = clientServices.doLogin(username, password);
 			} catch (ClientServiceException cse) {
 				System.out.println(cse.getMessage());
+				System.out.println("Returning to main menu...\n");
+				return;
 			}
 		}
-		System.out.println("Wellcome client " + client.getFullName());
+		System.out.println("Welcome client " + client.getFullName());
 
 		while (loop) {
 			switch (mainMenu()) {

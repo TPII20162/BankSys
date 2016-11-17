@@ -26,14 +26,16 @@ public class OperatorView {
 				operator = operatorServices.doLogin(username, password);
 			} catch (OperationServiceException ose) {
 				System.out.println(ose.getMessage());
+				System.out.println("Returning to main menu...\n");
+				return;
 			}
 		}
-		System.out.println("Wellcome operator " + operator.getFullName());
+		System.out.println("Welcome operator " + operator.getFullName());
 
 		while (loop) {
 			switch (mainMenu()) {
 			case 1:
-				System.out.print("Enter the clien full name: ");
+				System.out.print("Enter the client full name: ");
 				String fullName = scanner.next();
 				System.out.print("Enter the client username: ");
 				String username = scanner.next();
