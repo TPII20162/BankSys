@@ -40,16 +40,10 @@ public class AccountInMemoryDAOTest {
 		
 		if (numberOfAccounts > 0) {
 		
-			String[] accountNumbers = new String[numberOfAccounts];
-			
 			List<Account> createdAccounts = aim.list();
 			
-			for (int i = 0; i < numberOfAccounts; i++) {
-				accountNumbers[i] = createdAccounts.get(i).getNumber();
-			}
-			
-			for (String accountNumber : accountNumbers) {
-				aim.delete(accountNumber);
+			for (Account account : createdAccounts) {
+				aim.delete(account.getNumber());
 			}
 		
 		}
