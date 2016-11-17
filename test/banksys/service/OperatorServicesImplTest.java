@@ -91,7 +91,6 @@ public class OperatorServicesImplTest {
 		Operator op = new Operator("Operator","operator","operator");
 
 		try {
-			operatorServices.doNewClient(op, "Client", "Client", "client");
 			Account accExpected = operatorServices.doNewAccount(op,2.0,act);
 			Account accActual = operatorServices.doRetrieveAccount(op, accExpected.getNumber());
 			assertEquals("Error: Account Not Find", accExpected.getNumber(), accActual.getNumber());
@@ -101,9 +100,15 @@ public class OperatorServicesImplTest {
 		}
 	}
 
-	@Test
-	public void testDoCloseAccount() {
+	@Test(expected=OperationServiceException.class)
+	public void testDoCloseAccount() throws OperationServiceException{
+
+		AccountType act = AccountType.ORDINARY;
+		Operator op = new Operator("Operator","operator","operator");
 		
+		Account acc = operatorServices.doNewAccount(op, 101.0, act);
+		operatorServices.doCloseAccount(op, acc.getNumber());
+		operatorServices.doRetrieveAccount(op, acc.getNumber());
 	}
 
 	@Test
