@@ -69,12 +69,6 @@ public class AccountInMemoryDAOTest {
 			assertEquals(ac3, aim.retrieve("3"));
 		} catch (AccountNotFoundException e) {}
 	}
-	
-	@Test(expected = AccountCreationException.class)
-	public void testCreateAlreadyExists() throws AccountCreationException{
-		aim.create(ac);
-		aim.create(ac);
-	}
 
 	@Test
 	public void testDelete() throws PersistenceException {
