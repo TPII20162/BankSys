@@ -50,9 +50,13 @@ public class OperatorServicesImplTest {
 		}
 	}
 
-	@Test
-	public void testDoDeleteClient() {
-		
+	@Test(expected=OperationServiceException.class)
+	public void testDoDeleteClient() throws OperationServiceException{
+
+		Operator op = new Operator("Operator","operator","operator");
+		Client cli = operatorServices.doNewClient(op, "FullName", "username", "password");
+		operatorServices.doDeleteClient(op, cli.getId());
+		operatorServices.doRetrieveClient(op, cli.getId());
 	}
 
 	@Test
