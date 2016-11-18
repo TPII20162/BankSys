@@ -35,10 +35,10 @@ public class OperatorServicesImpl implements OperatorServices {
 	}
 
 	@Override
-	public Client doNewClient(Operator operator, String fullName, String username, String password, String password2)
+	public Client doNewClient(Operator operator, String fullName, String username, String password, String confirmationPassword)
 			throws OperationServiceException {
 
-		if (password.equals(password2)) {
+		if (password.equals(confirmationPassword)) {
 			Client client = new Client(fullName, username, password);
 			try {
 				return this.clientDAO.create(client);
