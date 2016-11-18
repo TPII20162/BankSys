@@ -23,12 +23,17 @@ public class OperatorServicesImplTest {
 	private AccountDAO accountDAO;
 	private OperatorDAO operatorDAO;
 	private OperatorServicesImpl operatorServices;
+	private Operator operator;
+	
 	@Before
 	public void setUp() throws Exception {
 		clientDAO = new ClientInMemoryDAO();
 		accountDAO = new AccountInMemoryDAO();
 		operatorDAO = new OperatorInMemoryDAO();
 		operatorServices = new OperatorServicesImpl(clientDAO, accountDAO, operatorDAO);
+		
+		operator = new Operator("Admin", "adm", "789");
+		operatorDAO.create(operator);
 	}
 
 	@After
@@ -61,6 +66,16 @@ public class OperatorServicesImplTest {
 
 	@Test
 	public void testDoLogin() {
+		
+		Operator opTest = null;
+		
+		try {
+			opTest = operatorServices.doLogin("adm", "789");
+		} catch (OperationServiceException e) {
+			fail();
+		}
+		
+		assertEquals(opTest.getUsername(), "adm");
 		
 	}
 
