@@ -76,6 +76,7 @@ public class OperatorServicesImplTest {
 		}
 		
 		assertEquals(opTest.getUsername(), "adm");
+		assertEquals(opTest.getPassword(), "789");
 		
 	}
 
