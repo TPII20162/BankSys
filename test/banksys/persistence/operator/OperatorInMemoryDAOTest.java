@@ -11,7 +11,7 @@ import banksys.persistence.operator.exception.OperatorNotFoundException;
 public class OperatorInMemoryDAOTest {
 	
 	@Test
-	public void testCreate(){
+	public void testCreateAndRetrive(){
 		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
 		Operator op = new Operator("Operator", "operator", "operator");
 		try{
