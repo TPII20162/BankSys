@@ -11,9 +11,7 @@ import org.junit.Test;
 import banksys.model.Account;
 import banksys.model.AccountType;
 import banksys.model.Client;
-import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
-import banksys.persistence.account.exception.AccountNotFoundException;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.exception.PersistenceException;
 
