@@ -1,8 +1,6 @@
 package banksys.persistence.client;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import banksys.model.Client;
