@@ -19,31 +19,24 @@ import banksys.persistence.exception.PersistenceException;
 
 public class AccountInMemoryDAOTest {
 
-	private AccountInMemoryDAO aim;
-	private Account ac, ac2, ac3;
+	private AccountInMemoryDAO accountInMemory;
 	
 	@Before
 	public void setUp() throws Exception {
-		
-		aim = new AccountInMemoryDAO();
-		
-		ac = new Account(AccountType.ORDINARY, 1.0);
-		ac2 = new Account(AccountType.SAVINGS, 1.0);
-		ac3 = new Account(AccountType.ORDINARY, 2.0);
-		
+		accountInMemory = new AccountInMemoryDAO();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		
-		int numberOfAccounts = aim.numberOfAccounts();
+		int numberOfAccounts = accountInMemory.numberOfAccounts();
 		
 		if (numberOfAccounts > 0) {
 		
-			List<Account> createdAccounts = aim.list();
+			List<Account> createdAccounts = accountInMemory.list();
 			
 			for (Account account : createdAccounts) {
-				aim.delete(account.getNumber());
+				accountInMemory.delete(account.getNumber());
 			}
 		
 		}
@@ -51,70 +44,91 @@ public class AccountInMemoryDAOTest {
 	}
 
 	@Test
-	public void testCreate() {
-		try {
-			aim.create(ac);
-			aim.create(ac2);
-			aim.create(ac3);
-		} catch (AccountCreationException e) {}
-		try {
-			assertEquals(ac, aim.retrieve("1"));
-			assertEquals(ac2, aim.retrieve("2"));
-			assertEquals(ac3, aim.retrieve("3"));
-		} catch (AccountNotFoundException e) {}
+	public void testCreate() throws PersistenceException {
+		
+		Account account1 = new Account(AccountType.ORDINARY);
+		Account account2 = new Account(AccountType.ORDINARY);
+		Account account3 = new Account(AccountType.ORDINARY);
+		
+		accountInMemory.create(account1);
+		accountInMemory.create(account2);
+		accountInMemory.create(account3);
+		
+		assertTrue("account1 deveria estar contida na lista de contas",
+				accountInMemory.list().contains(account1));
+		
+		assertTrue("account2 deveria estar contida na lista de contas",
+				accountInMemory.list().contains(account2));
+		
+		assertTrue("account3 deveria estar contida na lista de contas",
+				accountInMemory.list().contains(account3));
+		
 	}
 
 	@Test
 	public void testDelete() throws PersistenceException {
 		
-		aim.create(ac);
-		aim.create(ac2);
-		aim.create(ac3);
+		Account account1 = new Account(AccountType.ORDINARY);
+		Account account2 = new Account(AccountType.ORDINARY);
 		
-		assertEquals("Deveriam existir três contas", 3, aim.numberOfAccounts());
+		accountInMemory.create(account1);
+		accountInMemory.create(account2);
 		
-		aim.delete(ac.getNumber());
+		assertEquals("Deveriam existir duas contas", 2,
+				accountInMemory.numberOfAccounts());
 		
-		assertEquals("Deveriam existir duas contas", 2, aim.numberOfAccounts());
+		accountInMemory.delete(account1.getNumber());
+		
+		assertEquals("Deveria existir apenas uma conta", 1,
+				accountInMemory.numberOfAccounts());
 		
 	}
 	
 	@Test(expected = AccountDeletionException.class)
 	public void testDeleteIsNull() throws AccountDeletionException{
-		aim.delete("2");
+		accountInMemory.delete("2");
 	}
 
 	@Test
 	public void testRetrieve() {
-		
+		// TODO
 	}
 
 	@Test
 	public void testUpdate() {
-		
+		// TODO
 	}
 
 	@Test
 	public void testList() throws PersistenceException {
 		
-		aim.create(ac);
-		aim.create(ac2);
-		aim.create(ac3);
+		Account account1 = new Account(AccountType.ORDINARY);
+		Account account2 = new Account(AccountType.ORDINARY);
+		Account account3 = new Account(AccountType.ORDINARY);
 		
-		assertEquals(aim.list().get(0), ac);
-		assertEquals(aim.list().get(1), ac2);
-		assertEquals(aim.list().get(2), ac3);
+		accountInMemory.create(account1);
+		accountInMemory.create(account2);
+		accountInMemory.create(account3);
+		
+		assertEquals("As contas não são a mesma", account1,
+				accountInMemory.list().get(0));
+		
+		assertEquals("As contas não são a mesma", account2,
+				accountInMemory.list().get(1));
+		
+		assertEquals("As contas não são a mesma", account3,
+				accountInMemory.list().get(2));
 		
 	}
 	
 	@Test(expected = PersistenceException.class)
 	public void testListIsNull() throws PersistenceException{
-		aim.list();
+		accountInMemory.list();
 	}
 	
 	@Test
 	public void testNumberOfAccounts() {
-		
+		// TODO
 	}
 	
 	@Test
@@ -123,29 +137,37 @@ public class AccountInMemoryDAOTest {
 		Client client = new Client("José da Silva", "jsilva", "12345");
 		
 		ClientInMemoryDAO cim = new ClientInMemoryDAO();
+		
 		cim.create(client);
 		
-		aim.create(ac);
-		aim.create(ac2);
-		aim.create(ac3);
+		Account account1 = new Account(AccountType.ORDINARY);
+		Account account2 = new Account(AccountType.ORDINARY);
 		
-		ac.setClientId(client.getId());
-		ac2.setClientId(client.getId());
+		accountInMemory.create(account1);
+		accountInMemory.create(account2);
 		
-		List<Account> clientAccounts = aim.findByClientId(client.getId());
+		account1.setClientId(client.getId());
+		account2.setClientId(client.getId());
 		
-		assertEquals(ac, clientAccounts.get(0));
-		assertEquals(ac2, clientAccounts.get(0));
+		List<Account> clientAccounts =
+				accountInMemory.findByClientId(client.getId());
+		
+		assertEquals("As contas deveriam ser a mesma", account1,
+				clientAccounts.get(0));
+		
+		assertEquals("As contas deveriam ser a mesma", account2,
+				clientAccounts.get(1));
 		
 	}
 	
 	public void testFindByClientIdWhenClientDontExists()
 			throws PersistenceException{
 		
-		List<Account> clientAccounts = aim.findByClientId(1.0);
+		List<Account> clientAccounts = accountInMemory.findByClientId(1.0);
 		
 		assertTrue("Não deveria existir nenhuma conta para um cliente" +
 				" inexistente", clientAccounts.isEmpty());
 		
 	}
+	
 }
