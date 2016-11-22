@@ -16,12 +16,12 @@ public class OperatorView {
 	{	
 		Operator operator = null;
 
-		operator = doLogIn(operatorServices);
+		operator = doLogInMenu(operatorServices);
 		
 		mainMenu(operatorServices, operator);
 	}
 
-	private static Operator doLogIn(OperatorServices operatorServices)
+	private static Operator doLogInMenu(OperatorServices operatorServices)
 	{
 		Operator operator = null;
 		
