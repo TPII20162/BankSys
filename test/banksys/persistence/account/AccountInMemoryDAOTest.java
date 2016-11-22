@@ -103,7 +103,15 @@ public class AccountInMemoryDAOTest {
 				account, accountInMemory.retrieve(accountNumber));
 		
 	}
-
+	
+	@Test(expected = AccountNotFoundException.class)
+	public void testRetrieveWithNonExistentAccountNumber() throws
+			AccountNotFoundException {
+		
+		accountInMemory.retrieve("-1");
+		
+	}
+	
 	@Test
 	public void testUpdate() {
 		// TODO
