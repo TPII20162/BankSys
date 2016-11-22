@@ -2,12 +2,15 @@ package banksys.service;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.AccountInMemoryDAO;
+import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.client.ClientDAO;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.operator.OperatorDAO;
@@ -131,7 +134,20 @@ public class OperatorServicesImplTest {
 	}
 
 	@Test
-	public void testFindAccountByClientId() {
+	public void testFindAccountByClientId() throws OperationServiceException, AccountCreationException {
+		Operator operator = new Operator("Operator","operator","operator");
+		
+		Client client = operatorServices.doNewClient(operator, "fullName", "username", "password","password");
+		Account createdAccount = operatorServices.doNewAccount(operator, client.getId(), AccountType.ORDINARY);
+		
+		List<Account> listOfAccounts = operatorServices.findAccountByClientId(operator, client.getId());
+		assertEquals("There is no account", 1, listOfAccounts.size());
+		
+		
+		Account foundAccount = listOfAccounts.get(0);
+		assertNotNull(foundAccount);
+		
+		assertEquals(foundAccount.getClientId(), createdAccount.getClientId());
 		
 	}
 
