@@ -11,7 +11,9 @@ import org.junit.Test;
 import banksys.model.Account;
 import banksys.model.AccountType;
 import banksys.model.Client;
+import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
+import banksys.persistence.account.exception.AccountNotFoundException;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.exception.PersistenceException;
 
@@ -88,8 +90,18 @@ public class AccountInMemoryDAOTest {
 	}
 
 	@Test
-	public void testRetrieve() {
-		// TODO
+	public void testRetrieve() throws AccountCreationException,
+			AccountNotFoundException {
+		
+		Account account = new Account(AccountType.ORDINARY);
+		
+		accountInMemory.create(account);
+		
+		String accountNumber = account.getNumber();
+		
+		assertEquals("A conta recuperada é diferente da conta criada",
+				account, accountInMemory.retrieve(accountNumber));
+		
 	}
 
 	@Test
