@@ -114,7 +114,8 @@ public class OperatorServicesImpl implements OperatorServices {
 	public Account doNewAccount(Operator operator, Double clientId, AccountType accountType)
 			throws OperationServiceException {
 		try {
-			return this.accountDAO.create(new Account(accountType));
+			Account account = new Account(accountType, clientId);
+			return this.accountDAO.create(account);
 		} catch (AccountCreationException ace) {
 			throw new OperationServiceException("Error: Account creation problem!", ace);
 		}
