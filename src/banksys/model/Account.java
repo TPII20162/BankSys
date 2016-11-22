@@ -8,7 +8,7 @@ public class Account {
 
 	private AccountType type;
 
-	private Double clientId;
+	private double clientId;
 	
 	private double bonus;
 

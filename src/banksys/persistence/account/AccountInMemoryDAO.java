@@ -99,7 +99,7 @@ public class AccountInMemoryDAO implements AccountDAO {
 	public List<Account> findByClientId(Double clientId) throws PersistenceException {
 		ArrayList<Account> accountsById = new ArrayList<Account>();
 		for(Account aux : accounts){
-			if(aux.getClientId() == clientId)
+			if(aux.getClientId() == clientId.doubleValue())
 				accountsById.add(aux);
 		}
 		return accountsById;

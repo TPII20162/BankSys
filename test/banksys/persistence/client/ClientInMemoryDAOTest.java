@@ -94,6 +94,31 @@ public class ClientInMemoryDAOTest {
 		
 	}
 	
+	@Test
+	public void testList() throws PersistenceException {
+		
+		Client client1 = new Client((double)1,"Fulano de Tal", "fulano1",
+				"fulano");
+		Client client2 = new Client((double)2,"Sicrano de Tal", "sicrano1",
+				"sicrano");
+		Client client3 = new Client((double)3,"Beltrano de Tal", "beltrano1",
+				"beltrano");
+		
+		cim.create(client1);
+		cim.create(client2);
+		cim.create(client3);
+		
+		List<Client> lista = cim.list();
+		
+		
+		assertEquals(client1,lista.get(0));
+		
+		assertEquals(client2,lista.get(1));
+		
+		assertEquals(client3,lista.get(2));
+		
+	}
+	
 	@Ignore
 	public void testNumberOfClients() throws PersistenceException {
 		

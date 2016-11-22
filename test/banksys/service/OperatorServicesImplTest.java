@@ -149,7 +149,7 @@ public class OperatorServicesImplTest {
 
 	@Test
 	public void testFindAccountByClientId() throws OperationServiceException, AccountCreationException {
-		/*
+		
 		Operator operator = new Operator("Operator","operator","operator");
 		
 		Client client = operatorServices.doNewClient(operator, "fullName", "username", "password","password");
@@ -163,7 +163,7 @@ public class OperatorServicesImplTest {
 		assertNotNull(foundAccount);
 		
 		assertEquals(foundAccount.getClientId(), createdAccount.getClientId());
-		*/
+		
 	}
 
 }
