@@ -15,6 +15,7 @@ import banksys.persistence.client.ClientDAO;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.operator.OperatorDAO;
 import banksys.persistence.operator.OperatorInMemoryDAO;
+import banksys.service.exception.ClientServiceException;
 import banksys.service.exception.OperationServiceException;
 import banksys.model.Account;
 import banksys.model.AccountType;
@@ -26,6 +27,7 @@ public class OperatorServicesImplTest {
 	private AccountDAO accountDAO;
 	private OperatorDAO operatorDAO;
 	private OperatorServicesImpl operatorServices;
+	private ClientServicesImpl clientServices;
 	private Operator operator;
 	
 	@Before
@@ -34,6 +36,7 @@ public class OperatorServicesImplTest {
 		accountDAO = new AccountInMemoryDAO();
 		operatorDAO = new OperatorInMemoryDAO();
 		operatorServices = new OperatorServicesImpl(clientDAO, accountDAO, operatorDAO);
+		clientServices = new ClientServicesImpl(accountDAO);
 		
 		operator = new Operator("Admin", "adm", "789");
 		operatorDAO.create(operator);
@@ -100,8 +103,19 @@ public class OperatorServicesImplTest {
 }
 
 	@Test
-	public void testDoEarnBonus() {
+	public void testDoEarnBonus() throws OperationServiceException, ClientServiceException {
+		double creditValue = 200.00;
 		
+		Client client = operatorServices.doNewClient(operator, "fullname", "username", "password","password");
+		Account specialAccount = operatorServices.doNewAccount(operator, client.getId(), AccountType.SPECIAL);
+		
+		
+		clientServices.doCredit(client, specialAccount.getNumber(), creditValue);
+		assertEquals("Incorrect bonus after credit", creditValue * 0.01, specialAccount.getBonus(), 0.00001);
+	
+		operatorServices.doEarnBonus(operator, specialAccount.getNumber());
+		assertEquals("Incorrect value for Earn Bonus", creditValue+(creditValue*0.01), specialAccount.getBalance(), 0.00001);
+	
 	}
 
 	@Test

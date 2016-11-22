@@ -105,6 +105,21 @@ public class AccountInMemoryDAOTest {
 		
 	}
 	
+	@Test
+	public void testRetrieveSpecialAccount() throws AccountCreationException,
+			AccountNotFoundException {
+		
+		Account account = new Account(AccountType.SPECIAL);
+		
+		accountInMemory.create(account);
+		
+		String accountNumber = account.getNumber();
+		
+		assertEquals("A conta recuperada é diferente da conta criada",
+				account, accountInMemory.retrieve(accountNumber));
+		
+	}
+	
 	@Test(expected = AccountNotFoundException.class)
 	public void testRetrieveWithNonExistentAccountNumber() throws
 			AccountNotFoundException {

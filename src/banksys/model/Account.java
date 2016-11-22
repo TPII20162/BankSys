@@ -10,7 +10,7 @@ public class Account {
 
 	private Double clientId;
 	
-	private Double bonus;
+	private double bonus;
 
 
 	public Account(String number, AccountType type) {
