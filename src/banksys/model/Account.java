@@ -9,6 +9,9 @@ public class Account {
 	private AccountType type;
 
 	private Double clientId;
+	
+	private double bonus;
+
 
 	public Account(String number, AccountType type) {
 		this(number, 0.0, type);
@@ -32,7 +35,20 @@ public class Account {
 		this.type = type;
 		this.clientId = clientId;
 	}
-
+	
+	@Override
+	public boolean equals(Object o) {
+		
+		if (!(o instanceof Account)) {
+			return false;
+		}
+		
+		Account account = (Account) o;
+		
+		return account.getNumber().equals(this.getNumber());
+		
+	}
+	
 	public String getNumber() {
 		return number;
 	}
@@ -63,6 +79,14 @@ public class Account {
 
 	public void setClientId(Double clientId) {
 		this.clientId = clientId;
+	}
+
+	public Double getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(Double bonus) {
+		this.bonus = bonus;
 	}
 
 }

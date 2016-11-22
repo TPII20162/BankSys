@@ -35,14 +35,21 @@ public class OperatorServicesImpl implements OperatorServices {
 	}
 
 	@Override
-	public Client doNewClient(Operator operator, String fullName, String username, String password)
+	public Client doNewClient(Operator operator, String fullName, String username, String password, String confirmationPassword)
 			throws OperationServiceException {
-		Client client = new Client(fullName, username, password);
-		try {
-			return this.clientDAO.create(client);
-		} catch (ClientCreationException cce) {
-			throw new OperationServiceException(cce);
+
+		if (password.equals(confirmationPassword)) {
+			Client client = new Client(fullName, username, password);
+			try {
+				return this.clientDAO.create(client);
+			} catch (ClientCreationException cce) {
+				throw new OperationServiceException(cce);
+			}
+
+		} else {
+			throw new OperationServiceException("Password and confirmation don't match.");
 		}
+
 	}
 
 	@Override
@@ -80,14 +87,27 @@ public class OperatorServicesImpl implements OperatorServices {
 	
 	@Override
 	public void doEarnInterest(Operator operator, String accountNumber) throws OperationServiceException {
-		// TODO Auto-generated method stub
+		Account ac; 
+		try {
+			ac = this.accountDAO.retrieve(accountNumber);
+			ac.setBalance(ac.getBalance()*0.001);
+		} catch (AccountNotFoundException e) {
+			throw new OperationServiceException("Error: Do Interest",e);
+		}
 		
 	}
 
 	@Override
 	public void doEarnBonus(Operator operator, String accountNumber) throws OperationServiceException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Account ac = this.accountDAO.retrieve(accountNumber);
+			ac.setBalance(ac.getBalance() + ac.getBonus());
+			ac.setBonus(0.0);
+			this.accountDAO.update(ac);			
+		} catch (AccountNotFoundException anfe) {
+			throw new OperationServiceException("Error: Invalid Account Number!", anfe);
+		}
+
 	}
 
 	@Override

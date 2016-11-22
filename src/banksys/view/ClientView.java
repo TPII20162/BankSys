@@ -30,9 +30,10 @@ public class ClientView {
 			catch (ClientServiceException cse) 
 			{
 				System.out.println(cse.getMessage());
+				System.out.println("Returning to main menu...\n");
+				return null;
 			}
-		}
-		
+		}		
 		System.out.println("Wellcome client " + client.getFullName());
 		
 		return client;
@@ -118,7 +119,8 @@ public class ClientView {
 	{		
 		Client client = doLogIn(clientServices);
 		
-		mainMenu(clientServices, client);
+		if (client != null)
+			mainMenu(clientServices, client);
 	}
 
 	private static void mainMenu(ClientServices services, Client client) 

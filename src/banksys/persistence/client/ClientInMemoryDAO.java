@@ -10,12 +10,12 @@ import banksys.persistence.client.exception.ClientNotFoundException;
 import banksys.persistence.exception.PersistenceException;
 
 public class ClientInMemoryDAO implements ClientDAO {
-	private static double ACCOUNT_IDS = 1;
+	private static double CLIENT_IDS = 1;
 
-	private static List<Client> clients = new ArrayList<Client>();;
+	private static List<Client> clients = new ArrayList<Client>();
 
 	private static double nextId() {
-		return ACCOUNT_IDS++;
+		return CLIENT_IDS++;
 	}
 
 	public ClientInMemoryDAO() {
@@ -23,6 +23,12 @@ public class ClientInMemoryDAO implements ClientDAO {
 
 	@Override
 	public Client create(Client client) throws ClientCreationException {
+		
+		for (Client someClient : clients){
+			if (someClient.getId() == client.getId()){
+				throw new ClientCreationException("Error: Duplicate client of ID" + client.getId() + "!");
+			}
+		}
 		client.setId(nextId());
 		ClientInMemoryDAO.clients.add(client);
 		return client;
@@ -63,7 +69,10 @@ public class ClientInMemoryDAO implements ClientDAO {
 		if (ClientInMemoryDAO.clients.size() == 0) {
 			throw new PersistenceException("No existing client list!");
 		}
-		return ClientInMemoryDAO.clients;
+		List<Client> list = new ArrayList<>();
+		list.addAll(ClientInMemoryDAO.clients);
+
+		return list;
 	}
 
 	@Override

@@ -14,11 +14,10 @@ public class OperatorView {
 	
 	public static void run(OperatorServices operatorServices) 
 	{	
-		Operator operator = null;
-
-		operator = doLogInMenu(operatorServices);
+		Operator operator = doLogInMenu(operatorServices);
 		
-		mainMenu(operatorServices, operator);
+		if (operator != null)
+			mainMenu(operatorServices, operator);
 	}
 
 	private static Operator doLogInMenu(OperatorServices operatorServices)
@@ -39,6 +38,8 @@ public class OperatorView {
 			catch (OperationServiceException ose) 
 			{
 				System.out.println(ose.getMessage());
+				System.out.println("Returning to main menu...\n");
+				return null;
 			}
 		}
 		
@@ -92,10 +93,12 @@ public class OperatorView {
 		String username = scanner.next();
 		System.out.print("Enter the client password: ");
 		String password = scanner.next();
+		System.out.print("Confirm client password: ");
+		String conf_pass = scanner.next();
 
 		try 
 		{
-			Client client = operatorServices.doNewClient(operator, fullName, username, password);
+			Client client = operatorServices.doNewClient(operator, fullName, username, password, conf_pass);
 			System.out.println("Client creation successfully! Client ID number: " + client.getId());
 		}
 		catch (OperationServiceException ose) 
