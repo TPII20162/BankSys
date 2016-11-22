@@ -99,9 +99,9 @@ public class ClientInMemoryDAOTest {
 		
 		Client client1 = new Client((double)1,"Fulano de Tal", "fulano1",
 				"fulano");
-		Client client2 = new Client((double)1,"Sicrano de Tal", "sicrano1",
+		Client client2 = new Client((double)2,"Sicrano de Tal", "sicrano1",
 				"sicrano");
-		Client client3 = new Client((double)1,"Beltrano de Tal", "beltrano1",
+		Client client3 = new Client((double)3,"Beltrano de Tal", "beltrano1",
 				"beltrano");
 		
 		cim.create(client1);
