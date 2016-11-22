@@ -66,7 +66,8 @@ public class AccountInMemoryDAOTest {
 	}
 
 	@Test
-	public void testDelete() throws PersistenceException {
+	public void testDeleteAndVerifyNumberOfAccounts()
+			throws PersistenceException {
 		
 		Account account1 = new Account(AccountType.ORDINARY);
 		Account account2 = new Account(AccountType.ORDINARY);
@@ -142,11 +143,6 @@ public class AccountInMemoryDAOTest {
 	@Test(expected = PersistenceException.class)
 	public void testListIsNull() throws PersistenceException{
 		accountInMemory.list();
-	}
-	
-	@Test
-	public void testNumberOfAccounts() {
-		// TODO
 	}
 	
 	@Test
