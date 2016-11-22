@@ -60,7 +60,7 @@ public class ClientServicesImpl implements ClientServices {
 			
 			//No caso do credito, qualquer cliente pode creditar em qualquer conta.
 			//Mas no debito apenas o dono da conta pode debitar
-			if(client.getId()==account.getClientId()){
+			if(client.getId().equals(account.getClientId())){
 				
 				double currentBalance = account.getBalance();
 				

@@ -74,56 +74,30 @@ public class ClientServicesImplTest {
 	}
 	
 	@Test
-	public  void doCreditTest(){
+	public  void doCreditTest() throws OperationServiceException, ClientServiceException{
 		
-		AccountInMemoryDAO accountInMemoryDAO = new AccountInMemoryDAO();
-		try {
-			accountInMemoryDAO.create(new Account("123",AccountType.ORDINARY));
-		} catch (AccountCreationException e) {
-			System.out.println("Erro: "+e.getMessage());
-		}
+		Client createdClient = operatorServices.doNewClient(operator, "FullName", "username", "password", "password");
+		Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(),
+				AccountType.ORDINARY);
 		
-		ClientServicesImpl clientServicesImpl = new ClientServicesImpl(accountInMemoryDAO);
-		Client client = new Client(123.,"teste", "teste", "teste");
+		clientServices.doCredit(new Client("FullName", "username", "password"), createdOrdinaryAccount.getNumber(), 50.);
 		
-		try {
-			clientServicesImpl.doCredit(client, "123", 50.0);
-		} catch (ClientServiceException e) {
-			System.out.println("Erro: "+e.getMessage());
-		}
-		
-		try {
-			assertEquals("Erro valor diferente", 00, 50.,clientServicesImpl.doRetrieveBalance(client, "123"));
-		} catch (ClientServiceException e) {
-			System.out.println("Erro: "+e.getMessage());
-		}
+		assertEquals(00,50,createdOrdinaryAccount.getBalance());
 		
 	}
 	
 	
 	@Test
-	public void doDebitTest(){
-		AccountInMemoryDAO accountInMemoryDAO = new AccountInMemoryDAO();
-		try {
-			accountInMemoryDAO.create(new Account("123",AccountType.ORDINARY));
-		} catch (AccountCreationException e) {
-			System.out.println("Erro: "+e.getMessage());
-		}
+	public void doDebitTest() throws OperationServiceException, ClientServiceException{
+		Client createdClient = operatorServices.doNewClient(operator, "FullName", "username", "password", "password");
+		Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(),
+				AccountType.ORDINARY);
+	
+		clientServices.doCredit(new Client("FullName", "username", "password"), createdOrdinaryAccount.getNumber(), 50.);
 		
-		ClientServicesImpl clientServicesImpl = new ClientServicesImpl(accountInMemoryDAO);
-		Client client = new Client(123.,"teste", "teste", "teste");
+		clientServices.doDebit(createdClient, createdOrdinaryAccount.getNumber(), 30.);
 		
-		try {
-			clientServicesImpl.doCredit(client, "123", 50.0);
-			clientServicesImpl.doDebit(client, "123", 30.0);
-		} catch (ClientServiceException e) {
-			System.out.println("Erro: "+e.getMessage());
-		}
+		assertEquals(00,20.,createdOrdinaryAccount.getBalance());
 		
-		try {
-			assertEquals("Erro valor diferente", 00, 30.,clientServicesImpl.doRetrieveBalance(client, "123"));
-		} catch (ClientServiceException e) {
-			System.out.println("Erro: "+e.getMessage());
-		}
 	}
 }
