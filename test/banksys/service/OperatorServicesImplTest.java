@@ -23,6 +23,7 @@ import banksys.model.Client;
 import banksys.model.Operator;
 
 public class OperatorServicesImplTest {
+	
 	private ClientDAO clientDAO;
 	private AccountDAO accountDAO;
 	private OperatorDAO operatorDAO;
@@ -44,6 +45,31 @@ public class OperatorServicesImplTest {
 
 	@After
 	public void tearDown() throws Exception {
+		
+		int numberOfClients = clientDAO.numberOfClients();
+		
+		if (numberOfClients > 0) {
+			
+			List<Client> createdClients = clientDAO.list();
+			
+			for (Client client : createdClients) {
+				clientDAO.delete(client.getId());
+			}
+		
+		}
+		
+		int numberOfAccounts = accountDAO.numberOfAccounts();
+		
+		if (numberOfAccounts > 0) {
+		
+			List<Account> createdAccounts = accountDAO.list();
+			
+			for (Account account : createdAccounts) {
+				accountDAO.delete(account.getNumber());
+			}
+		
+		}
+		
 	}
 
 	@Test
