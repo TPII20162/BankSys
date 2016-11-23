@@ -24,6 +24,8 @@ public class ClientInMemoryDAOTest {
 	@After
 	public void tearDown() throws PersistenceException {
 		
+		synchronized (clientInMemory) {
+		
 		int numberOfClients = clientInMemory.numberOfClients();
 		
 		if (numberOfClients > 0) {
@@ -36,10 +38,14 @@ public class ClientInMemoryDAOTest {
 		
 		}
 		
+		}
+		
 	}
 	
 	@Test
 	public void testCreate() throws ClientCreationException {
+		
+		synchronized (clientInMemory) {
 		
 		Client client  = new Client("Fulano de Tal", "fulano",
 				"ful1ano");
@@ -48,10 +54,14 @@ public class ClientInMemoryDAOTest {
 		
 		assertEquals("Os clientes não são o mesmo", client, clientReceive);
 		
+		}
+		
 	}
 	
 	@Test
 	public void testDelete() throws PersistenceException {
+		
+		synchronized (clientInMemory) {
 		
 		Client client  = new Client("Fulano de Tal", "fulano",
 				"ful1ano");
@@ -66,10 +76,14 @@ public class ClientInMemoryDAOTest {
 		assertEquals("Não deveria existir nenhum cliente em memória",
 				0, clientInMemory.numberOfClients());
 		
+		}
+		
 	}
 	
 	@Test
 	public void testRetrieve() throws PersistenceException {
+		
+		synchronized (clientInMemory) {
 		
 		Client client  = new Client("Fulano de Tal", "fulano",
 				"fulano");
@@ -81,10 +95,14 @@ public class ClientInMemoryDAOTest {
 		assertEquals("O cliente criado e o recuperado não são o mesmo",
 				client, clientReceived);
 		
+		}
+		
 	}
 	
 	@Test
 	public void testRetriveByUsernameAndPassword() throws PersistenceException {
+		
+		synchronized (clientInMemory) {
 		
 		Client client  = new Client("Fulano de Tal", "fulano",
 				"fulano");
@@ -95,10 +113,14 @@ public class ClientInMemoryDAOTest {
 				clientInMemory.retrieveByUsernameAndPassword("fulano",
 						"fulano"));
 		
+		}
+		
 	}
 	
 	@Test
 	public void testList() throws PersistenceException {
+		
+		synchronized (clientInMemory) {
 		
 		Client client1 = new Client("Fulano de Tal", "fulano",
 				"fulano");
@@ -124,10 +146,14 @@ public class ClientInMemoryDAOTest {
 		assertEquals("Os clientes não são o mesmo", client3,
 				clientsList.get(2));
 		
+		}
+		
 	}
 	
 	@Test
 	public void testNumberOfClients() throws PersistenceException {
+		
+		synchronized (clientInMemory) {
 		
 		Client client  = new Client("Fulano de Tal", "fulano1",
 				"ful1ano");
@@ -136,6 +162,8 @@ public class ClientInMemoryDAOTest {
 		
 		assertEquals("Deveria existir exatamente um cliente", 1,
 				clientInMemory.numberOfClients());
+		
+		}
 		
 	}
 	
