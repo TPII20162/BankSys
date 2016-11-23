@@ -11,7 +11,7 @@ import java.io.OutputStream;
 public class ResetSQLiteDataBase {
 	
 	private static final String TEMPLATE_BANKSYS_SQLITE = "template_banksys.sqlite";
-	private static final String BANKSYS_DB = "banksys.db";
+	private static final String BANKSYS_DB = "banksys.sqlite";
 
 	public static void resetDataBase()
 	{
