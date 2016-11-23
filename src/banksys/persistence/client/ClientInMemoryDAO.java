@@ -1,7 +1,6 @@
 package banksys.persistence.client;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import banksys.model.Client;
@@ -14,8 +13,7 @@ public class ClientInMemoryDAO implements ClientDAO {
 	
 	private static double CLIENT_IDS = 1;
 
-	private static List<Client> clients =
-			Collections.synchronizedList(new ArrayList<Client>());
+	private static List<Client> clients = new ArrayList<Client>();
 
 	private static double nextId() {
 		return CLIENT_IDS++;
