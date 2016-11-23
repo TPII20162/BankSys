@@ -15,7 +15,6 @@ import banksys.model.Client;
 import banksys.model.Operator;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.AccountInMemoryDAO;
-import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.client.ClientDAO;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.operator.OperatorDAO;
