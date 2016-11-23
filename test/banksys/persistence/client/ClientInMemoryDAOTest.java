@@ -10,29 +10,28 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ClientInMemoryDAOTest {
 	
-	private ClientInMemoryDAO cim;
+	private ClientInMemoryDAO clientInMemory;
 	
 	@Before
 	public void setUp() {
-		cim = new ClientInMemoryDAO();
+		clientInMemory = new ClientInMemoryDAO();
 	}
 	
 	@After
 	public void tearDown() throws PersistenceException {
 		
-		int numberOfClients = cim.numberOfClients();
+		int numberOfClients = clientInMemory.numberOfClients();
 		
 		if (numberOfClients > 0) {
 			
-			List<Client> createdClients = cim.list();
+			List<Client> createdClients = clientInMemory.list();
 			
 			for (Client client : createdClients) {
-				cim.delete(client.getId());
+				clientInMemory.delete(client.getId());
 			}
 		
 		}
@@ -42,92 +41,101 @@ public class ClientInMemoryDAOTest {
 	@Test
 	public void testCreate() throws ClientCreationException {
 		
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+		Client client  = new Client("Fulano de Tal", "fulano",
 				"ful1ano");
 		
-		Client clientReceive = cim.create(client);
+		Client clientReceive = clientInMemory.create(client);
 		
-		assertEquals(client, clientReceive);
+		assertEquals("Os clientes não são o mesmo", client, clientReceive);
 		
 	}
 	
 	@Test
 	public void testDelete() throws PersistenceException {
 		
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
+		Client client  = new Client("Fulano de Tal", "fulano",
 				"ful1ano");
 		
-		int sizeBefore;
+		clientInMemory.create(client);
 		
-		cim.create(client);
+		assertEquals("Deveria existir apenas um cliente criado", 1,
+				clientInMemory.numberOfClients());
 		
-		sizeBefore = cim.numberOfClients();
+		clientInMemory.delete(client.getId());
 		
-		cim.delete(client.getId());
-		
-		assertEquals(sizeBefore-1, cim.numberOfClients());
+		assertEquals("Não deveria existir nenhum cliente em memória",
+				0, clientInMemory.numberOfClients());
 		
 	}
 	
 	@Test
 	public void testRetrieve() throws PersistenceException {
 		
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
-				"ful1ano");
+		Client client  = new Client("Fulano de Tal", "fulano",
+				"fulano");
 		
-		cim.create(client);
+		clientInMemory.create(client);
 		
-		Client clientReceived = cim.retrieve(client.getId());
-		assertEquals(client.getId(), clientReceived.getId());
+		Client clientReceived = clientInMemory.retrieve(client.getId());
+		
+		assertEquals("O cliente criado e o recuperado não são o mesmo",
+				client, clientReceived);
 		
 	}
 	
 	@Test
 	public void testRetriveByUsernameAndPassword() throws PersistenceException {
 		
-		Client client  = new Client((double)1,"Fulano de Tal", "fulano1",
-				"ful1ano");
+		Client client  = new Client("Fulano de Tal", "fulano",
+				"fulano");
 		
-		cim.create(client);
+		clientInMemory.create(client);
 		
-		assertNotNull(cim.retrieveByUsernameAndPassword("fulano1", "ful1ano"));
+		assertEquals("O cliente criado e o recuperado não são o mesmo", client,
+				clientInMemory.retrieveByUsernameAndPassword("fulano",
+						"fulano"));
 		
 	}
 	
 	@Test
 	public void testList() throws PersistenceException {
 		
-		Client client1 = new Client((double)1,"Fulano de Tal", "fulano1",
+		Client client1 = new Client("Fulano de Tal", "fulano",
 				"fulano");
-		Client client2 = new Client((double)2,"Sicrano de Tal", "sicrano1",
+		
+		Client client2 = new Client("Sicrano de Tal", "sicrano",
 				"sicrano");
-		Client client3 = new Client((double)3,"Beltrano de Tal", "beltrano1",
+		
+		Client client3 = new Client("Beltrano de Tal", "beltrano",
 				"beltrano");
 		
-		cim.create(client1);
-		cim.create(client2);
-		cim.create(client3);
+		clientInMemory.create(client1);
+		clientInMemory.create(client2);
+		clientInMemory.create(client3);
 		
-		List<Client> lista = cim.list();
+		List<Client> clientsList = clientInMemory.list();
 		
+		assertEquals("Os clientes não são o mesmo", client1,
+				clientsList.get(0));
 		
-		assertEquals(client1,lista.get(0));
+		assertEquals("Os clientes não são o mesmo", client2,
+				clientsList.get(1));
 		
-		assertEquals(client2,lista.get(1));
-		
-		assertEquals(client3,lista.get(2));
+		assertEquals("Os clientes não são o mesmo", client3,
+				clientsList.get(2));
 		
 	}
 	
-	@Ignore
+	@Test
 	public void testNumberOfClients() throws PersistenceException {
 		
 		Client client  = new Client("Fulano de Tal", "fulano1",
 				"ful1ano");
 		
-		cim.create(client);
+		clientInMemory.create(client);
 		
-		assertEquals(1,cim.numberOfClients());
+		assertEquals("Deveria existir exatamente um cliente", 1,
+				clientInMemory.numberOfClients());
 		
 	}
 	
