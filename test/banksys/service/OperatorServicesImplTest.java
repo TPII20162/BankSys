@@ -73,18 +73,13 @@ public class OperatorServicesImplTest {
 	}
 
 	@Test
-	public void testDoNewClientAndDoRetrieveClient() {
-		
+	public void testDoNewClientAndDoRetrieveClient() throws OperationServiceException{
 		Operator op = new Operator("Operator","operator","operator");
 
-		try {
-			Client cliExpected = operatorServices.doNewClient(op, "FullName", "username", "password", "password");
-			Client cliRetrieve = operatorServices.doRetrieveClient(op, cliExpected.getId());
-			assertEquals("Error: Client Not Find", cliExpected.getId(), cliRetrieve.getId());
+		Client cliExpected = operatorServices.doNewClient(op, "FullName", "username", "password", "password");
+		Client cliRetrieve = operatorServices.doRetrieveClient(op, cliExpected.getId());
+		assertEquals("Error: Client Not Find", cliExpected.getId(), cliRetrieve.getId());
 
-		} catch (OperationServiceException e) {
-			fail("Error: Client Not Find");
-		}
 	}
 
 	@Test(expected=OperationServiceException.class)
@@ -97,15 +92,11 @@ public class OperatorServicesImplTest {
 	}
 
 	@Test
-	public void testDoLogin() {
+	public void testDoLogin() throws OperationServiceException{
 		
 		Operator opTest = null;
 		
-		try {
-			opTest = operatorServices.doLogin("adm", "789");
-		} catch (OperationServiceException e) {
-			fail();
-		}
+		opTest = operatorServices.doLogin("adm", "789");
 		
 		assertEquals(opTest.getUsername(), "adm");
 		assertEquals(opTest.getPassword(), "789");
@@ -145,20 +136,15 @@ public class OperatorServicesImplTest {
 	}
 
 	@Test
-	public void testDoNewAccountAndDoRetrieveAccount() {
+	public void testDoNewAccountAndDoRetrieveAccount() throws OperationServiceException{
 
 		AccountType act = AccountType.SPECIAL;
 		Operator op = new Operator("Operator","operator","operator");
 
-		try {
-			Client cli = operatorServices.doNewClient(op, "fullName", "username", "password","password");
-			Account accExpected = operatorServices.doNewAccount(op, cli.getId(), act);
-			Account accActual = operatorServices.doRetrieveAccount(op, accExpected.getNumber());
-			assertEquals("Error: Account Not Find", accExpected.getNumber(), accActual.getNumber());
-
-		} catch (OperationServiceException e) {
-			fail("Error: Account Not Find");
-		}
+		Client cli = operatorServices.doNewClient(op, "fullName", "username", "password","password");
+		Account accExpected = operatorServices.doNewAccount(op, cli.getId(), act);
+		Account accActual = operatorServices.doRetrieveAccount(op, accExpected.getNumber());
+		assertEquals("Error: Account Not Find", accExpected.getNumber(), accActual.getNumber());
 	}
 
 	@Test(expected=OperationServiceException.class)
