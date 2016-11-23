@@ -29,5 +29,17 @@ public class OperatorInMemoryDAOTest {
 		opMem.delete(op.getId());
 		opMem.retrieve(op.getId());
 	}
+	
+	@Test
+	public void testRetriveByUsernameAndPassword() throws PersistenceException{
+		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
+		Operator op = new Operator("Operator", "testUsername", "testPassword");
+		
+		opMem.create(op);
+		Operator ret = opMem.retrieveByUsernameAndPassword("testUsername", "testPassword");
+		System.out.println(ret.getId());
+		System.out.println(op.getId());
+		assertTrue("Error: Do Not Find Operator", op.getId() == ret.getId());
+	}
 
 }
