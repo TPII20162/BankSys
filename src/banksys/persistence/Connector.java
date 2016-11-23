@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Connector { 
     
 	private static Connection connection = null;
-	private final static String DATABASE_URL = "jdbc:sqlite:banksys.db";
+	private final static String DATABASE_URL = "jdbc:sqlite:banksys.sqlite";
  
 	/*
 	 * Since we only need one connection to the database
