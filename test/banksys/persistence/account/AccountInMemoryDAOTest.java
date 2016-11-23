@@ -187,6 +187,9 @@ public class AccountInMemoryDAOTest {
 		assertEquals("As contas deveriam ser a mesma", account2,
 				clientAccounts.get(1));
 		
+		// Deleta o cliente da lista para não afetar os testes de clients
+		cim.delete(client.getId());
+		
 	}
 	
 	public void testFindByClientIdWhenClientDontExists()
