@@ -21,8 +21,8 @@ public class AccountDatabaseDAO implements AccountDAO{
 		Connection connection = Connector.connect();
 		try{
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO account " +
-			"(client_id, number, balance, account_type, bonus) " +
-			"VALUES (?, ?, ?, ?, ?);");
+			"(client_id, number, balance, account_type, bonus) VALUES (?, ?, ?, ?, ?);");
+			
 			preparedStatement.setDouble(1, account.getClientId());
 			preparedStatement.setString(2, account.getNumber());
 			preparedStatement.setDouble(3, account.getBalance());
@@ -32,9 +32,8 @@ public class AccountDatabaseDAO implements AccountDAO{
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			connection.close();
-			}
-		catch(SQLException e)
-		{
+		}
+		catch(SQLException e){
 			throw new AccountCreationException(e.getMessage());
 		}
 		
