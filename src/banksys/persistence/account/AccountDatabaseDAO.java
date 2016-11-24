@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import banksys.model.Account;
-import banksys.model.AccountType;
 import banksys.persistence.Connector;
 import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
@@ -38,17 +37,6 @@ public class AccountDatabaseDAO implements AccountDAO{
 		}
 		
 		return account;
-	}
-	
-	public static void main(String[] args) {
-		Account account = new Account("123", 72000.0, AccountType.ORDINARY, 26.0);
-		account.setBonus(0.02);
-		AccountDatabaseDAO accountDatabaseDAO = new AccountDatabaseDAO();
-		try {
-			accountDatabaseDAO.create(account);
-		} catch (AccountCreationException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
