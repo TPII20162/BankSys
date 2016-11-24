@@ -2,6 +2,7 @@ package banksys.persistence.account;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -60,7 +61,32 @@ public class AccountDatabaseDAO implements AccountDAO{
 
 	@Override
 	public Account retrieve(String number) throws AccountNotFoundException {
-		return null;
+		Account account = null;
+
+		Connection connection = Connector.connect();
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE number = ?;");
+			preparedStatement.setString(1, number);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next())
+			{
+				Double clientId = resultSet.getDouble("client_id");
+				Double balance = resultSet.getDouble("balance");
+				AccountType type = AccountType.valueOf(resultSet.getString("account_type"));
+
+				account = new Account(number, balance, type, clientId);
+				account.setBonus(resultSet.getDouble("bonus"));
+			}
+
+			preparedStatement.close();
+			connection.close();
+		}
+		catch(SQLException e)
+		{
+			throw new AccountNotFoundException(e.getMessage());
+		}
+		return account;
 	}
 
 	@Override
