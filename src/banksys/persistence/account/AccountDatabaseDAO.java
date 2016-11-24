@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import banksys.model.Account;
+import banksys.model.AccountType;
 import banksys.persistence.Connector;
 import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.account.exception.AccountDeletionException;
@@ -50,7 +51,7 @@ public class AccountDatabaseDAO implements AccountDAO{
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
 				connection.close();
-			}
+		}
 		catch(SQLException e)
 		{
 			throw new AccountDeletionException(e.getMessage());
@@ -64,7 +65,29 @@ public class AccountDatabaseDAO implements AccountDAO{
 
 	@Override
 	public void update(Account account) throws AccountNotFoundException {
-		
+		Connection connection = Connector.connect();
+		try {
+				PreparedStatement preparedStatement = connection.prepareStatement(
+				"UPDATE account SET " +
+				"number = ?, " +
+				"balance = ?, " +
+				"account_type = ?, " +
+				"bonus = ? " +
+	 			"WHERE client_id = ?;");
+				preparedStatement.setString(1, account.getNumber());
+				preparedStatement.setDouble(2, account.getBalance());
+				preparedStatement.setString(3, account.getType().toString());
+				preparedStatement.setDouble(4, account.getBonus());
+				preparedStatement.setDouble(5, account.getClientId());
+	
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				connection.close();
+		}
+		catch(SQLException e)
+		{
+			throw new AccountNotFoundException(e.getMessage());
+		}
 	}
 
 	@Override
