@@ -41,7 +41,20 @@ public class AccountDatabaseDAO implements AccountDAO{
 
 	@Override
 	public void delete(String number) throws AccountDeletionException {
-		
+		Connection connection = Connector.connect();
+		try {
+				PreparedStatement preparedStatement = connection.prepareStatement(
+				"DELETE FROM account WHERE number = ?;");
+				preparedStatement.setString(1, number);
+	
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				connection.close();
+			}
+		catch(SQLException e)
+		{
+			throw new AccountDeletionException(e.getMessage());
+		}
 	}
 
 	@Override
