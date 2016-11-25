@@ -129,8 +129,34 @@ public class AccountInMemoryDAOTest {
 	}
 	
 	@Test
-	public void testUpdate() {
-		// TODO
+	public void testUpdate() throws AccountCreationException, AccountNotFoundException {
+		
+		Account account = new Account(AccountType.ORDINARY);
+		
+		account.setBalance(100.0);
+		
+		accountInMemory.create(account);
+		
+		Account sameAccount = new Account(account.getNumber(),
+				AccountType.ORDINARY);
+		
+		sameAccount.setBalance(50.0);
+		sameAccount.setType(AccountType.SPECIAL);
+		
+		assertEquals("O saldo da conta deveria ser 100.0", 100.0,
+				account.getBalance(), 0.0);
+		
+		assertEquals("O tipo da conta deveria ser ORDINARY",
+				AccountType.ORDINARY, account.getType());
+		
+		accountInMemory.update(sameAccount);
+		
+		assertEquals("O saldo da conta deveria ser 50.0", 50.0,
+				account.getBalance(), 0.0);
+		
+		assertEquals("O tipo da conta deveria ser SPECIAL", AccountType.SPECIAL,
+				account.getType());
+		
 	}
 
 	@Test
