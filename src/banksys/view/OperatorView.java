@@ -87,8 +87,11 @@ public class OperatorView {
 
 	private static int newClientMenu(OperatorServices operatorServices, Operator operator)
 	{
+		
+		scanner.nextLine();
+		
 		System.out.print("Enter the client full name: ");
-		String fullName = scanner.next();
+		String fullName = scanner.nextLine();
 		System.out.print("Enter the client username: ");
 		String username = scanner.next();
 		System.out.print("Enter the client password: ");
