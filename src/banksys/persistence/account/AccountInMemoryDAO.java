@@ -73,7 +73,23 @@ public class AccountInMemoryDAO implements AccountDAO {
 	
 	@Override
 	public void update(Account account) throws AccountNotFoundException {
-		// TODO Auto-generated method stub
+		
+		for (Account acc : accounts) {
+			
+			if (acc.equals(account)) {
+				
+				acc.setBalance(account.getBalance());
+				acc.setBonus(account.getBonus());
+				acc.setClientId(account.getClientId());
+				acc.setNumber(account.getNumber());
+				acc.setType(account.getType());
+				
+				break;
+				
+			}
+			
+		}
+		
 	}
 
 	@Override
