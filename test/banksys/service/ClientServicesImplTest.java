@@ -15,6 +15,7 @@ import banksys.model.Client;
 import banksys.model.Operator;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.AccountInMemoryDAO;
+import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.client.ClientDAO;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.operator.OperatorDAO;
@@ -124,4 +125,37 @@ public class ClientServicesImplTest {
 		assertEquals(00,20.,createdOrdinaryAccount.getBalance());
 		
 	}
+	
+	@Test
+	public void testDoTransfer() throws AccountCreationException,
+			ClientServiceException {
+		
+		Client client = new Client("José da Silva", "josesilva", "123");
+		
+		Account account1 = new Account(AccountType.ORDINARY);
+		Account account2 = new Account(AccountType.ORDINARY);
+		
+		accountDAO.create(account1);
+		accountDAO.create(account2);
+		
+		clientServices.doCredit(client, account1.getNumber(), 10.0);
+		clientServices.doCredit(client, account2.getNumber(), 10.0);
+		
+		assertEquals("account1 deveria ter um saldo de 10.0", 10.0,
+				account1.getBalance(), 0.0);
+		
+		assertEquals("account2 deveria ter um saldo de 10.0", 10.0,
+				account2.getBalance(), 0.0);
+		
+		clientServices.doTransfer(client, account1.getNumber(),
+				account2.getNumber(), 5.0);
+		
+		assertEquals("account1 deveria ter um saldo de 5.0", 5.0,
+				account1.getBalance(), 0.0);
+		
+		assertEquals("account2 deveria ter um saldo de 15.0", 15.0,
+				account2.getBalance(), 0.0);
+		
+	}
+	
 }
