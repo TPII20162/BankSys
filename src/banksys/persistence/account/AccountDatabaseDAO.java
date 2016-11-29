@@ -185,7 +185,27 @@ public class AccountDatabaseDAO implements AccountDAO{
 
 	@Override
 	public int numberOfAccounts() throws PersistenceException {
-		return 0;
+		Integer numberOfAccounts = 0;
+		Connection connection = Connector.connect();
+
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) AS NumberOfAccounts FROM account;");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next())
+			{
+				numberOfAccounts = resultSet.getInt("NumberOfAccounts");
+			}
+
+			preparedStatement.close();
+			connection.close();
+		}
+		catch(SQLException e)
+		{
+			throw new AccountNotFoundException(e.getMessage());
+		}
+		
+		return numberOfAccounts;
 	}
 
 }
