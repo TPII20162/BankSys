@@ -119,7 +119,35 @@ public class AccountDatabaseDAO implements AccountDAO{
 
 	@Override
 	public List<Account> list() throws PersistenceException {
-		return null;
+		Account account = null;
+		List<Account> accountList = new ArrayList<Account>();
+		Connection connection = Connector.connect();
+
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account;");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next())
+			{
+				String number = resultSet.getString("number");
+				Double balance = resultSet.getDouble("balance");
+				Double clientId = resultSet.getDouble("client_id");
+				AccountType type = AccountType.valueOf(resultSet.getString("account_type"));
+
+				account = new Account(number, balance, type, clientId);
+				account.setBonus(resultSet.getDouble("bonus"));
+				accountList.add(account);
+			}
+
+			preparedStatement.close();
+			connection.close();
+		}
+		catch(SQLException e)
+		{
+			throw new AccountNotFoundException(e.getMessage());
+		}
+		
+		return accountList;
 	}
 
 	@Override
