@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import banksys.model.Account;
@@ -123,7 +124,35 @@ public class AccountDatabaseDAO implements AccountDAO{
 
 	@Override
 	public List<Account> findByClientId(Double clientId) throws PersistenceException {
-		return null;
+		Account account = null;
+		List<Account> accountList = new ArrayList<Account>();
+		Connection connection = Connector.connect();
+
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE client_id = ?;");
+			preparedStatement.setDouble(1, clientId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next())
+			{
+				String number = resultSet.getString("number");
+				Double balance = resultSet.getDouble("balance");
+				AccountType type = AccountType.valueOf(resultSet.getString("account_type"));
+
+				account = new Account(number, balance, type, clientId);
+				account.setBonus(resultSet.getDouble("bonus"));
+				accountList.add(account);
+			}
+
+			preparedStatement.close();
+			connection.close();
+		}
+		catch(SQLException e)
+		{
+			throw new AccountNotFoundException(e.getMessage());
+		}
+		
+		return accountList;
 	}
 
 	@Override
