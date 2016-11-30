@@ -72,6 +72,19 @@ public class ClientServicesImplTest {
 		}
 		
 	}
+	
+	@Test
+	public void testDoRetrieveBalance() throws OperationServiceException, ClientServiceException{
+		Client cl = null;
+		Account ac = null;
+		
+		cl = operatorServices.doNewClient(operator, "Felipe", "fsfelipe", "7777", "7777");
+		ac = operatorServices.doNewAccount(operator, cl.getId(), AccountType.ORDINARY);
+		clientServices.doCredit(cl, ac.getNumber(), 50.0);
+		
+		assertEquals(50.0, clientServices.doRetrieveBalance(cl, ac.getNumber()), 0.001);
+		
+	}
 
 	@Test
 	public void testDoRetrieveAllAccounts() {
