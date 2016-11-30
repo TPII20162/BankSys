@@ -74,6 +74,17 @@ public class ClientServicesImplTest {
 	}
 	
 	@Test
+	public void testDoLogin() throws OperationServiceException, ClientServiceException{
+		Client cl = null;
+		Client login = null;
+		cl = operatorServices.doNewClient(operator, "Felipe", "fsfelipe", "7777", "7777");
+		login = clientServices.doLogin("fsfelipe", "7777");
+		
+		assertEquals(cl, login);
+		
+	}
+	
+	@Test
 	public void testDoRetrieveBalance() throws OperationServiceException, ClientServiceException{
 		Client cl = null;
 		Account ac = null;
