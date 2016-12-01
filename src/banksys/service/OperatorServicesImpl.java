@@ -114,10 +114,16 @@ public class OperatorServicesImpl implements OperatorServices {
 	public Account doNewAccount(Operator operator, Double clientId, AccountType accountType)
 			throws OperationServiceException {
 		try {
+			Client client = clientDAO.retrieve(clientId);
+			
 			Account account = new Account(accountType, clientId);
 			return this.accountDAO.create(account);
+			
 		} catch (AccountCreationException ace) {
 			throw new OperationServiceException("Error: Account creation problem!", ace);
+		} catch (ClientNotFoundException e) {
+			e.printStackTrace();
+			throw new OperationServiceException("OperatorServiceImpl.doNewAccount Error: Client Not Found");
 		}
 	}
 
