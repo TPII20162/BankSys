@@ -107,7 +107,7 @@ public class ClientView {
 		try {
 			List<Account> accounts = services.doRetrieveAllClientAccounts(client);
 			for (Account account : accounts) {
-				System.out.println("[" + account.getType() + "] Numer: " + account.getNumber() + " Balance: "
+				System.out.println("[" + account.getType() + "] Number: " + account.getNumber() + " Balance: "
 						+ account.getBalance());
 			}
 		} catch (ClientServiceException cse) {
