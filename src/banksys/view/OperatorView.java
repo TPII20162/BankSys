@@ -59,7 +59,7 @@ public class OperatorView {
 			System.out.println(" [1] New Client");
 			System.out.println(" [2] New Account");
 			System.out.println(" [3] Close Account");
-			System.out.println(" [4] Earn Iterest");
+			System.out.println(" [4] Earn Interest");
 			System.out.println(" [5] Earn Bonus");
 			System.out.println(" [0] Exit");
 			System.out.println("================================");
