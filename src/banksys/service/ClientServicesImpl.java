@@ -106,18 +106,11 @@ public class ClientServicesImpl implements ClientServices {
 		
 
 		ClientInMemoryDAO clientInMemoryDAO = new ClientInMemoryDAO();
-		Client client = null;
 		
 		try {
-			client = clientInMemoryDAO.retrieveByUsernameAndPassword(username, password);
-		} catch (ClientNotFoundException e) {
-			System.out.println("Erro: "+e.getMessage());
-		}
-		
-		if(client != null){
-			return client;
-		}else{
-			return null;
+			return clientInMemoryDAO.retrieveByUsernameAndPassword(username, password);
+		} catch (ClientNotFoundException onf) {
+			throw new ClientServiceException("Error: Username/password invalid!", onf);
 		}
 
 	}
