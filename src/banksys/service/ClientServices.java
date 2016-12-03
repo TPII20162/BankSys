@@ -20,5 +20,5 @@ public interface ClientServices {
 
 	public Client doLogin(String username, String password) throws ClientServiceException;
 	
-	public Account retriveAccount(String accountNumber) throws ClientServiceException;
+	public Account retriveAccount(String accountNumer) throws ClientServiceException;
 }

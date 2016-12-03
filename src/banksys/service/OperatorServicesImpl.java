@@ -90,7 +90,7 @@ public class OperatorServicesImpl implements OperatorServices {
 		Account ac; 
 		try {
 			ac = this.accountDAO.retrieve(accountNumber);
-			ac.setBalance(ac.getBalance()*0.001);
+			ac.setBalance(ac.getBalance()*1.001);
 		} catch (AccountNotFoundException e) {
 			throw new OperationServiceException("Error: Do Interest",e);
 		}
