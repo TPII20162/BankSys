@@ -138,14 +138,19 @@ public class ClientServicesImpl implements ClientServices {
 	}
 
 	@Override
-	public Account retriveAccount(String accountNumber) throws ClientServiceException{		
+	public Account retriveAccount(String accountNumber) throws
+			ClientServiceException {
+		
 		Account account = null;
+		
 		try {
 			account = accountDAO.retrieve(accountNumber);
 		} catch (AccountNotFoundException e) {
 			throw new ClientServiceException(e);
 		}
 		
-		return null;
+		return account;
+		
 	}
+	
 }

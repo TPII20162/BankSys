@@ -72,45 +72,37 @@ public class ClientView {
 		}
 	}
 	
-	private static void doTransferMenu(ClientServices services, Client client)
-	{
-		Account checkAccount = null;
+	private static void doTransferMenu(ClientServices services, Client client) {
 		
 		System.out.println("Enter the origin account number: ");
 		String fromNumber = scanner.next();
+		
 		try {
-			checkAccount = services.retriveAccount(fromNumber);
+			services.retriveAccount(fromNumber);
 		} catch (ClientServiceException e) {
 			System.out.println(e.getMessage());
 		}
-		if(checkAccount != null){
-			checkAccount = null;
-			System.out.println("Enter the destination account number: ");
-			String toNumber = scanner.next();
-			
-			try {
-				checkAccount = services.retriveAccount(toNumber);
-			} catch (ClientServiceException e) {
-				System.out.println(e.getMessage());
-			}
-			
-			if(checkAccount != null){
-				System.out.println("Enter the amount to be transferred: ");
-				Double amount = scanner.nextDouble();
-
-				try 
-				{
-					services.doTransfer(client, fromNumber, toNumber, amount);
-					System.out.println("Operation was successful!");
-				} catch (ClientServiceException cse) {
-					System.out.println(cse.getMessage());
-				}
-				
-			}		
-			
+		
+		System.out.println("Enter the destination account number: ");
+		String toNumber = scanner.next();
+		
+		try {
+			services.retriveAccount(fromNumber);
+		} catch (ClientServiceException e) {
+			System.out.println(e.getMessage());
 		}
-		System.out.println("The account entered doesn`t exist");
-		return; 
+		
+		System.out.println("Enter the amount to be transferred: ");
+		Double amount = scanner.nextDouble();
+		
+		try {
+			
+			services.doTransfer(client, fromNumber, toNumber, amount);
+			System.out.println("Operation was successful!");
+			
+		} catch (ClientServiceException cse) {
+			System.out.println(cse.getMessage());
+		}
 		
 	}
 	
