@@ -19,4 +19,6 @@ public interface ClientServices {
 	public List<Account> doRetrieveAllClientAccounts(Client client) throws ClientServiceException;
 
 	public Client doLogin(String username, String password) throws ClientServiceException;
+	
+	public Account retriveAccount(String accountNumber) throws ClientServiceException;
 }
