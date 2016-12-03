@@ -80,16 +80,22 @@ public class ClientView {
 		try {
 			services.retriveAccount(fromNumber);
 		} catch (ClientServiceException e) {
+			
 			System.out.println(e.getMessage());
+			return;
+			
 		}
 		
 		System.out.println("Enter the destination account number: ");
 		String toNumber = scanner.next();
 		
 		try {
-			services.retriveAccount(fromNumber);
+			services.retriveAccount(toNumber);
 		} catch (ClientServiceException e) {
+			
 			System.out.println(e.getMessage());
+			return;
+			
 		}
 		
 		System.out.println("Enter the amount to be transferred: ");
