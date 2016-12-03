@@ -106,10 +106,15 @@ public class ClientView {
 	{
 		try {
 			List<Account> accounts = services.doRetrieveAllClientAccounts(client);
-			for (Account account : accounts) {
-				System.out.println("[" + account.getType() + "] Number: " + account.getNumber() + " Balance: "
-						+ account.getBalance());
+			if(accounts.size() > 0){
+				for (Account account : accounts) {
+					System.out.println("[" + account.getType() + "] Number: " + account.getNumber() + " Balance: "
+							+ account.getBalance());
+				}
+			}else{
+				System.out.println("O cliente "+client.getFullName()+" não possui contas.");
 			}
+			
 		} catch (ClientServiceException cse) {
 			System.out.println(cse.getMessage());
 		}
