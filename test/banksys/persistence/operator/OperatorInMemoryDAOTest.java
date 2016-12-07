@@ -44,20 +44,40 @@ public class OperatorInMemoryDAOTest {
 	}
 	
 	@Test
-	public void testInsertOnList() throws PersistenceException {
+	public void testInsertOnList() throws PersistenceException{
 		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
 		
 		Operator op1 = new Operator("Operator1", "Operator1", "Operator1");
 		Operator op2 = new Operator("Operator2", "Operator2", "Operator2");
 		Operator op3 = new Operator("Operator3", "Operator3", "Operator3");
 		
-		int sizeBeforeInsertion = opMem.list().size();
+		int sizeBeforeInsertion;
+		
+		try{
+			sizeBeforeInsertion = opMem.list().size();
+		} catch(PersistenceException e){
+			sizeBeforeInsertion = 0;
+		}
 		
 		op1 = opMem.create(op1);
 		op2 = opMem.create(op2);
 		op3 = opMem.create(op3);
 		
 		assertEquals("Error: Insertion Failed in List",sizeBeforeInsertion+3, opMem.list().size());
+	}
+	
+	@Test(expected = PersistenceException.class)
+	public void testEmptyList() throws PersistenceException{
+		
+		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
+		List<Operator> lista = new ArrayList<>();
+		
+		lista.addAll(opMem.list());
+		
+		for(Operator op : lista)
+			opMem.delete(op.getId());
+		
+		opMem.list();
 	}
 
 }
