@@ -60,7 +60,7 @@ public class OperatorInMemoryDAOTest {
 		op3 = opMem.create(op3);
 		op4 = opMem.create(op4);
 		
-		assertEquals("Error: Insertion Failed in List",sizeBeforeInsertion+3, opMem.list().size());
+		assertEquals("Error: Do Not Added in List",sizeBeforeInsertion+3, opMem.list().size());
 	}
 	
 	@Test(expected = PersistenceException.class)
@@ -75,6 +75,23 @@ public class OperatorInMemoryDAOTest {
 			opMem.delete(op.getId());
 		
 		opMem.list();
+	}
+
+	@Test
+	public void testDeleteFromList() throws PersistenceException{
+
+		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
+		Operator op1 = new Operator("Operator1", "Operator1", "Operator1");
+		Operator op2 = new Operator("Operator2", "Operator2", "Operator2");
+		int sizeBeforeDelete;
+
+		opMem.create(op1);
+		op2 = opMem.create(op2);
+		sizeBeforeDelete = opMem.list().size();
+		opMem.delete(op2.getId());
+
+		assertEquals("Error: Do Not Deleted of List", sizeBeforeDelete-1, opMem.list().size());
+
 	}
 
 }
