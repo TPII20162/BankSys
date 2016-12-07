@@ -50,18 +50,15 @@ public class OperatorInMemoryDAOTest {
 		Operator op1 = new Operator("Operator1", "Operator1", "Operator1");
 		Operator op2 = new Operator("Operator2", "Operator2", "Operator2");
 		Operator op3 = new Operator("Operator3", "Operator3", "Operator3");
-		
-		int sizeBeforeInsertion;
-		
-		try{
-			sizeBeforeInsertion = opMem.list().size();
-		} catch(PersistenceException e){
-			sizeBeforeInsertion = 0;
-		}
+		Operator op4 = new Operator("Operator4", "Operator4", "Operator4");
 		
 		op1 = opMem.create(op1);
+		
+		int sizeBeforeInsertion = opMem.list().size();
+		
 		op2 = opMem.create(op2);
 		op3 = opMem.create(op3);
+		op4 = opMem.create(op4);
 		
 		assertEquals("Error: Insertion Failed in List",sizeBeforeInsertion+3, opMem.list().size());
 	}
