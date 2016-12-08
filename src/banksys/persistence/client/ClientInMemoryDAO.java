@@ -112,10 +112,20 @@ public class ClientInMemoryDAO implements ClientDAO {
 	}
 
 	private Client findByUsernameAndPassword(String username, String password) {
-		return clients.stream().filter(client -> client.getUsername().equals(username) &&
-		                                         client.getPassword().equals(password))
-		                       .findFirst()
-		                       .orElse(null);
+		
+		for (Client client : clients) {
+			
+			if (client.getUsername().equals(username) &&
+					client.getPassword().equals(password)) {
+				
+				return client;
+				
+			}
+			
+		}
+		
+		return null;
+		
 	}
 	
 }
