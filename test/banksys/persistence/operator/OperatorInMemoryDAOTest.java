@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import banksys.model.Operator;
 import banksys.persistence.exception.PersistenceException;
+import banksys.persistence.operator.exception.OperatorDeletionException;
 import banksys.persistence.operator.exception.OperatorNotFoundException;
 
 public class OperatorInMemoryDAOTest {
@@ -33,6 +34,16 @@ public class OperatorInMemoryDAOTest {
 		opMem.retrieve(op.getId());
 	}
 	
+	@Test(expected=OperatorDeletionException.class)
+	public void testDeleteWhenNotExists() throws PersistenceException{
+		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
+		Operator op = new Operator("OpDelete", "opDelete", "opDelete");
+
+		op = opMem.create(op);
+		opMem.delete(op.getId());
+		opMem.delete(op.getId());
+	}
+
 	@Test
 	public void testRetriveByUsernameAndPassword() throws PersistenceException{
 		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
@@ -42,7 +53,17 @@ public class OperatorInMemoryDAOTest {
 		Operator ret = opMem.retrieveByUsernameAndPassword("testUsername", "testPassword");
 		assertTrue("Error: Do Not Find Operator", op.getId() == ret.getId());
 	}
-	
+
+	@Test(expected=OperatorNotFoundException.class)
+	public void testRetrieveByUsernameAndPasswordWhenNotExists() throws PersistenceException{
+		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
+		Operator op = new Operator("Operator", "testUsername22", "testPassword22");
+
+		op = opMem.create(op);
+		opMem.delete(op.getId());
+		opMem.retrieveByUsernameAndPassword("testUsername22", "testPassword22");
+	}
+
 	@Test
 	public void testInsertOnList() throws PersistenceException{
 		OperatorInMemoryDAO opMem = new OperatorInMemoryDAO();
