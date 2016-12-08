@@ -33,7 +33,6 @@ public class AccountDatabaseDAO implements AccountDAO{
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-			connection.close();
 		}
 		catch(SQLException e){
 			throw new AccountCreationException(e.getMessage());
