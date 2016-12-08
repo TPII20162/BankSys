@@ -42,11 +42,7 @@ public class AccountDatabaseDAOTest {
 			
 			Account retrieved = dao.retrieve(number);
 			
-			Assert.assertEquals(number, retrieved.getNumber());
-			Assert.assertEquals(balance, retrieved.getBalance(), 0);
-			Assert.assertEquals(accountType, retrieved.getType());
-			Assert.assertEquals(clientId, retrieved.getClientId(), 0);
-			Assert.assertEquals(bonus, retrieved.getBonus(), 0);
+			Assert.assertNotNull(retrieved);
 		} catch (AccountCreationException e) {
 			System.err.println("Could not create account on database: " + e.getMessage());
 		} catch (AccountNotFoundException e) {
@@ -85,6 +81,31 @@ public class AccountDatabaseDAOTest {
 
 	@Test
 	public void testRetrieve() {
+		String number = "897SH";
+		double balance = 100;
+		AccountType accountType = AccountType.SPECIAL;
+		double clientId = 4;
+		double bonus = 0.05;
+		
+		Account account = new Account(number, balance, accountType, clientId);
+		account.setBonus(bonus);
+		
+		AccountDatabaseDAO dao = new AccountDatabaseDAO();
+		try {
+			dao.create(account);
+			
+			Account retrieved = dao.retrieve(number);
+			
+			Assert.assertEquals(number, retrieved.getNumber());
+			Assert.assertEquals(balance, retrieved.getBalance(), 0);
+			Assert.assertEquals(accountType, retrieved.getType());
+			Assert.assertEquals(clientId, retrieved.getClientId(), 0);
+			Assert.assertEquals(bonus, retrieved.getBonus(), 0);
+		} catch (AccountCreationException e) {
+			System.err.println("Could not create account on database: " + e.getMessage());
+		} catch (AccountNotFoundException e) {
+			System.err.println("Could not find account on database: " + e.getMessage());
+		}
 	}
 
 	@Test
