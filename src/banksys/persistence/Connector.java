@@ -15,9 +15,13 @@ public class Connector {
 	 */
 	public static Connection connect()
 	{
-		if(connection == null)
-		{
-			connection = connectToSQLite();
+		try {
+			if(connection == null || connection.isClosed())
+			{
+				connection = connectToSQLite();
+			}
+		} catch (SQLException e) {
+			System.err.println("Could not access current database connection: " + e.getMessage());
 		}
 		
 		return connection;

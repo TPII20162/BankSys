@@ -11,6 +11,7 @@ import banksys.model.Account;
 import banksys.model.AccountType;
 import banksys.persistence.ResetSQLiteDataBase;
 import banksys.persistence.account.exception.AccountCreationException;
+import banksys.persistence.account.exception.AccountDeletionException;
 import banksys.persistence.account.exception.AccountNotFoundException;
 
 public class AccountDatabaseDAOTest {
@@ -55,6 +56,31 @@ public class AccountDatabaseDAOTest {
 
 	@Test
 	public void testDelete() {
+		String number = "456";
+		double balance = 800;
+		AccountType accountType = AccountType.SAVINGS;
+		double clientId = 1;
+		double bonus = 0.02;
+		
+		Account account = new Account(number, balance, accountType, clientId);
+		account.setBonus(bonus);
+		
+		AccountDatabaseDAO dao = new AccountDatabaseDAO();
+		try {
+			dao.create(account);
+			
+			dao.delete(number);
+			
+			Account retrieved = dao.retrieve(number);
+			
+			Assert.assertNull(retrieved);
+		} catch (AccountCreationException e) {
+			System.err.println("Could not create account on database: " + e.getMessage());
+		} catch (AccountNotFoundException e) {
+			System.err.println("Could not find account on database: " + e.getMessage());
+		} catch (AccountDeletionException e) {
+			System.err.println("Could not delete account from database: " + e.getMessage());
+		}
 	}
 
 	@Test
