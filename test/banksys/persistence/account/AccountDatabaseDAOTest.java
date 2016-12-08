@@ -110,6 +110,43 @@ public class AccountDatabaseDAOTest {
 
 	@Test
 	public void testUpdate() {
+		String number = "897SH";
+		double balance = 100;
+		AccountType accountType = AccountType.SPECIAL;
+		double clientId = 4;
+		double bonus = 0.05;
+		
+		Account account = new Account(number, balance, accountType, clientId);
+		account.setBonus(bonus);
+		
+		double newBalance = 36000;
+		AccountType newAccountType = AccountType.TAX;
+		double newClientId = 5;
+		double newBonus = 0.03;
+		
+		AccountDatabaseDAO dao = new AccountDatabaseDAO();
+		try {
+			dao.create(account);
+			
+			account.setBalance(newBalance);
+			account.setBonus(newBonus);
+			account.setClientId(newClientId);
+			account.setType(newAccountType);
+			
+			dao.update(account);
+			
+			Account retrieved = dao.retrieve(number);
+			
+			Assert.assertEquals(number, retrieved.getNumber());
+			Assert.assertEquals(newBalance, retrieved.getBalance(), 0);
+			Assert.assertEquals(newAccountType, retrieved.getType());
+			Assert.assertEquals(newClientId, retrieved.getClientId(), 0);
+			Assert.assertEquals(newBonus, retrieved.getBonus(), 0);
+		} catch (AccountCreationException e) {
+			System.err.println("Could not create account on database: " + e.getMessage());
+		} catch (AccountNotFoundException e) {
+			System.err.println("Could not find account on database: " + e.getMessage());
+		}
 	}
 
 	@Test

@@ -95,16 +95,16 @@ public class AccountDatabaseDAO implements AccountDAO{
 		try {
 				PreparedStatement preparedStatement = connection.prepareStatement(
 				"UPDATE account SET " +
-				"number = ?, " +
+				"client_id = ?, " +
 				"balance = ?, " +
 				"account_type = ?, " +
 				"bonus = ? " +
-	 			"WHERE client_id = ?;");
-				preparedStatement.setString(1, account.getNumber());
+	 			"WHERE number = ?;");
+				preparedStatement.setDouble(1, account.getClientId());
 				preparedStatement.setDouble(2, account.getBalance());
 				preparedStatement.setString(3, account.getType().toString());
 				preparedStatement.setDouble(4, account.getBonus());
-				preparedStatement.setDouble(5, account.getClientId());
+				preparedStatement.setString(5, account.getNumber());
 	
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
