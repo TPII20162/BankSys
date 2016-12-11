@@ -1,8 +1,13 @@
 package banksys.persistence.operator;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import banksys.model.Operator;
+import banksys.persistence.Connector;
+import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.exception.PersistenceException;
 import banksys.persistence.operator.exception.OperatorCreationException;
 import banksys.persistence.operator.exception.OperatorDeletionException;
@@ -12,7 +17,23 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 
 	@Override
 	public Operator create(Operator operator) throws OperatorCreationException {
-		return null;
+		Connection connection = Connector.connect();
+		
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO operator " +
+			"(userId) VALUES (?);");
+			
+			preparedStatement.setDouble(1, operator.getId());
+			
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		}
+		catch(SQLException e){
+			throw new OperatorCreationException(e.getMessage());
+		}
+		
+		return operator;
+		
 	}
 
 	@Override
