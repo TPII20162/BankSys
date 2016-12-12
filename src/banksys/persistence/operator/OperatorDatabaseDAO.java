@@ -18,26 +18,40 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 	@Override
 	public Operator create(Operator operator) throws OperatorCreationException {
 		Connection connection = Connector.connect();
-		
-		try{
-			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO operator " +
-			"(user_id) VALUES (?);");
-			
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("INSERT INTO operator "
+							+ "(user_id) VALUES (?);");
+
 			preparedStatement.setDouble(1, operator.getId());
-			
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-		}
-		catch(SQLException e){
+		} catch (SQLException e) {
 			throw new OperatorCreationException(e.getMessage());
 		}
-		
+
 		return operator;
-		
+
 	}
 
 	@Override
 	public void delete(Double id) throws OperatorDeletionException {
+
+		Connection connection = Connector.connect();
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("DELETE FROM operator WHERE number = ?;");
+			preparedStatement.setDouble(1, id);
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			throw new OperatorDeletionException(e.getMessage());
+		}
 
 	}
 
