@@ -21,7 +21,7 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 		
 		try{
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO operator " +
-			"(userId) VALUES (?);");
+			"(user_id) VALUES (?);");
 			
 			preparedStatement.setDouble(1, operator.getId());
 			
