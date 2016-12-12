@@ -9,7 +9,7 @@ public interface UserDAO {
 	
 	public User create(User user) throws SQLException ;
 
-	public void delete(Double id) ;
+	public void delete(Double id) throws SQLException ;
 
 	public User retrieve(Double id) ;
 

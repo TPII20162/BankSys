@@ -36,8 +36,22 @@ public class UserDatabaseDAO implements UserDAO {
 	}
 
 	@Override
-	public void delete(Double id) {
-		// TODO Auto-generated method stub
+	public void delete(Double id) throws SQLException {
+		Connection connection = Connector.connect();
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("DELETE FROM user WHERE id = ?;");
+
+			preparedStatement.setDouble(1, id);
+			
+			
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new SQLException(e.getMessage());
+		}
+
 		
 	}
 
