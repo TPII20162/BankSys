@@ -48,7 +48,7 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 		try {
 			userDatabase.delete(id);
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("DELETE FROM operator WHERE number = ?;");
+					.prepareStatement("DELETE FROM operator WHERE user_id = ?;");
 			preparedStatement.setDouble(1, id);
 
 			preparedStatement.executeUpdate();

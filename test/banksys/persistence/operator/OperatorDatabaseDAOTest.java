@@ -9,6 +9,7 @@ import org.junit.Test;
 import banksys.model.Operator;
 import banksys.persistence.ResetSQLiteDataBase;
 import banksys.persistence.operator.exception.OperatorCreationException;
+import banksys.persistence.operator.exception.OperatorDeletionException;
 
 public class OperatorDatabaseDAOTest {
 
@@ -32,13 +33,25 @@ public class OperatorDatabaseDAOTest {
 			operatorDatabase.create(op);
 		} catch (OperatorCreationException e) {
 			fail(e.getMessage());
-		}
-		*/
+		}*/
+		
 				
 	}
 
 	@Test
 	public void testDelete() {
+		
+		
+		Operator op = new Operator(7.0, "John", "johnjohn", "77262");
+		try {
+			operatorDatabase.create(op);
+			operatorDatabase.delete(op.getId());
+		} catch (OperatorCreationException e) {
+			fail(e.getMessage());
+		} catch (OperatorDeletionException e) {
+			fail(e.getMessage());
+		}
+		
 	}
 
 	@Test
