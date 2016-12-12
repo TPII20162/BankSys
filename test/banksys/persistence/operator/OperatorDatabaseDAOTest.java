@@ -27,13 +27,13 @@ public class OperatorDatabaseDAOTest {
 
 	@Test
 	public void testCreate() {
-		/*
+		
 		Operator op = new Operator(1.0, "Felipe", "fscfelipe", "123");
 		try {
 			operatorDatabase.create(op);
 		} catch (OperatorCreationException e) {
 			fail(e.getMessage());
-		}*/
+		}
 		
 				
 	}
@@ -41,7 +41,7 @@ public class OperatorDatabaseDAOTest {
 	@Test
 	public void testDelete() {
 		
-		
+		/*
 		Operator op = new Operator(7.0, "John", "johnjohn", "77262");
 		try {
 			operatorDatabase.create(op);
@@ -51,7 +51,7 @@ public class OperatorDatabaseDAOTest {
 		} catch (OperatorDeletionException e) {
 			fail(e.getMessage());
 		}
-		
+		*/
 	}
 
 	@Test
