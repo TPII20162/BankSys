@@ -12,14 +12,18 @@ import banksys.persistence.exception.PersistenceException;
 import banksys.persistence.operator.exception.OperatorCreationException;
 import banksys.persistence.operator.exception.OperatorDeletionException;
 import banksys.persistence.operator.exception.OperatorNotFoundException;
+import banksys.persistence.user.UserDatabaseDAO;
 
 public class OperatorDatabaseDAO implements OperatorDAO {
 
+	UserDatabaseDAO  userDatabase = new UserDatabaseDAO();
+	
 	@Override
 	public Operator create(Operator operator) throws OperatorCreationException {
 		Connection connection = Connector.connect();
 
 		try {
+			userDatabase.create(operator);
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("INSERT INTO operator "
 							+ "(user_id) VALUES (?);");
@@ -42,6 +46,7 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 		Connection connection = Connector.connect();
 
 		try {
+			userDatabase.delete(id);
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("DELETE FROM operator WHERE number = ?;");
 			preparedStatement.setDouble(1, id);
