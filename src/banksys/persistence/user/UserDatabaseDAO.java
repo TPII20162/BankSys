@@ -41,7 +41,7 @@ public class UserDatabaseDAO implements UserDAO {
 
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("DELETE FROM user WHERE id = ?;");
+					.prepareStatement("DELETE FROM user WHERE user_id = ?;");
 
 			preparedStatement.setDouble(1, id);
 			

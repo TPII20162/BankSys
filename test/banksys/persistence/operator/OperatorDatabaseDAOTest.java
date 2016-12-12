@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import banksys.model.Operator;
+import banksys.persistence.ResetSQLiteDataBase;
 import banksys.persistence.operator.exception.OperatorCreationException;
 
 public class OperatorDatabaseDAOTest {
@@ -16,6 +17,7 @@ public class OperatorDatabaseDAOTest {
 	@Before
 	public void setUp() throws Exception {
 		operatorDatabase = new OperatorDatabaseDAO();
+		ResetSQLiteDataBase.resetDataBase();
 	}
 
 	@After
