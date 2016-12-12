@@ -38,14 +38,6 @@ public class UserDatabaseDAOTest {
 
 	@Test
 	public void testDelete() {
-		UserDatabaseDAO userDatabase = new UserDatabaseDAO();
-		User user = new User(11.0, "Felipe", "fscfelipe", "123");
-		
-		try {
-			userDatabase.delete(11.0);
-		} catch (SQLException e) {
-			fail(e.getMessage());
-		}
 	}
 
 	@Test
