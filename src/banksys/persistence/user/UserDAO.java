@@ -1,12 +1,13 @@
 package banksys.persistence.user;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import banksys.model.User;
 
 public interface UserDAO {
 	
-	public User create(User user) ;
+	public User create(User user) throws SQLException ;
 
 	public void delete(Double id) ;
 
