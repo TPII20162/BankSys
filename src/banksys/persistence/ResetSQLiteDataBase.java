@@ -23,7 +23,7 @@ public class ResetSQLiteDataBase {
 		
 		copyFile(TEMPLATE_BANKSYS_SQLITE, BANKSYS_DB);
 		
-		System.out.println("Database was reseted.");
+		//System.out.println("Database was reseted.");
 	}
 
 	private static void copyFile(String source, String destiny) {
