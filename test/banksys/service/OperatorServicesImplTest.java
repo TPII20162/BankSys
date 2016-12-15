@@ -11,6 +11,7 @@ import org.junit.Test;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.AccountInMemoryDAO;
 import banksys.persistence.account.exception.AccountCreationException;
+import banksys.persistence.account.exception.AccountNotFoundException;
 import banksys.persistence.client.ClientDAO;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.operator.OperatorDAO;
@@ -145,6 +146,17 @@ public class OperatorServicesImplTest {
 		Account accExpected = operatorServices.doNewAccount(op, cli.getId(), act);
 		Account accActual = operatorServices.doRetrieveAccount(op, accExpected.getNumber());
 		assertEquals("Error: Account Not Find", accExpected.getNumber(), accActual.getNumber());
+	}
+
+	@Test(expected=OperationServiceException.class)
+	public void testDoRetrieveAccountWhenNotExistsClient() throws OperationServiceException{
+
+		AccountType act = AccountType.SPECIAL;
+		Operator op = new Operator("Operator","operator","operator");
+		Client cli = operatorServices.doNewClient(op, "fullName", "username", "password","password");
+		Account accExpected = operatorServices.doNewAccount(op, cli.getId(), act);
+		operatorServices.doCloseAccount(op, accExpected.getNumber());
+		Account accActual = operatorServices.doRetrieveAccount(op, accExpected.getNumber());
 	}
 
 	@Test(expected=OperationServiceException.class)
