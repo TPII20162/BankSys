@@ -178,4 +178,17 @@ public class OperatorServicesImplTest {
 		
 	}
 
+	@Test
+	public void testFindAccountByClientIdWhenNotExistsClient() throws OperationServiceException {
+
+		Operator operator = new Operator("Operator","operator","operator");
+
+		Client client = operatorServices.doNewClient(operator, "fullName", "username", "password","password");
+		operatorServices.doDeleteClient(operator, client.getId());
+
+		List<Account> listOfAccounts = operatorServices.findAccountByClientId(operator, client.getId());
+		assertEquals("Error: Should be 0", 0, listOfAccounts.size());
+
+	}
+
 }
