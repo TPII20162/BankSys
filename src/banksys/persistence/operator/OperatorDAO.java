@@ -17,7 +17,7 @@ public interface OperatorDAO {
 
 	public Operator retrieve(Double id) throws OperatorNotFoundException, SQLException;
 
-	public Operator retrieveByUsernameAndPassword(String username, String password) throws OperatorNotFoundException;
+	public Operator retrieveByUsernameAndPassword(String username, String password) throws OperatorNotFoundException, SQLException;
 
 	public List<Operator> list() throws PersistenceException;
 

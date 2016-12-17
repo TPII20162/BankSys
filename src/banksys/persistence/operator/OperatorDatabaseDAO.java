@@ -89,8 +89,28 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 
 	@Override
 	public Operator retrieveByUsernameAndPassword(String username,
-			String password) throws OperatorNotFoundException {
-		return null;
+			String password) throws OperatorNotFoundException, SQLException {
+		Connection connection = Connector.connect();
+		Operator operator = null;
+		
+		
+		try {
+			User user = userDatabase.retrieveByUsernameAndPassword(username, password);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT FROM operator WHERE user_id = ?;");
+
+			preparedStatement.setDouble(1, user.getId());
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			double user_id = rs.getDouble(1);
+			
+			operator = new Operator(user_id, user.getFullName(), user.getUsername(), user.getPassword());					
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new SQLException(e.getMessage());
+		}
+		return operator;
 	}
 
 	@Override
