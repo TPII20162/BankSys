@@ -15,7 +15,7 @@ public interface UserDAO {
 
 	public User retrieveByUsernameAndPassword(String username, String password);
 
-	public List<User> list();
+	public List<User> list() throws SQLException;
 
 	public int numberOfUsers();
 

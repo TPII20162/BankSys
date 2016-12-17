@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import banksys.model.User;
 import banksys.persistence.Connector;
-import banksys.persistence.operator.exception.OperatorCreationException;
 
 public class UserDatabaseDAO implements UserDAO {
 
@@ -91,9 +91,31 @@ public class UserDatabaseDAO implements UserDAO {
 	}
 
 	@Override
-	public List<User> list() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> list() throws SQLException {
+		Connection connection = Connector.connect();
+		List<User> users = new ArrayList<User>();		
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * FROM user");
+
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()){
+				double user_id = rs.getDouble(1);
+				String fullName = rs.getString(2);
+				String userName = rs.getString(3);
+				String password = rs.getString(4);
+				User someUser = new User(user_id, fullName, userName, password);
+				
+				users.add(someUser);
+			}
+			
+			
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new SQLException(e.getMessage());
+		}
+		return users;
 	}
 
 	@Override
