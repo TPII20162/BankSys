@@ -13,7 +13,7 @@ public interface UserDAO {
 
 	public User retrieve(Double id) throws SQLException ;
 
-	public User retrieveByUsernameAndPassword(String username, String password);
+	public User retrieveByUsernameAndPassword(String username, String password)  throws SQLException;
 
 	public List<User> list() throws SQLException;
 

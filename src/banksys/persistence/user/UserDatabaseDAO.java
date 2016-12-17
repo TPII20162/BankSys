@@ -85,9 +85,30 @@ public class UserDatabaseDAO implements UserDAO {
 	}
 
 	@Override
-	public User retrieveByUsernameAndPassword(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public User retrieveByUsernameAndPassword(String username, String password) throws SQLException {
+		Connection connection = Connector.connect();
+		User user = null;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT FROM user WHERE user_name = ? AND password = ?;");
+
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);			
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			double user_id = rs.getDouble(1);
+			String fullName = rs.getString(2);
+			
+			user = new User(user_id, fullName, username, password);
+			
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new SQLException(e.getMessage());
+		}
+		
+		return user;
 	}
 
 	@Override
