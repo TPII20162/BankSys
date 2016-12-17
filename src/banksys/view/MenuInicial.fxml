@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import java.awt.BorderLayout?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerMenuInicial">
+   <children>
+      <Button layoutX="179.0" layoutY="114.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="275.0" text="Login Administrador" onAction="#goToAdmin"/>
+      <Button layoutX="179.0" layoutY="209.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="275.0" text="Login Cliente" onAction="#goToClient"/>
+      <Button layoutX="566.0" layoutY="379.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Sair" onAction = "#Sair"/>
+      <Text layoutX="179.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem Vindo ao BankSys" textAlignment="CENTER" wrappingWidth="286.13671875">
+         <font>
+            <Font name="Vladimir Script" size="36.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
