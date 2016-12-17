@@ -85,16 +85,15 @@ public class ClientServicesImplTest {
 	}
 	
 	@Test
-	public void testDoRetrieveBalance() throws OperationServiceException, ClientServiceException{
-		Client cl = null;
-		Account ac = null;
+	public void testDoRetrieveBalance() throws OperationServiceException, ClientServiceException {
+		Client client = null;
+		Account account = null;
 		
-		cl = operatorServices.doNewClient(operator, "Felipe", "fsfelipe", "7777", "7777");
-		ac = operatorServices.doNewAccount(operator, cl.getId(), AccountType.ORDINARY);
-		clientServices.doCredit(cl, ac.getNumber(), 50.0);
+		client = operatorServices.doNewClient(operator, "Felipe", "fsfelipe", "7777", "7777");
+		account = operatorServices.doNewAccount(operator, client.getId(), AccountType.ORDINARY);
+		clientServices.doCredit(account, 50.0);
 		
-		assertEquals(50.0, clientServices.doRetrieveBalance(cl, ac.getNumber()), 0.001);
-		
+		assertEquals(50.0, clientServices.doRetrieveBalance(client, account.getNumber()), 0.001);
 	}
 
 	@Test
@@ -123,63 +122,48 @@ public class ClientServicesImplTest {
 	}
 	
 	@Test
-	public  void doCreditTest() throws OperationServiceException, ClientServiceException{
-		
+	public void doCreditTest() throws OperationServiceException, ClientServiceException {
 		Client createdClient = operatorServices.doNewClient(operator, "FullName", "username", "password", "password");
-		Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(),
-				AccountType.ORDINARY);
+		Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(), AccountType.ORDINARY);
 		
-		clientServices.doCredit(new Client("FullName", "username", "password"), createdOrdinaryAccount.getNumber(), 50.);
+		clientServices.doCredit(createdOrdinaryAccount, 50.);
 		
 		assertEquals(00,50,createdOrdinaryAccount.getBalance());
-		
 	}
 	
 	
 	@Test
-	public void doDebitTest() throws OperationServiceException, ClientServiceException{
+	public void doDebitTest() throws OperationServiceException, ClientServiceException {
 		Client createdClient = operatorServices.doNewClient(operator, "FullName", "username", "password", "password");
-		Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(),
-				AccountType.ORDINARY);
+		Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(), AccountType.ORDINARY);
 	
-		clientServices.doCredit(new Client("FullName", "username", "password"), createdOrdinaryAccount.getNumber(), 50.);
+		clientServices.doCredit(createdOrdinaryAccount, 50.);
 		
-		clientServices.doDebit(createdClient, createdOrdinaryAccount.getNumber(), 30.);
+		clientServices.doDebit(createdOrdinaryAccount, 30.);
 		
 		assertEquals(00,20.,createdOrdinaryAccount.getBalance());
-		
 	}
 	
 	@Test
-	public void testDoTransfer() throws AccountCreationException,
-			ClientServiceException {
-		
-		Client client = new Client("José da Silva", "josesilva", "123");
-		
+	public void testDoTransfer() throws AccountCreationException, ClientServiceException {
 		Account account1 = new Account(AccountType.ORDINARY);
 		Account account2 = new Account(AccountType.ORDINARY);
 		
 		accountDAO.create(account1);
 		accountDAO.create(account2);
 		
-		clientServices.doCredit(client, account1.getNumber(), 10.0);
-		clientServices.doCredit(client, account2.getNumber(), 10.0);
+		clientServices.doCredit(account1, 10.0);
+		clientServices.doCredit(account2, 10.0);
 		
-		assertEquals("account1 deveria ter um saldo de 10.0", 10.0,
-				account1.getBalance(), 0.0);
+		assertEquals("account1 deveria ter um saldo de 10.0", 10.0, account1.getBalance(), 0.0);
 		
-		assertEquals("account2 deveria ter um saldo de 10.0", 10.0,
-				account2.getBalance(), 0.0);
+		assertEquals("account2 deveria ter um saldo de 10.0", 10.0, account2.getBalance(), 0.0);
 		
-		clientServices.doTransfer(client, account1.getNumber(),
-				account2.getNumber(), 5.0);
+		clientServices.doTransfer(account1, account2, 5.0);
 		
-		assertEquals("account1 deveria ter um saldo de 5.0", 5.0,
-				account1.getBalance(), 0.0);
+		assertEquals("account1 deveria ter um saldo de 5.0", 5.0, account1.getBalance(), 0.0);
 		
-		assertEquals("account2 deveria ter um saldo de 15.0", 15.0,
-				account2.getBalance(), 0.0);
-		
+		assertEquals("account2 deveria ter um saldo de 15.0", 15.0, account2.getBalance(), 0.0);
 	}
 	
 }

@@ -48,7 +48,9 @@ public class ClientView {
 		
 		try
 		{
-			services.doCredit(client, number, amount);
+			Account account = services.retriveAccount(number);
+			
+			services.doCredit(account, amount);
 			System.out.println("Credit operation performed successfully!");
 		}
 		catch (ClientServiceException cse) 
@@ -65,7 +67,9 @@ public class ClientView {
 		Double amount = scanner.nextDouble();
 		
 		try {
-			services.doDebit(client, number, amount);
+			Account account = services.retriveAccount(number);
+			
+			services.doDebit(account, amount);
 			System.out.println("Debit operation performed successfully!");
 		} catch (ClientServiceException cse) {
 			System.out.println(cse.getMessage());
@@ -102,14 +106,14 @@ public class ClientView {
 		Double amount = scanner.nextDouble();
 		
 		try {
+			Account sourceAccount = services.retriveAccount(fromNumber);
+			Account targetAccount = services.retriveAccount(toNumber);
 			
-			services.doTransfer(client, fromNumber, toNumber, amount);
+			services.doTransfer(sourceAccount, targetAccount, amount);
 			System.out.println("Operation was successful!");
-			
 		} catch (ClientServiceException cse) {
 			System.out.println(cse.getMessage());
 		}
-		
 	}
 	
 	private static void retrieveBalanceMenu(ClientServices services, Client client)

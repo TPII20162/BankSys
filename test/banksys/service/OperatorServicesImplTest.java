@@ -1,6 +1,7 @@
 package banksys.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -8,20 +9,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import banksys.model.Account;
+import banksys.model.AccountType;
+import banksys.model.Client;
+import banksys.model.Operator;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.AccountInMemoryDAO;
 import banksys.persistence.account.exception.AccountCreationException;
-import banksys.persistence.account.exception.AccountNotFoundException;
 import banksys.persistence.client.ClientDAO;
 import banksys.persistence.client.ClientInMemoryDAO;
 import banksys.persistence.operator.OperatorDAO;
 import banksys.persistence.operator.OperatorInMemoryDAO;
 import banksys.service.exception.ClientServiceException;
 import banksys.service.exception.OperationServiceException;
-import banksys.model.Account;
-import banksys.model.AccountType;
-import banksys.model.Client;
-import banksys.model.Operator;
 
 public class OperatorServicesImplTest {
 	
@@ -127,13 +127,11 @@ public class OperatorServicesImplTest {
 		Client client = operatorServices.doNewClient(operator, "fullname", "username", "password","password");
 		Account specialAccount = operatorServices.doNewAccount(operator, client.getId(), AccountType.SPECIAL);
 		
-		
-		clientServices.doCredit(client, specialAccount.getNumber(), creditValue);
+		clientServices.doCredit(specialAccount, creditValue);
 		assertEquals("Incorrect bonus after credit", creditValue * 0.01, specialAccount.getBonus(), 0.00001);
 	
 		operatorServices.doEarnBonus(operator, specialAccount.getNumber());
 		assertEquals("Incorrect value for Earn Bonus", creditValue+(creditValue*0.01), specialAccount.getBalance(), 0.00001);
-	
 	}
 
 	@Test
