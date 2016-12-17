@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerOperatorView">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Client">
+               <items>
+                  <MenuItem  mnemonicParsing="false" text="Criar Cliente " onAction = "#OpenCreateWindow" />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Conta">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Adicionar Conta" />
+                  <MenuItem mnemonicParsing="false" text="Remover Conta" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Juros" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Bonus" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Sair">
+            <items>
+              <MenuItem  mnemonicParsing="false" text="Sair" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</Pane>

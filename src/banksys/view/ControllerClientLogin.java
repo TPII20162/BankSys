@@ -21,39 +21,48 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ControllerClientLogin {
-	@FXML PasswordField Password = new PasswordField();
-	@FXML TextField Login = new TextField();
-	OperatorServices operatorServices;
-	AccountDAO accountDAO;
-	ClientDAO clientDAO;
-	OperatorDAO operatorDAO;
-	ClientServices clientServices;
-	Client client;
-	Operator operator;
-	@FXML private void initialize(){
-		accountDAO = new AccountInMemoryDAO();
-		clientDAO = new ClientInMemoryDAO();
-		operatorDAO = new OperatorInMemoryDAO();
-		operatorServices = new OperatorServicesImpl(clientDAO, accountDAO, operatorDAO);
-		clientServices = new ClientServicesImpl(accountDAO);
+	@FXML PasswordField Password;
+	@FXML TextField Login;
+		@FXML private void initialize(){
+		Context.getInstance().setAccountDAO(new AccountInMemoryDAO());
+		Context.getInstance().setClientDAO(new ClientInMemoryDAO());
+		Context.getInstance().setOperatorDAO(new OperatorInMemoryDAO());
+		Context.getInstance().setOperatorServices(new OperatorServicesImpl(Context.getInstance().getClientDAO(), Context.getInstance().getAccountDAO(), Context.getInstance().getOperatorDAO()));
+		Context.getInstance().setClientServices(new ClientServicesImpl(Context.getInstance().getAccountDAO()));
 	}
 	@FXML public void Confirm(){
 		String password = Password.getText();
 		String login = Login.getText();
-		try{
-			client = clientServices.doLogin(login, password);
-			operator = operatorServices.doLogin(login, password);
-			Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
-	        dialogoInfo.setTitle("Login");
-	        dialogoInfo.setContentText("Login Efetuado com sucesso!");
-	        dialogoInfo.showAndWait();
+		if(Context.getInstance().isClient()){
+			try{
+				Context.getInstance().setClientobj(Context.getClientServices().doLogin(login, password));
+				Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+		        dialogoInfo.setTitle("Login");
+		        dialogoInfo.setContentText("Login Efetuado com sucesso!");
+		        dialogoInfo.showAndWait();
+				}
+			catch (ClientServiceException e) {
+				Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+		        dialogoInfo.setTitle("Login");
+		        dialogoInfo.setContentText("Login ou Senha Incorretos.\n Tente Novamente!");
+		        dialogoInfo.showAndWait();
 			}
-		catch(ClientServiceException | OperationServiceException e){
-			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
-	        dialogoInfo.setTitle("Login");
-	        dialogoInfo.setContentText("Login ou Senha Incorretos.\n Tente Novamente!");
-	        dialogoInfo.showAndWait();
 		}
+		if(Context.getInstance().isOperator()){
+			try{
+				Context.getInstance().setOperatorobj(Context.getInstance().getOperatorServices().doLogin(login, password));
+				Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+				dialogoInfo.setTitle("Login");
+				dialogoInfo.setContentText("Login Efetuado com sucesso!");
+				dialogoInfo.showAndWait();
+				}
+			catch(OperationServiceException e){
+				Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+				dialogoInfo.setTitle("Login");
+				dialogoInfo.setContentText("Login ou Senha Incorretos.\n Tente Novamente!");
+				dialogoInfo.showAndWait();
+			}
+		}	
 	}
 		
 }

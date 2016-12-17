@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerOperatorOperations">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Client">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#OpenCreateWindow" text="Criar Cliente " />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Conta">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Adicionar Conta" />
+                  <MenuItem mnemonicParsing="false" text="Remover Conta" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Juros" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Bonus" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Sair">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Sair" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Text layoutX="29.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criar um Novo Cliente :" wrappingWidth="306.13671875" />
+      <Text layoutX="45.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o Nome Completo do Usuário:" wrappingWidth="172.484375" />
+      <TextField fx:id="fullName" layoutX="206.0" layoutY="81.0" prefHeight="34.0" prefWidth="379.0" />
+      <Text layoutX="45.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o nome de Usuário" />
+      <TextField fx:id="username" layoutX="206.0" layoutY="132.0" prefHeight="25.0" prefWidth="379.0" />
+      <Text layoutX="45.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira a senha " />
+      <PasswordField fx:id="password" layoutX="206.0" layoutY="188.0" prefHeight="25.0" prefWidth="379.0" />
+      <PasswordField fx:id="conf_pass" layoutX="206.0" layoutY="242.0" prefHeight="25.0" prefWidth="379.0" />
+      <Text layoutX="45.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirme a senha :" />
+      <Button layoutX="460.0" layoutY="313.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Confirmar" onAction = "#doCreateAccount()"/>
+   </children>
+</Pane>
