@@ -1,5 +1,6 @@
 package banksys.persistence.operator;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import banksys.model.Operator;
@@ -14,7 +15,7 @@ public interface OperatorDAO {
 
 	public void delete(Double id) throws OperatorDeletionException;
 
-	public Operator retrieve(Double id) throws OperatorNotFoundException;
+	public Operator retrieve(Double id) throws OperatorNotFoundException, SQLException;
 
 	public Operator retrieveByUsernameAndPassword(String username, String password) throws OperatorNotFoundException;
 

@@ -2,10 +2,12 @@ package banksys.persistence.operator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import banksys.model.Operator;
+import banksys.model.User;
 import banksys.persistence.Connector;
 import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.exception.PersistenceException;
@@ -16,7 +18,7 @@ import banksys.persistence.user.UserDatabaseDAO;
 
 public class OperatorDatabaseDAO implements OperatorDAO {
 
-	UserDatabaseDAO  userDatabase = new UserDatabaseDAO();
+	UserDatabaseDAO userDatabase = new UserDatabaseDAO();
 	
 	@Override
 	public Operator create(Operator operator) throws OperatorCreationException {
@@ -61,8 +63,28 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 	}
 
 	@Override
-	public Operator retrieve(Double id) throws OperatorNotFoundException {
-		return null;
+	public Operator retrieve(Double id) throws OperatorNotFoundException, SQLException {
+		Connection connection = Connector.connect();
+		Operator operator = null;
+		
+		
+		try {
+			User user = userDatabase.retrieve(id);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT FROM operator WHERE user_id = ?;");
+
+			preparedStatement.setDouble(1, id);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			double user_id = rs.getDouble(1);
+			
+			operator = new Operator(id, user.getFullName(), user.getUsername(), user.getPassword());					
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new SQLException(e.getMessage());
+		}
+		return operator;
 	}
 
 	@Override
