@@ -1,5 +1,6 @@
 package banksys.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import banksys.model.Account;
@@ -80,7 +81,7 @@ public class OperatorServicesImpl implements OperatorServices {
 	public Operator doLogin(String username, String password) throws OperationServiceException {
 		try {
 			return this.operatorDAO.retrieveByUsernameAndPassword(username, password);
-		} catch (OperatorNotFoundException onf) {
+		} catch (OperatorNotFoundException | SQLException onf) {
 			throw new OperationServiceException("Error: Username/password invalid!", onf);
 		}
 	}
