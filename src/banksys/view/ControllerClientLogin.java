@@ -17,8 +17,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ControllerClientLogin {
-	@FXML PasswordField Password;
-	@FXML TextField Login;
+	@FXML PasswordField Password = new PasswordField();
+	@FXML TextField Login = new TextField();
 	OperatorServices operatorServices;
 	AccountDAO accountDAO;
 	ClientDAO clientDAO;
