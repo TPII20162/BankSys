@@ -48,7 +48,9 @@ public class ClientView {
 		
 		try
 		{
-			services.doCredit(client, number, amount);
+			Account account = services.retriveAccount(number);
+			
+			services.doCredit(account, amount);
 			System.out.println("Credit operation performed successfully!");
 		}
 		catch (ClientServiceException cse) 

@@ -7,8 +7,8 @@ import banksys.model.Client;
 import banksys.service.exception.ClientServiceException;
 
 public interface ClientServices {
-
-	public void doCredit(Client client, String accountNumber, Double amount) throws ClientServiceException;
+	
+	public void doCredit(Account account, Double amount) throws ClientServiceException;
 
 	public void doDebit(Client client, String accountNumber, Double amount) throws ClientServiceException;
 

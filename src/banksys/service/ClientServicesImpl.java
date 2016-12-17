@@ -19,33 +19,27 @@ public class ClientServicesImpl implements ClientServices {
 	public ClientServicesImpl(AccountDAO accountDAO) {
 		this.accountDAO = accountDAO;
 	}
-
+	
 	@Override
-	public void doCredit(Client client, String accountNumber, Double amount) throws ClientServiceException {
-
-		if(amount<=0){
+	public void doCredit(Account account, Double amount) throws ClientServiceException {
+		if(amount <= 0) {
 			throw new ClientServiceException("Error: The amount must be 0 or higher.");
 		}
 			
-		try {
-			Account account = this.accountDAO.retrieve(accountNumber);
-			
-			if(account.getType()==AccountType.SPECIAL){
-				double currentBonus = account.getBonus();
-				account.setBonus(currentBonus + (amount * 0.01));
-			}
-			
-			double currentBalance = account.getBalance();
-			
-			account.setBalance(currentBalance + amount);
-			
-			this.accountDAO.update(account);
-			
-		} catch (AccountNotFoundException e) {
-			throw new ClientServiceException("Error: Account of number "+accountNumber+ " not found.");
+		if(account.getType() == AccountType.SPECIAL) {
+			double currentBonus = account.getBonus();
+			account.setBonus(currentBonus + (amount * 0.01));
 		}
 		
-
+		double currentBalance = account.getBalance();
+		
+		account.setBalance(currentBalance + amount);
+		
+		try {
+			this.accountDAO.update(account);
+		} catch (AccountNotFoundException e) {
+			throw new ClientServiceException("Error: Account of number " + account.getNumber() + " not found.");
+		}
 	}
 
 	@Override
@@ -92,8 +86,11 @@ public class ClientServicesImpl implements ClientServices {
 		
 		try {
 			this.accountDAO.retrieve(targetAccountNumber);
-			this.doDebit(client, sourceAccountNumber, amount);	
-			this.doCredit(client, targetAccountNumber, amount);		
+			this.doDebit(client, sourceAccountNumber, amount);
+			
+			Account targetAccount = this.accountDAO.retrieve(targetAccountNumber);
+			
+			this.doCredit(targetAccount, amount);
 		}catch (AccountNotFoundException e) {
 			throw new ClientServiceException("Error: Account of number "+targetAccountNumber+ " not found.");
 		}catch (ClientServiceException e){
