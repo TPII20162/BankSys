@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="676.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="fromAccount" layoutX="33.0" layoutY="110.0" prefHeight="31.0" prefWidth="242.0" />
+      <TextField fx:id="toAccount" layoutX="33.0" layoutY="287.0" prefHeight="31.0" prefWidth="242.0" />
+      <TextField fx:id="transferQuantity" layoutX="383.0" layoutY="179.0" />
+      <Text layoutX="33.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o número da conta de onde irá transferir:" wrappingWidth="121.48486709594727" />
+      <Text layoutX="33.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o número da conta para onde irá transferir:" wrappingWidth="121.48486328125" />
+      <Text layoutX="383.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira a quantidade a ser transferida:" wrappingWidth="111.17431640625" />
+      <Button layoutX="444.0" layoutY="303.0" mnemonicParsing="false" text="Cancelar" />
+      <Button layoutX="569.0" layoutY="303.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="77.0" text="Ok" />
+   </children>
+</Pane>

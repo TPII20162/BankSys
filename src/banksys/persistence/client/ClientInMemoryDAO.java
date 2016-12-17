@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import banksys.model.Client;
+import banksys.model.Operator;
 import banksys.persistence.client.exception.ClientCreationException;
 import banksys.persistence.client.exception.ClientDeletionException;
 import banksys.persistence.client.exception.ClientNotFoundException;
 import banksys.persistence.exception.PersistenceException;
+import banksys.persistence.operator.OperatorInMemoryDAO;
 
 public class ClientInMemoryDAO implements ClientDAO {
 	
@@ -15,6 +17,11 @@ public class ClientInMemoryDAO implements ClientDAO {
 
 	private static List<Client> clients = new ArrayList<Client>();
 
+	static{
+		ClientInMemoryDAO.clients.add(new Client("Default System client", "client", "12345"));
+
+	}
+	
 	private static double nextId() {
 		return CLIENT_IDS++;
 	}
