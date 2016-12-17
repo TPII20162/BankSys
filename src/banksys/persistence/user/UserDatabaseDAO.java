@@ -2,6 +2,7 @@ package banksys.persistence.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -56,9 +57,31 @@ public class UserDatabaseDAO implements UserDAO {
 	}
 
 	@Override
-	public User retrieve(Double id) {
-		// TODO Auto-generated method stub
-		return null;
+	public User retrieve(Double id) throws SQLException {
+		Connection connection = Connector.connect();
+		User user = null;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT FROM user WHERE user_id = ?;");
+
+			preparedStatement.setDouble(1, id);
+			
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			double user_id = rs.getDouble(1);
+			String fullName = rs.getString(2);
+			String userName = rs.getString(3);
+			String password = rs.getString(4);
+			
+			user = new User(user_id, fullName, userName, password);
+			
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new SQLException(e.getMessage());
+		}
+		return user;
 	}
 
 	@Override

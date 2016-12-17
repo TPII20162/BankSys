@@ -11,7 +11,7 @@ public interface UserDAO {
 
 	public void delete(Double id) throws SQLException ;
 
-	public User retrieve(Double id) ;
+	public User retrieve(Double id) throws SQLException ;
 
 	public User retrieveByUsernameAndPassword(String username, String password);
 
