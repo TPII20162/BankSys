@@ -12,7 +12,7 @@ public interface ClientServices {
 
 	public void doDebit(Account account, Double amount) throws ClientServiceException;
 
-	public void doTransfer(Client client, String sourceAccountNumber, String targetAccountNumber, Double amount) throws ClientServiceException;
+	public void doTransfer(Account sourceAccount, Account targetAccount, Double amount) throws ClientServiceException;
 	
 	public Double doRetrieveBalance(Client client, String accountNumber) throws ClientServiceException;
 	

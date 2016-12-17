@@ -106,14 +106,14 @@ public class ClientView {
 		Double amount = scanner.nextDouble();
 		
 		try {
+			Account sourceAccount = services.retriveAccount(fromNumber);
+			Account targetAccount = services.retriveAccount(toNumber);
 			
-			services.doTransfer(client, fromNumber, toNumber, amount);
+			services.doTransfer(sourceAccount, targetAccount, amount);
 			System.out.println("Operation was successful!");
-			
 		} catch (ClientServiceException cse) {
 			System.out.println(cse.getMessage());
 		}
-		
 	}
 	
 	private static void retrieveBalanceMenu(ClientServices services, Client client)

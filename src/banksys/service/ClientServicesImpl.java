@@ -68,19 +68,15 @@ public class ClientServicesImpl implements ClientServices {
 	}
 
 	@Override
-	public void doTransfer(Client client, String sourceAccountNumber, String targetAccountNumber, Double amount)
-			throws ClientServiceException {
+	public void doTransfer(Account sourceAccount, Account targetAccount, Double amount) throws ClientServiceException {
 		try {
-			Account sourceAccount = this.accountDAO.retrieve(sourceAccountNumber);
+			// Verificar se a conta alvo existe antes de fazer o debito na conta fonte
+			this.accountDAO.retrieve(targetAccount.getNumber());
 			
-			this.accountDAO.retrieve(targetAccountNumber);
 			this.doDebit(sourceAccount, amount);
-			
-			Account targetAccount = this.accountDAO.retrieve(targetAccountNumber);
-			
 			this.doCredit(targetAccount, amount);
 		} catch (AccountNotFoundException e) {
-			throw new ClientServiceException("Error: Account of number " + targetAccountNumber + " not found.");
+			throw new ClientServiceException("Error: Account of number " + targetAccount.getNumber() + " not found.");
 		} catch (ClientServiceException e) {
 			throw e;			
 		}

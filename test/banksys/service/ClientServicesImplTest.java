@@ -146,8 +146,6 @@ public class ClientServicesImplTest {
 	
 	@Test
 	public void testDoTransfer() throws AccountCreationException, ClientServiceException {
-		Client client = new Client("Jose da Silva", "josesilva", "123");
-		
 		Account account1 = new Account(AccountType.ORDINARY);
 		Account account2 = new Account(AccountType.ORDINARY);
 		
@@ -161,7 +159,7 @@ public class ClientServicesImplTest {
 		
 		assertEquals("account2 deveria ter um saldo de 10.0", 10.0, account2.getBalance(), 0.0);
 		
-		clientServices.doTransfer(client, account1.getNumber(), account2.getNumber(), 5.0);
+		clientServices.doTransfer(account1, account2, 5.0);
 		
 		assertEquals("account1 deveria ter um saldo de 5.0", 5.0, account1.getBalance(), 0.0);
 		
