@@ -43,57 +43,45 @@ public class ClientServicesImpl implements ClientServices {
 	}
 
 	@Override
-	public void doDebit(Client client, String accountNumber, Double amount) throws ClientServiceException {
-		if(amount<=0){
+	public void doDebit(Account account, Double amount) throws ClientServiceException {
+		if(amount <= 0) {
 			throw new ClientServiceException("Error: The amount must be 0 or higher.");
 		}
 		
 		try {
+			double currentBalance = account.getBalance();
 			
-			Account account = this.accountDAO.retrieve(accountNumber);
-			
-			//No caso do credito, qualquer cliente pode creditar em qualquer conta.
-			//Mas no debito apenas o dono da conta pode debitar
-			if(client.getId().equals(account.getClientId())){
-				
-				double currentBalance = account.getBalance();
-				
-				if(account.getType()==AccountType.TAX){
-					amount = amount + (amount * 0.001);
-				}
-				
-				if(currentBalance - amount >= 0 ){					
-					account.setBalance(currentBalance - amount);
-					
-					this.accountDAO.update(account);					
-				}else{
-					throw new ClientServiceException("Error: The balance after the Debit Operation must be 0 or higher.");
-				}
-				
-			}else{
-				throw new ClientServiceException("Error: Only the owner of the account can do Debits.");
+			if(account.getType() == AccountType.TAX) {
+				amount += (amount * 0.001);
 			}
-			
+				
+			if(currentBalance - amount >= 0 ) {					
+				account.setBalance(currentBalance - amount);
+					
+				this.accountDAO.update(account);					
+			} else {
+				throw new ClientServiceException("Error: The balance after the Debit Operation must be 0 or higher.");
+			}
 		} catch (AccountNotFoundException e) {
-			throw new ClientServiceException("Error: Account of number "+accountNumber+ " not found.");
+			throw new ClientServiceException("Error: Account of number " + account.getNumber() + " not found.");
 		}
-
 	}
 
 	@Override
 	public void doTransfer(Client client, String sourceAccountNumber, String targetAccountNumber, Double amount)
 			throws ClientServiceException {
-		
 		try {
+			Account sourceAccount = this.accountDAO.retrieve(sourceAccountNumber);
+			
 			this.accountDAO.retrieve(targetAccountNumber);
-			this.doDebit(client, sourceAccountNumber, amount);
+			this.doDebit(sourceAccount, amount);
 			
 			Account targetAccount = this.accountDAO.retrieve(targetAccountNumber);
 			
 			this.doCredit(targetAccount, amount);
-		}catch (AccountNotFoundException e) {
-			throw new ClientServiceException("Error: Account of number "+targetAccountNumber+ " not found.");
-		}catch (ClientServiceException e){
+		} catch (AccountNotFoundException e) {
+			throw new ClientServiceException("Error: Account of number " + targetAccountNumber + " not found.");
+		} catch (ClientServiceException e) {
 			throw e;			
 		}
 	}

@@ -67,7 +67,9 @@ public class ClientView {
 		Double amount = scanner.nextDouble();
 		
 		try {
-			services.doDebit(client, number, amount);
+			Account account = services.retriveAccount(number);
+			
+			services.doDebit(account, amount);
 			System.out.println("Debit operation performed successfully!");
 		} catch (ClientServiceException cse) {
 			System.out.println(cse.getMessage());

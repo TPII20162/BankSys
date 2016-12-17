@@ -139,7 +139,7 @@ public class ClientServicesImplTest {
 	
 		clientServices.doCredit(createdOrdinaryAccount, 50.);
 		
-		clientServices.doDebit(createdClient, createdOrdinaryAccount.getNumber(), 30.);
+		clientServices.doDebit(createdOrdinaryAccount, 30.);
 		
 		assertEquals(00,20.,createdOrdinaryAccount.getBalance());
 	}

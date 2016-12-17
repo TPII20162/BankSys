@@ -10,7 +10,7 @@ public interface ClientServices {
 	
 	public void doCredit(Account account, Double amount) throws ClientServiceException;
 
-	public void doDebit(Client client, String accountNumber, Double amount) throws ClientServiceException;
+	public void doDebit(Account account, Double amount) throws ClientServiceException;
 
 	public void doTransfer(Client client, String sourceAccountNumber, String targetAccountNumber, Double amount) throws ClientServiceException;
 	
