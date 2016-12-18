@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="111.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerClientOperations">
+   <children>
+      <Text layoutX="25.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o valor a ser creditado: " />
+      <TextField fx:id="creditText" layoutX="29.0" layoutY="71.0" />
+      <Button layoutX="230.0" layoutY="71.0" mnemonicParsing="false" text="Ok" onAction="#doCredit"/>
+      <Button layoutX="283.0" layoutY="71.0" mnemonicParsing="false" text="Cancelar" onAction="#cancelOperation"/>
+   </children>
+</Pane>

@@ -9,8 +9,7 @@ import banksys.service.ClientServices;
 import banksys.service.OperatorServices;
 
 public class Context {
-	private boolean operator;
-	private boolean client;
+	private boolean operator, client, credit, debit, retrieve;
 	private OperatorServices operatorServices;
 	private AccountDAO accountDAO;
 	private ClientDAO clientDAO;
@@ -43,7 +42,7 @@ public class Context {
 	public void setOperatorDAO(OperatorDAO operatorDAO) {
 		this.operatorDAO = operatorDAO;
 	}
-	public static ClientServices getClientServices() {
+	public ClientServices getClientServices() {
 		return clientServices;
 	}
 	public void setClientServices(ClientServices clientServices) {
@@ -78,4 +77,24 @@ public class Context {
 	public void setClient(boolean client) {
 		this.client = client;
 	}
+	public boolean isCredit() {
+		return credit;
+	}
+	public void setCredit(boolean credit) {
+		this.credit = credit;
+	}
+	public boolean isDebit() {
+		return debit;
+	}
+	public void setDebit(boolean debit) {
+		this.debit = debit;
+	}
+	public boolean isRetrieve() {
+		return retrieve;
+	}
+	public void setRetrieve(boolean retrieve) {
+		this.retrieve = retrieve;
+	}
+	
+	
 }

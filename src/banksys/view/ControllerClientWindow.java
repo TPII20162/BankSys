@@ -11,51 +11,52 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ControllerClientWindow {
-	@FXML public void doCredit(ActionEvent event) throws IOException{
+	@FXML public void toCredit(ActionEvent event) throws IOException{
 		Parent ex_parent = FXMLLoader.load(getClass().getResource("AccountNumberWindow.fxml"));
         Scene home_page_scene = new Scene(ex_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //app_stage.hide();
         app_stage.setScene(home_page_scene);
 		app_stage.setTitle("BankSys");
-		Context.getInstance().setClient(true);
-		Context.getInstance().setOperator(false);
+		Context.getInstance().setCredit(true);
+		Context.getInstance().setDebit(false);
+		Context.getInstance().setRetrieve(false);
 		app_stage.show();
 	}
 	
-	@FXML public void doDebit(ActionEvent event) throws IOException{
+	@FXML public void toDebit(ActionEvent event) throws IOException{
 		Parent ex_parent = FXMLLoader.load(getClass().getResource("AccountNumberWindow.fxml"));
         Scene home_page_scene = new Scene(ex_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //app_stage.hide();
         app_stage.setScene(home_page_scene);
 		app_stage.setTitle("BankSys");
-		Context.getInstance().setClient(true);
-		Context.getInstance().setOperator(false);
+		Context.getInstance().setCredit(false);
+		Context.getInstance().setDebit(true);
+		Context.getInstance().setRetrieve(false);
 		app_stage.show();
 	}
 	
-	@FXML public void doTransfer(ActionEvent event) throws IOException{
+	@FXML public void toTransfer(ActionEvent event) throws IOException{
 		Parent ex_parent = FXMLLoader.load(getClass().getResource("TransferWindow.fxml"));
         Scene home_page_scene = new Scene(ex_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //app_stage.hide();
         app_stage.setScene(home_page_scene);
 		app_stage.setTitle("BankSys");
-		Context.getInstance().setClient(true);
-		Context.getInstance().setOperator(false);
 		app_stage.show();
 	}
 	
-	@FXML public void doRetrieve(ActionEvent event) throws IOException{
+	@FXML public void toRetrieve(ActionEvent event) throws IOException{
 		Parent ex_parent = FXMLLoader.load(getClass().getResource("AccountNumberWindow.fxml"));
         Scene home_page_scene = new Scene(ex_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //app_stage.hide();
         app_stage.setScene(home_page_scene);
 		app_stage.setTitle("BankSys");
-		Context.getInstance().setClient(true);
-		Context.getInstance().setOperator(false);
+		Context.getInstance().setCredit(false);
+		Context.getInstance().setDebit(false);
+		Context.getInstance().setRetrieve(true);
 		app_stage.show();
 	}
 }

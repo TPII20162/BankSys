@@ -43,7 +43,7 @@ public class ControllerClientLogin {
 		String login = Login.getText();
 		if(Context.getInstance().isClient()){
 			try{
-				Context.getInstance().setClientobj(Context.getClientServices().doLogin(login, password));
+				Context.getInstance().setClientobj(Context.getInstance().getClientServices().doLogin(login, password));
 				openClientWindow(event);
 		        
 				}

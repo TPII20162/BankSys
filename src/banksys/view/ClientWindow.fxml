@@ -5,10 +5,10 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerClientWindow">
    <children>
-      <Button layoutX="64.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="114.0" text="Creditar" />
-      <Button layoutX="64.0" layoutY="178.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="114.0" text="Debitar" />
-      <Button layoutX="52.0" layoutY="298.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="181.0" text="Realizar Transferência" />
-      <Button layoutX="275.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="114.0" text="Checar Saldo" />
+      <Button layoutX="64.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="114.0" text="Creditar" onAction="#toCredit"/>
+      <Button layoutX="64.0" layoutY="178.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="114.0" text="Debitar" onAction="#toDebit"/>
+      <Button layoutX="52.0" layoutY="298.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="181.0" text="Realizar Transferência" onAction="#toTransfer"/>
+      <Button layoutX="275.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="114.0" text="Checar Saldo" onAction="#toRetrieve"/>
       <Button layoutX="275.0" layoutY="178.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="114.0" text="Listar Contas" />
       <Button layoutX="450.0" layoutY="320.0" mnemonicParsing="false" text="Sair" />
    </children>
