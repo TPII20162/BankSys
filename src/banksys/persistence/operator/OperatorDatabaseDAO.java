@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import banksys.model.Operator;
@@ -115,7 +116,35 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 
 	@Override
 	public List<Operator> list() throws PersistenceException {
-		return null;
+		Connection connection = Connector.connect();
+		List<User> users;
+		List<Operator> operators = new ArrayList<Operator>();
+		
+		try {
+			users = userDatabase.list();
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * operator;");
+
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()){
+				double user_id_on_operator_table = rs.getDouble(1);
+				
+				for(User user: users){
+					if(user.getId() == user_id_on_operator_table){
+						Operator newOperator = new Operator(user.getId(), user.getFullName(), user.getUsername(), user.getPassword());
+						operators.add(newOperator);
+					}
+				}
+	
+			}		
+
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new PersistenceException(e.getMessage());
+		}
+		return operators;
 	}
 
 }
