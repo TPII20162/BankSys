@@ -30,9 +30,32 @@ public class ClientDatabaseDAO implements ClientDAO {
 
 	@Override
 	public Client retrieveByUsernameAndPassword(String username, String password)
-			throws ClientNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+			throws SQLException {
+		Connection connection = Connector.connect();
+		Client client = null;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * FROM client WHERE user_id = ?;");
+
+			preparedStatement.setString(1, user_id);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(resultSet.next())
+			{
+				Double clientId = resultSet.getDouble("user_id");
+				client = new Client(clientId);
+				
+			}
+			preparedStatement.close();
+			connection.close();
+		}
+		catch(SQLException e)
+		{
+			throw new SQLException(e.getMessage());
+		}
+		return client;
 	}
 
 	@Override
