@@ -65,9 +65,28 @@ public class ClientDatabaseDAO implements ClientDAO {
 	}
 
 	@Override
-	public int numberOfClients() throws PersistenceException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int numberOfClients() throws SQLException {
+		Integer numberOfClients = 0;
+		Connection connection = Connector.connect();
+
+		try{
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) AS NumberOfClients FROM client;");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next())
+			{
+				numberOfClients = resultSet.getInt("NumberOfClients");
+			}
+
+			preparedStatement.close();
+			connection.close();
+		}
+		catch(SQLException e)
+		{
+			throw new SQLException(e.getMessage());
+		}
+		
+		return numberOfClients;
 	}
 
 }
