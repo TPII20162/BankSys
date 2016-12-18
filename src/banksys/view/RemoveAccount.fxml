@@ -8,30 +8,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerOperatorOperations">
    <children>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Client">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#OpenCreateWindow" text="Criar Cliente " />
-               </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Conta">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Adicionar Conta" />
-                  <MenuItem mnemonicParsing="false" text="Remover Conta" />
-                  <MenuItem mnemonicParsing="false" text="Gerar Juros" />
-                  <MenuItem mnemonicParsing="false" text="Gerar Bonus" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Sair">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Sair" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
       <Text layoutX="36.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o Número da Conta a ser Excluída:" />
       <TextField fx:id="AccountToRemove" layoutX="292.0" layoutY="86.0" prefHeight="25.0" prefWidth="279.0" />
       <Button layoutX="502.0" layoutY="200.0" mnemonicParsing="false" onAction="#RemoveAccount" text="Confirmar" />
+      <Text layoutX="227.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remover Conta :">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="21.0" layoutY="200.0" mnemonicParsing="false" text="Voltar" onAction = "#Voltar"/>
    </children>
 </Pane>

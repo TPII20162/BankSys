@@ -1,8 +1,16 @@
 package banksys.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
+
 import banksys.model.AccountType;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import banksys.model.AccountType;
@@ -19,6 +27,7 @@ public class ControllerOperatorOperations {
 	@FXML TextField ClientToAdd;
 	@FXML TextField AccountTipo;
 	@FXML TextField AccountToEarnInterest;
+	@FXML TextField AccountToEarnBonus;
 
 	@FXML public void OpenCreateWindow() {}
 
@@ -102,6 +111,31 @@ public class ControllerOperatorOperations {
 	        dialogoInfo.setContentText("Erro ao gerar Juros.\n Tente Novamente!");
 	        dialogoInfo.showAndWait();
 		}
+	}
+
+	@FXML public void EarnBonus() {
+		String accountNumber = AccountToEarnBonus.getText();
+		try {
+			Context.getInstance().getOperatorServices().doEarnBonus(Context.getInstance().getOperatorobj(), accountNumber);
+			Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+	        dialogoInfo.setTitle("Gerar Bonus");
+	        dialogoInfo.setContentText("Bonus gerados com sucesso com sucesso!");
+	        dialogoInfo.showAndWait();
+		} catch (OperationServiceException e) {
+			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+	        dialogoInfo.setTitle("Gerar Bonus");
+	        dialogoInfo.setContentText("Erro ao gerar Bonus.\n Tente Novamente!");
+	        dialogoInfo.showAndWait();
+		}
+	}
+
+	@FXML public void Voltar(ActionEvent event) throws IOException {
+		Parent ex_parent = FXMLLoader.load(getClass().getResource("OperatorWindown.fxml"));
+        Scene home_page_scene = new Scene(ex_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(home_page_scene);
+		app_stage.setTitle("BankSys");
+		app_stage.show();
 	}
 
 }

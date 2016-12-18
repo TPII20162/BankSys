@@ -1,34 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerOperatorView">
    <children>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Client">
-               <items>
-                  <MenuItem  mnemonicParsing="false" text="Criar Cliente " onAction = "#OpenCreateWindow" />
-               </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Conta">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Adicionar Conta" onAction  = "#OpenCreateAccount"/>
-                  <MenuItem mnemonicParsing="false" text="Remover Conta" onAction = "#OpenRemoveAccount"/>
-                  <MenuItem mnemonicParsing="false" text="Gerar Juros" />
-                  <MenuItem mnemonicParsing="false" text="Gerar Bonus" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Sair">
-            <items>
-              <MenuItem  mnemonicParsing="false" text="Sair" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
+      <Button layoutX="175.0" layoutY="67.0" mnemonicParsing="false" onAction="#OpenCreateWindow" prefHeight="25.0" prefWidth="185.0" text="Criar Cliente " />
+      <Text layoutX="175.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem Vindo Operador" wrappingWidth="199.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="174.0" layoutY="102.0" mnemonicParsing="false" onAction="#OpenCreateAccount" prefHeight="25.0" prefWidth="185.0" text="Criar Conta" />
+      <Button layoutX="175.0" layoutY="138.0" mnemonicParsing="false" onAction="#OpenRemoveAccount" prefHeight="25.0" prefWidth="185.0" text="Remover Conta" />
+     <Button layoutX="174.0" layoutY="175.0" mnemonicParsing="false"  onAction = "#OpenEarnInterest" prefHeight="25.0" prefWidth="185.0" text="Gerar Juros" />
+      <Button layoutX="174.0" layoutY="216.0" mnemonicParsing="false" onAction = "#OpenEarBonus" prefHeight="25.0" prefWidth="185.0" text="Gerar Bonus" />
+      <Button layoutX="466.0" layoutY="343.0" mnemonicParsing="false" onAction = "#Sair" prefHeight="25.0" prefWidth="92.0" text="Sair" />
    </children>
 </Pane>

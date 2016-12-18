@@ -45,6 +45,30 @@ public class ControllerOperatorView {
 		app_stage.show();
 	}
 
+	@FXML public void OpenEarnInterest(ActionEvent event) throws IOException {
+		Parent ex_parent = FXMLLoader.load(getClass().getResource("EarnInterest.fxml"));
+        Scene home_page_scene = new Scene(ex_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //app_stage.hide();
+        app_stage.setScene(home_page_scene);
+		app_stage.setTitle("BankSys");
+		app_stage.show();
+	}
+
+	@FXML public void OpenEarBonus(ActionEvent event) throws IOException {
+		Parent ex_parent = FXMLLoader.load(getClass().getResource("EarnBonus.fxml"));
+        Scene home_page_scene = new Scene(ex_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //app_stage.hide();
+        app_stage.setScene(home_page_scene);
+		app_stage.setTitle("BankSys");
+		app_stage.show();
+	}
+
+	@FXML public void Sair() {
+		System.exit(0);
+	}
+
 
 
 
