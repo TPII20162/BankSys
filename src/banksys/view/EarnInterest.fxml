@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerOperatorOperations">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Client">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#OpenCreateWindow" text="Criar Cliente " />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Conta">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Adicionar Conta" />
+                  <MenuItem mnemonicParsing="false" text="Remover Conta" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Juros" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Bonus" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Sair">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Sair" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button layoutX="492.0" layoutY="336.0" mnemonicParsing="false" onAction="#EarnInterest" text="Confirmar" />
+      <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o Numero da conta para gerar Juros" wrappingWidth="144.13671875" />
+      <TextField fx:id="AccountToEarnInterest" layoutX="177.0" layoutY="60.0" prefHeight="25.0" prefWidth="334.0" />
+   </children>
+</Pane>

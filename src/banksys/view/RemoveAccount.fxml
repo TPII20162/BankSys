@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="banksys.view.ControllerOperatorOperations">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Client">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#OpenCreateWindow" text="Criar Cliente " />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Conta">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Adicionar Conta" />
+                  <MenuItem mnemonicParsing="false" text="Remover Conta" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Juros" />
+                  <MenuItem mnemonicParsing="false" text="Gerar Bonus" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Sair">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Sair" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Text layoutX="36.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insira o Número da Conta a ser Excluída:" />
+      <TextField fx:id="AccountToRemove" layoutX="292.0" layoutY="86.0" prefHeight="25.0" prefWidth="279.0" />
+      <Button layoutX="502.0" layoutY="200.0" mnemonicParsing="false" onAction="#RemoveAccount" text="Confirmar" />
+   </children>
+</Pane>

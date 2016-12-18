@@ -17,8 +17,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Conta">
             <items>
-              <MenuItem mnemonicParsing="false" text="Adicionar Conta" />
-                  <MenuItem mnemonicParsing="false" text="Remover Conta" />
+              <MenuItem mnemonicParsing="false" text="Adicionar Conta" onAction  = "#OpenCreateAccount"/>
+                  <MenuItem mnemonicParsing="false" text="Remover Conta" onAction = "#OpenRemoveAccount"/>
                   <MenuItem mnemonicParsing="false" text="Gerar Juros" />
                   <MenuItem mnemonicParsing="false" text="Gerar Bonus" />
             </items>
