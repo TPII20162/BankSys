@@ -1,4 +1,4 @@
-package banksys.persistence.account;
+package banksys.persistence.client;
 
 import static org.junit.Assert.*;
 
