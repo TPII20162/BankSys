@@ -133,4 +133,8 @@ public class ClientInMemoryDAO implements ClientDAO {
 		
 	}
 	
+	public void clearlist(){
+		clients.clear();
+	}
+	
 }

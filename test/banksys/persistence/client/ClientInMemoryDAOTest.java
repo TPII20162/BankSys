@@ -23,19 +23,7 @@ public class ClientInMemoryDAOTest {
 	
 	@After
 	public void tearDown() throws PersistenceException {
-		
-		int numberOfClients = clientInMemory.numberOfClients();
-		
-		if (numberOfClients > 0) {
-			
-			List<Client> createdClients = clientInMemory.list();
-			
-			for (Client client : createdClients) {
-				clientInMemory.delete(client.getId());
-			}
-		
-		}
-		
+		clientInMemory.clearlist();
 	}
 	
 	@Test
@@ -127,15 +115,26 @@ public class ClientInMemoryDAOTest {
 	}
 	
 	@Test
-	public void testNumberOfClients() throws PersistenceException {
+	public void testNumberOfClients() {
 		
-		Client client  = new Client("Fulano de Tal", "fulano1",
-				"ful1ano");
+		Client client1 = new Client("Felipe", "fscfelipe", "111");
+		Client client2 = new Client("Jose", "esoj", "111");
+		Client client3 = new Client("Gigi", "igig", "111");
 		
-		clientInMemory.create(client);
+		try {
+			clientInMemory.create(client1);
+			clientInMemory.create(client2);
+			clientInMemory.create(client3);
+		} catch (ClientCreationException e) {
+			fail("Falha ao adicionar cliente!");
+		}
 		
-		assertEquals("Deveria existir exatamente um cliente", 1,
-				clientInMemory.numberOfClients());
+		//SÃO 4 CLIENTES, POIS A CLASSE INCLUI 1 POR PADRÃO
+		try {
+			assertEquals(4, clientInMemory.numberOfClients());
+		} catch (PersistenceException e) {
+			fail("Falha ao captar número de clientes!");
+		}
 		
 	}
 	
