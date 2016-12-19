@@ -64,7 +64,7 @@ public class ClientDatabaseDAO implements ClientDAO {
 		
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("SELECT FROM client WHERE user_name = ?, password = ?;");
+					.prepareStatement("SELECT * FROM client WHERE user_name = ? AND password = ?;");
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
 			ResultSet resultSet = preparedStatement.executeQuery();
