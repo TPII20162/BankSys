@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import banksys.model.Operator;
-import banksys.model.User;
 import banksys.persistence.Connector;
-import banksys.persistence.account.exception.AccountCreationException;
 import banksys.persistence.exception.PersistenceException;
 import banksys.persistence.operator.exception.OperatorCreationException;
 import banksys.persistence.operator.exception.OperatorDeletionException;
@@ -26,13 +24,16 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 		Connection connection = Connector.connect();
 
 		try {
-			userDatabase.create(operator);
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("INSERT INTO operator "
-							+ "(user_id) VALUES (?);");
+							+ "(operator_id, full_name, user_name, password) VALUES (?,?,?,?);");
 
 			preparedStatement.setDouble(1, operator.getId());
-
+			preparedStatement.setString(2, operator.getFullName());
+			preparedStatement.setString(3, operator.getUsername());
+			preparedStatement.setString(4, operator.getPassword());
+			
+			
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} catch (SQLException e) {
@@ -42,16 +43,15 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 		return operator;
 
 	}
-
+	
 	@Override
 	public void delete(Double id) throws OperatorDeletionException {
 
 		Connection connection = Connector.connect();
 
 		try {
-			userDatabase.delete(id);
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("DELETE FROM operator WHERE user_id = ?;");
+					.prepareStatement("DELETE FROM operator WHERE operator_id = ?;");
 			preparedStatement.setDouble(1, id);
 
 			preparedStatement.executeUpdate();
@@ -64,52 +64,56 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 	}
 
 	@Override
-	public Operator retrieve(Double id) throws OperatorNotFoundException, SQLException {
+	public Operator retrieve(Double id) throws OperatorNotFoundException {
 		Connection connection = Connector.connect();
 		Operator operator = null;
 		
-		
 		try {
-			User user = userDatabase.retrieve(id);
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("SELECT FROM operator WHERE user_id = ?;");
+					.prepareStatement("SELECT * FROM operator WHERE operator_id = ?;");
 
 			preparedStatement.setDouble(1, id);
+			
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			double user_id = rs.getDouble(1);
+			String fullName = rs.getString(2);
+			String userName = rs.getString(3);
+			String password = rs.getString(4);
 			
-			operator = new Operator(id, user.getFullName(), user.getUsername(), user.getPassword());					
+			operator = new Operator(user_id, fullName, userName, password);
+			
 			preparedStatement.close();
 		} catch (SQLException e) {
-			throw new SQLException(e.getMessage());
+			throw new OperatorNotFoundException(e.getMessage());
 		}
 		return operator;
 	}
 
 	@Override
 	public Operator retrieveByUsernameAndPassword(String username,
-			String password) throws OperatorNotFoundException, SQLException {
+			String password) throws OperatorNotFoundException {
 		Connection connection = Connector.connect();
 		Operator operator = null;
 		
-		
 		try {
-			User user = userDatabase.retrieveByUsernameAndPassword(username, password);
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("SELECT FROM operator WHERE user_id = ?;");
+					.prepareStatement("SELECT * FROM operator WHERE user_name = ? AND password = ?;");
 
-			preparedStatement.setDouble(1, user.getId());
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);			
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			double user_id = rs.getDouble(1);
+			String fullName = rs.getString(2);
 			
-			operator = new Operator(user_id, user.getFullName(), user.getUsername(), user.getPassword());					
+			operator = new Operator(user_id, fullName, username, password);
+			
 			preparedStatement.close();
 		} catch (SQLException e) {
-			throw new SQLException(e.getMessage());
+			throw new OperatorNotFoundException(e.getMessage());
 		}
 		return operator;
 	}
@@ -117,29 +121,23 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 	@Override
 	public List<Operator> list() throws PersistenceException {
 		Connection connection = Connector.connect();
-		List<User> users;
 		List<Operator> operators = new ArrayList<Operator>();
 		
 		try {
-			users = userDatabase.list();
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("SELECT * operator;");
+					.prepareStatement("SELECT * FROM operator");
 
-			
 			ResultSet rs = preparedStatement.executeQuery();
-			
-			while(rs.next()){
-				double user_id_on_operator_table = rs.getDouble(1);
+			while (rs.next()){
+				double user_id = rs.getDouble(1);
+				String fullName = rs.getString(2);
+				String userName = rs.getString(3);
+				String password = rs.getString(4);
+				Operator operator = new Operator(user_id, fullName, userName, password);
 				
-				for(User user: users){
-					if(user.getId() == user_id_on_operator_table){
-						Operator newOperator = new Operator(user.getId(), user.getFullName(), user.getUsername(), user.getPassword());
-						operators.add(newOperator);
-					}
-				}
-	
-			}		
-
+				operators.add(operator);
+			}
+			
 			preparedStatement.close();
 		} catch (SQLException e) {
 			throw new PersistenceException(e.getMessage());
