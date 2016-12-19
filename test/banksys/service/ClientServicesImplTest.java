@@ -122,6 +122,21 @@ public class ClientServicesImplTest {
 	}
 	
 	@Test
+	public void doRetriveAccountTest(){
+		try {
+			Client createdClient = operatorServices.doNewClient(operator, "FullName", "username", "password", "password");
+			Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(),
+					AccountType.ORDINARY);
+			
+			assertEquals(createdOrdinaryAccount, clientServices.retriveAccount(createdOrdinaryAccount.getNumber()));
+			
+			
+		} catch (OperationServiceException | ClientServiceException e) {
+			fail("Error: Couldn'd find client accounts.");
+		}
+	}
+	
+	@Test
 	public void doCreditTest() throws OperationServiceException, ClientServiceException {
 		Client createdClient = operatorServices.doNewClient(operator, "FullName", "username", "password", "password");
 		Account createdOrdinaryAccount = operatorServices.doNewAccount(operator, createdClient.getId(), AccountType.ORDINARY);
@@ -130,7 +145,6 @@ public class ClientServicesImplTest {
 		
 		assertEquals(00,50,createdOrdinaryAccount.getBalance());
 	}
-	
 	
 	@Test
 	public void doDebitTest() throws OperationServiceException, ClientServiceException {
