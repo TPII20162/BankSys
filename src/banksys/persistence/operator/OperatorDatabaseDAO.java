@@ -13,11 +13,9 @@ import banksys.persistence.exception.PersistenceException;
 import banksys.persistence.operator.exception.OperatorCreationException;
 import banksys.persistence.operator.exception.OperatorDeletionException;
 import banksys.persistence.operator.exception.OperatorNotFoundException;
-import banksys.persistence.user.UserDatabaseDAO;
 
 public class OperatorDatabaseDAO implements OperatorDAO {
 
-	UserDatabaseDAO userDatabase = new UserDatabaseDAO();
 	
 	@Override
 	public Operator create(Operator operator) throws OperatorCreationException {
