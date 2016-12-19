@@ -11,6 +11,7 @@ import banksys.model.Client;
 import banksys.persistence.ResetSQLiteDataBase;
 import banksys.persistence.client.exception.ClientCreationException;
 import banksys.persistence.client.exception.ClientNotFoundException;
+import banksys.persistence.exception.PersistenceException;
 
 
 public class ClientDatabaseDAOTest {
@@ -68,6 +69,27 @@ public class ClientDatabaseDAOTest {
 
 	@Test
 	public void testList(){
+		Client c1 = new Client(1.0, "Maria", "mary", "123");
+		Client c2 = new Client(2.0, "Antonio", "anthony", "456");
+		Client c3 = new Client(3.0, "Jose", "josh", "789");
+		Client c4 = new Client(4.0, "Chico", "chuck", "101");
+		
+		ClientDatabaseDAO clientDb = new ClientDatabaseDAO();
+		try {
+			clientDb.create(c1);
+			clientDb.create(c2);
+			clientDb.create(c3);
+			clientDb.create(c4);
+		} catch (ClientCreationException e) {
+			fail("Falha ao adicionar cliente no banco!");
+		}
+		
+		try {
+			assertEquals(4, clientDb.list().size());
+		} catch (PersistenceException e) {
+			fail("Falha ao listar clientes!");
+		}
+		
 	}
 
 	@Test
