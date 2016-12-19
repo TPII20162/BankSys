@@ -32,11 +32,7 @@ public class ControllerClientLogin {
 	@FXML PasswordField Password;
 	@FXML TextField Login;
 		@FXML private void initialize(){
-		Context.getInstance().setAccountDAO(new AccountInMemoryDAO());
-		Context.getInstance().setClientDAO(new ClientInMemoryDAO());
-		Context.getInstance().setOperatorDAO(new OperatorInMemoryDAO());
-		Context.getInstance().setOperatorServices(new OperatorServicesImpl(Context.getInstance().getClientDAO(), Context.getInstance().getAccountDAO(), Context.getInstance().getOperatorDAO()));
-		Context.getInstance().setClientServices(new ClientServicesImpl(Context.getInstance().getAccountDAO()));
+		
 	}
 	@FXML public void Confirm(ActionEvent event) throws IOException{
 		String password = Password.getText();
@@ -81,6 +77,17 @@ public class ControllerClientLogin {
 	
 	@FXML private void openOperatorWindow(ActionEvent event) throws IOException{
 		Parent ex_parent = FXMLLoader.load(getClass().getResource("OperatorWindown.fxml"));
+        Scene home_page_scene = new Scene(ex_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //app_stage.hide();
+        app_stage.setScene(home_page_scene);
+		app_stage.setTitle("BankSys");
+		Context.getInstance().setClient(true);
+		Context.getInstance().setOperator(false);
+		app_stage.show();
+	}
+	@FXML public void Voltar(ActionEvent event) throws IOException {
+		Parent ex_parent = FXMLLoader.load(getClass().getResource("MenuInicial.fxml"));
         Scene home_page_scene = new Scene(ex_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //app_stage.hide();

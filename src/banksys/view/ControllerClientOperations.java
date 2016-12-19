@@ -19,9 +19,10 @@ public class ControllerClientOperations {
 	@FXML TextField creditText;
 	@FXML TextField debitText;
 	ClientServices cs;
+	String accountNumber;
 	
 	@FXML public void searchAccount(ActionEvent event) throws IOException{
-		String accountNumber = accountNumberText.getText();
+		accountNumber = accountNumberText.getText();
 		try {
 			
 			Context.getInstance().getClientServices().retriveAccount(accountNumber);
@@ -32,7 +33,7 @@ public class ControllerClientOperations {
 				openDebitWindow(event);
 			}
 			else if(Context.getInstance().isRetrieve()){
-				showBalance(accountNumber);
+				showBalance();
 			}
 			
 		} catch (ClientServiceException e) {
@@ -72,7 +73,7 @@ public class ControllerClientOperations {
 		app_stage.setTitle("Debitar");
 		app_stage.show();
 	}
-	@FXML private void showBalance(String accountNumber) throws IOException{
+	@FXML private void showBalance() throws IOException{
 		Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
         dialogoInfo.setTitle("Saldo");
         try {
@@ -85,12 +86,13 @@ public class ControllerClientOperations {
 	@FXML public void doCredit(ActionEvent event){
 		String amount = creditText.getText();
 		try {
-			Context.getInstance().getClientServices().doCredit(Context.getInstance().getClientServices().retriveAccount(accountNumberText.getText()), Double.parseDouble(amount));
+			Context.getInstance().getClientServices().doCredit(Context.getInstance().getClientServices().retriveAccount(accountNumber), Double.parseDouble(amount));
 			Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
 	        dialogoInfo.setTitle("Sucesso");
 	        dialogoInfo.setContentText("Valor creditado com sucesso");
 	        dialogoInfo.showAndWait();
 		} catch (NumberFormatException | ClientServiceException e) {
+			e.printStackTrace();
 			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
 	        dialogoInfo.setTitle("Error");
 	        dialogoInfo.setContentText("Quantidade inválida");

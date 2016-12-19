@@ -40,7 +40,7 @@ public class ControllerOperatorOperations {
 			Context.getInstance().getOperatorServices().doNewClient(Context.getInstance().getOperatorobj(), fullname, userName, PassWord, Conf_pass);
 			Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
 	        dialogoInfo.setTitle("Criar Cliente");
-	        dialogoInfo.setContentText("Cliente "+username+" criado com sucesso!");
+	        dialogoInfo.setContentText("Cliente "+userName+" criado com sucesso!");
 	        dialogoInfo.showAndWait();
 		} catch (OperationServiceException e) {
 			Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
