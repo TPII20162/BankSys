@@ -3,6 +3,7 @@ package banksys.persistence.client;
 import static org.junit.Assert.*;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +40,30 @@ public class ClientDatabaseDAOTest {
 
 	@Test
 	public void testRetrieveByUsernameAndPassword(){
+		
+		double clientId = 1;
+		String fullName = "Full Test";
+		String name = "Test";
+		String password = "123A";
+		
+		Client client = new Client(clientId, fullName, name, password);
+		
+		ClientDatabaseDAO dao = new ClientDatabaseDAO();
+		
+		try {
+			dao.create(client);
+			
+			Client retrieved = dao.retrieveByUsernameAndPassword(name, password);
+			
+			Assert.assertEquals(name, retrieved.getUsername());
+			Assert.assertEquals(password, retrieved.getPassword());
+		} catch (ClientCreationException e) {
+			System.err.println("Could not create client on database: " + e.getMessage());
+		} catch (ClientNotFoundException e) {
+			System.err.println("Could not find client on database: " + e.getMessage());
+		}
+
+		
 	}
 
 	@Test
