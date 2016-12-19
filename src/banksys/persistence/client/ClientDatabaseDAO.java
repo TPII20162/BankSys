@@ -21,21 +21,25 @@ public class ClientDatabaseDAO implements ClientDAO {
 	
 	UserDatabaseDAO userDatabase = new UserDatabaseDAO();
 	
+	@Override
 	public Client create(Client client) throws ClientCreationException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public void delete(Double id) throws ClientDeletionException {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public Client retrieve(Double id) throws ClientNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public Client retrieveByUsernameAndPassword(String username, String password) throws ClientNotFoundException {
 		Connection connection = Connector.connect();
 		Client client = null;
@@ -66,6 +70,7 @@ public class ClientDatabaseDAO implements ClientDAO {
 		return null;
 	}
 
+	@Override
 	public int numberOfClients() throws ClientNotFoundException {
 		Integer numberOfClients = 0;
 		Connection connection = Connector.connect();

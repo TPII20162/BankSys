@@ -63,11 +63,11 @@ public class ClientDatabaseDAOTest {
 	public void testNumberOfClients(){
 		double clientId = 1.0;
 	
-		Client client = new Client(clientId);
+		Client client = new Client(clientId, null, null, null);
 		
-		double clientId = 2.0;
+		double clientId1 = 2.0;
 	
-		Client client2 = new Client(clientId);
+		Client client2 = new Client(clientId1, null, null, null);
 		
 		ClientDatabaseDAO dao = new ClientDatabaseDAO();		
 
