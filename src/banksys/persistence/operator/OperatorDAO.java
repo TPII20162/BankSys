@@ -20,6 +20,8 @@ public interface OperatorDAO {
 	public Operator retrieveByUsernameAndPassword(String username, String password) throws OperatorNotFoundException, SQLException;
 
 	public List<Operator> list() throws PersistenceException;
+	
+	public int numberOfOperators() throws PersistenceException;
 
 
 }

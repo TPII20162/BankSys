@@ -142,5 +142,25 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 		}
 		return operators;
 	}
+	
+	
+	
+	public int numberOfOperators() throws PersistenceException{
+		Connection connection = Connector.connect();
+		int numberOfOperators = 0;
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT COUNT(*) AS total FROM operator");
+
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			numberOfOperators = rs.getInt("total");
+			
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new PersistenceException(e.getMessage());
+		}
+		return numberOfOperators;
+	}
 
 }

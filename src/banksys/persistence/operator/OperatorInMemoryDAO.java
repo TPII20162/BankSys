@@ -87,4 +87,8 @@ public class OperatorInMemoryDAO implements OperatorDAO {
 		}
 		return null;
 	}
+	
+	public int numberOfOperators(){
+		return OperatorInMemoryDAO.operators.size();
+	}
 }
