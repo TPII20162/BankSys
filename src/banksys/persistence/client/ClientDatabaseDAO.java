@@ -10,6 +10,7 @@ import java.util.List;
 import banksys.model.Account;
 import banksys.model.AccountType;
 import banksys.model.Client;
+import banksys.model.Operator;
 import banksys.model.User;
 import banksys.persistence.Connector;
 import banksys.persistence.account.exception.AccountCreationException;
@@ -18,6 +19,8 @@ import banksys.persistence.client.exception.ClientCreationException;
 import banksys.persistence.client.exception.ClientDeletionException;
 import banksys.persistence.client.exception.ClientNotFoundException;
 import banksys.persistence.exception.PersistenceException;
+import banksys.persistence.operator.exception.OperatorDeletionException;
+import banksys.persistence.operator.exception.OperatorNotFoundException;
 
 public class ClientDatabaseDAO implements ClientDAO {
 	
@@ -47,14 +50,50 @@ public class ClientDatabaseDAO implements ClientDAO {
 
 	@Override
 	public void delete(Double id) throws ClientDeletionException {
-		// TODO Auto-generated method stub
+
+		Connection connection = Connector.connect();
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("DELETE FROM client WHERE client_id = ?;");
+			preparedStatement.setDouble(1, id);
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			throw new ClientDeletionException(e.getMessage());
+		}
+
 
 	}
 
 	@Override
 	public Client retrieve(Double id) throws ClientNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = Connector.connect();
+		Client client = null;
+		
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * FROM client WHERE client_id = ?;");
+
+			preparedStatement.setDouble(1, id);
+			
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			double user_id = rs.getDouble(1);
+			String fullName = rs.getString(2);
+			String userName = rs.getString(3);
+			String password = rs.getString(4);
+			
+			client = new Client(user_id, fullName, userName, password);
+			
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw new ClientNotFoundException(e.getMessage());
+		}
+		return client;
 	}
 
 	@Override
