@@ -4,11 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import banksys.model.Client;
-import banksys.model.Operator;
 import banksys.model.User;
 import banksys.persistence.Connector;
 import banksys.persistence.client.exception.ClientCreationException;
