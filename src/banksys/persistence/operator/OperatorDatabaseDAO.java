@@ -34,6 +34,7 @@ public class OperatorDatabaseDAO implements OperatorDAO {
 			
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
+			connection.close();
 		} catch (SQLException e) {
 			throw new OperatorCreationException(e.getMessage());
 		}
