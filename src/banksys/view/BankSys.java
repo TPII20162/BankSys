@@ -22,10 +22,12 @@ public class BankSys {
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
+		Injector injector = Guice.createInjector(new BankSysModule());
+		
 		boolean loop = true;
-		AccountDAO accountDAO = new AccountInMemoryDAO();
-		ClientDAO clientDAO = new ClientInMemoryDAO();
-		OperatorDAO operatorDAO = new OperatorInMemoryDAO();
+		AccountDAO accountDAO = injector.getInstance(AccountDAO.class);
+		ClientDAO clientDAO = injector.getInstance(ClientDAO.class);
+		OperatorDAO operatorDAO = injector.getInstance(OperatorDAO.class);
 		OperatorServices operatorServices = new OperatorServicesImpl(clientDAO, accountDAO, operatorDAO);
 		ClientServices clientServices = new ClientServicesImpl(accountDAO);
 

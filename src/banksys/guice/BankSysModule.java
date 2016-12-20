@@ -15,7 +15,7 @@ public class BankSysModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(ClientServices.class).to(ClientServicesImpl.class);
+		//bind(ClientServices.class).to(ClientServicesImpl.class);
 		
 		bind(ClientDAO.class).to(ClientInMemoryDAO.class);
 		bind(OperatorDAO.class).to(OperatorInMemoryDAO.class);
