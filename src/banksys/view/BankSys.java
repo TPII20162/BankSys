@@ -2,6 +2,10 @@ package banksys.view;
 
 import java.util.Scanner;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import banksys.guice.BankSysModule;
 import banksys.persistence.account.AccountDAO;
 import banksys.persistence.account.AccountInMemoryDAO;
 import banksys.persistence.client.ClientDAO;
