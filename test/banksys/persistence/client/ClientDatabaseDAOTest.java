@@ -10,6 +10,7 @@ import org.junit.Test;
 import banksys.model.Client;
 import banksys.persistence.ResetSQLiteDataBase;
 import banksys.persistence.client.exception.ClientCreationException;
+import banksys.persistence.client.exception.ClientDeletionException;
 import banksys.persistence.client.exception.ClientNotFoundException;
 import banksys.persistence.exception.PersistenceException;
 
@@ -24,19 +25,79 @@ public class ClientDatabaseDAOTest {
 
 	@After
 	public void tearDown(){
+		
 	}
 	
 	@Test
 	public void testCreate() {
+		
+		double clientId = 123;
+		String fullName = "Full Test";
+		String name = "Test";
+		String password = "123A";
+		
+		Client client = new Client(clientId, fullName, name, password);
+		ClientDatabaseDAO dao = new ClientDatabaseDAO();
+		try {
+			dao.create(client);
+			
+		} catch (ClientCreationException e) {
+			System.err.println("Could not create client on database: " + e.getMessage());
+
+		}
+
+		
 	}
 
-	@Test
-	public void testDelete(){
-
+	@Test /*(expected=ClientNotFoundException.class) */
+	public void testDelete() throws ClientNotFoundException{ /*
+		
+		double clientId = 123;
+		String fullName = "Full Test";
+		String name = "Test";
+		String password = "123A";
+		
+		Client client = new Client(clientId, fullName, name, password);
+		ClientDatabaseDAO dao = new ClientDatabaseDAO();
+		
+		try{
+			dao.create(client);
+			dao.delete(clientId);
+			dao.retrieve(clientId);
+			
+		} catch (ClientCreationException e) {
+			System.err.println("Could not create client on database: " + e.getMessage());
+		} catch (ClientDeletionException e) {
+			System.err.println("Could not delete client on database: " + e.getMessage());
+		}
+*/
 	}
 
 	@Test
 	public void testRetrieve() {
+		
+		double clientId = 123;
+		String fullName = "Full Test";
+		String name = "Test";
+		String password = "123A";
+		
+		Client client = new Client(clientId, fullName, name, password);
+		ClientDatabaseDAO dao = new ClientDatabaseDAO();
+		
+		try{
+			dao.create(client);
+			dao.delete(clientId);
+			Client retrieved = dao.retrieve(clientId);
+			Assert.assertEquals(retrieved.getId(),client.getId());
+			
+		} catch (ClientCreationException e) {
+			System.err.println("Could not create client on database: " + e.getMessage());
+		} catch (ClientDeletionException e) {
+			System.err.println("Could not delete client on database: " + e.getMessage());
+		} catch (ClientNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
