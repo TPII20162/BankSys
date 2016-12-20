@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import banksys.model.Client;
+import banksys.persistence.Connector;
 import banksys.persistence.ResetSQLiteDataBase;
 import banksys.persistence.client.exception.ClientCreationException;
 import banksys.persistence.client.exception.ClientDeletionException;
@@ -45,12 +46,12 @@ public class ClientDatabaseDAOTest {
 			System.err.println("Could not create client on database: " + e.getMessage());
 
 		}
-
+		Connector.close();
 		
 	}
 
-	@Test /*(expected=ClientNotFoundException.class) */
-	public void testDelete() throws ClientNotFoundException{ /*
+	@Test (expected=ClientNotFoundException.class) 
+	public void testDelete() throws ClientNotFoundException{ 
 		
 		double clientId = 123;
 		String fullName = "Full Test";
@@ -70,7 +71,7 @@ public class ClientDatabaseDAOTest {
 		} catch (ClientDeletionException e) {
 			System.err.println("Could not delete client on database: " + e.getMessage());
 		}
-*/
+		Connector.close();
 	}
 
 	@Test
@@ -86,18 +87,15 @@ public class ClientDatabaseDAOTest {
 		
 		try{
 			dao.create(client);
-			dao.delete(clientId);
 			Client retrieved = dao.retrieve(clientId);
 			Assert.assertEquals(retrieved.getId(),client.getId());
 			
 		} catch (ClientCreationException e) {
 			System.err.println("Could not create client on database: " + e.getMessage());
-		} catch (ClientDeletionException e) {
-			System.err.println("Could not delete client on database: " + e.getMessage());
 		} catch (ClientNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Could not find client on database:" + e.getMessage());
 		}
+		Connector.close();
 	}
 
 	@Test
@@ -124,7 +122,7 @@ public class ClientDatabaseDAOTest {
 		} catch (ClientNotFoundException e) {
 			System.err.println("Could not find client on database: " + e.getMessage());
 		}
-
+		Connector.close();
 		
 	}
 
@@ -150,7 +148,7 @@ public class ClientDatabaseDAOTest {
 		} catch (PersistenceException e) {
 			fail("Falha ao listar clientes!");
 		}
-		
+		Connector.close();
 	}
 
 	@Test
@@ -176,7 +174,7 @@ public class ClientDatabaseDAOTest {
 		}catch (ClientNotFoundException e) {
 			System.err.println("Could not find client on database: " + e.getMessage());
 		}
-					
+		Connector.close();
 	}
 		
 }
