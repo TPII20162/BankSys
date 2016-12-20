@@ -1,9 +1,6 @@
 package banksys.persistence.operator;
 
 import static org.junit.Assert.*;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
@@ -17,7 +14,6 @@ import banksys.persistence.exception.PersistenceException;
 import banksys.persistence.operator.exception.OperatorCreationException;
 import banksys.persistence.operator.exception.OperatorDeletionException;
 import banksys.persistence.operator.exception.OperatorNotFoundException;
-import junit.framework.Assert;
 
 public class OperatorDatabaseDAOTest {
 
