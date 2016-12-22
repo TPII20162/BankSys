@@ -6,6 +6,11 @@ jdk:
   - oraclejdk7
   - oraclejdk8
   
+sudo: true
+
+notifications:
+  email: false
+  
 before_install:
   - apt-get update
   - apt-get install -y maven
