@@ -5,6 +5,15 @@ language: java
 jdk:
   - oraclejdk7
   - oraclejdk8
+  
+before_install:
+  - apt-get update
+  - apt-get install -y maven
+  
+before_script:
+   - if [[ $SHIPPABLE_JDK_VERSION == "oraclejdk8" ]] ; then export JAVA_HOME="/usr/lib/jvm/java-8-oracle"; export PATH="$PATH:/usr/lib/jvm/java-8-oracle/bin"; export java_path="/usr/lib/jvm/java-8-oracle/jre/bin/java"; fi
+   - update-alternatives --set java $java_path
+   - java -version
 
 # run tests, findbugs, pmd and friends using Ant, Maven or Gradle
 script: gradle build
